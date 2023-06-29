@@ -58,7 +58,7 @@ const App = () => {
         <Provider store={store}>
           <PersistGate
             loading={
-              <View style={{ marginTop: 60 }}>
+              <View style={{ marginTop: 400 }}>
                 <ActivityIndicator size={'large'} />
               </View>
             }

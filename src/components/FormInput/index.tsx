@@ -8,15 +8,18 @@ import {
   Pressable,
   Keyboard,
   ViewStyle,
+  Image,
 } from 'react-native';
 import { Control, Controller, Path } from 'react-hook-form';
 import Clipboard from '@react-native-community/clipboard';
 
 import { ThemeContext, useThemedStyles } from '@core/theme';
-import { Icon } from '@components/Icon';
+
 import { ShowIf } from '@components/ShowIf';
-import { Warning } from '@components/Icon/icons';
+
 import SvgComponent from '@core/theme/warning';
+import CheckIcon from '@core/theme/SVGS/Movements/Check';
+import WarningIcon from '@core/theme/SVGS/WarningIcon';
 
 /**
  * Types
@@ -104,18 +107,24 @@ export function FormInput<ContentType>({
                 hitSlop={5}
                 onPress={onEyeIconPress}>
                 {showPassword ? (
-                  <Icon name="EyeOpen" size={20} />
+                  <Image
+                    source={require('../../../assets/images/icons/eye-open.svg')}
+                    style={{ width: 20 }}
+                  />
                 ) : (
-                  <Icon name="EyeClosed" size={20} />
+                  <Image
+                    source={require('../../../assets/images/icons/eye-closed.svg')}
+                    style={{ width: 20 }}
+                  />
                 )}
               </Pressable>
             </ShowIf>
             <ShowIf condition={isDirty || fixed}>
               <View style={style.icon}>
                 {!error || fixed ? (
-                  <Icon name="Check" size={20} />
+                  <CheckIcon size={20} />
                 ) : (
-                  <Icon name="Warning" size={20} />
+                  <WarningIcon size={20} />
                   // <SvgComponent />
                 )}
               </View>

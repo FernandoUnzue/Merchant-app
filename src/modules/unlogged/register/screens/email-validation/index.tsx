@@ -8,7 +8,6 @@ import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
 import { LoginFooter } from '@components/LoginFooter';
 import { WhiskeredButton } from '@components/WhiskeredButton';
-import { Icon } from '@components/Icon';
 import { Spacer } from '@components/Spacer';
 import { Button } from '@components/Button';
 import axiosInstance from '@core/clients/axios';
@@ -94,7 +93,8 @@ export const EmailValidation: FC<EmailValidationScreenProps> = ({
         // Alert.alert('Check your email', 'Validation email was resent');
         setError({
           isError: false,
-          message: "L'e-mail di convalida è stata reinviata. Controlla la tua e-mail",
+          message:
+            "L'e-mail di convalida è stata reinviata. Controlla la tua e-mail",
         });
         resetError();
       }
@@ -111,8 +111,6 @@ export const EmailValidation: FC<EmailValidationScreenProps> = ({
     <>
       <View style={[container, style.body]}>
         <View style={style.content}>
-          <Icon name="Plane" size={128} />
-
           <Spacer />
           <Text style={style.title}>
             {'Controlla la casella di posta\ne verifica la tua email'}
@@ -127,7 +125,7 @@ export const EmailValidation: FC<EmailValidationScreenProps> = ({
 
           <Spacer height={14} />
           <Text style={style.subtitle}>
-            {"Abbiamo inviato un link di verifica all’indirizzo:"}
+            {'Abbiamo inviato un link di verifica all’indirizzo:'}
           </Text>
           <Text style={style.email}>{email}</Text>
           <Spacer height={14} />
@@ -144,7 +142,9 @@ export const EmailValidation: FC<EmailValidationScreenProps> = ({
         <View>
           <WhiskeredButton
             accessibilityLabel="invia di nuovo"
-            title={timer !== '00' ? `invia di nuovo (${timer})` : "invia di nuovo"}
+            title={
+              timer !== '00' ? `invia di nuovo (${timer})` : 'invia di nuovo'
+            }
             type="tertiary"
             timer={emailValidated ? undefined : timer}
             disabled={emailValidated || onTime}

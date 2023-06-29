@@ -8,8 +8,9 @@ import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
 import { LoginFooter } from '@components/LoginFooter';
 import { WhiskeredButton } from '@components/WhiskeredButton';
-import { Icon } from '@components/Icon';
+
 import { Spacer } from '@components/Spacer';
+import OkIcon from '@core/theme/SVGS/OkIcon';
 
 /**
  * Types
@@ -38,7 +39,7 @@ export const EmailValidationSuccess: FC<EmailValidationSuccessScreenProps> = ({
     <>
       <View style={[container, style.body]}>
         <View style={style.content}>
-          <Icon name="Ok" size={120} />
+          <OkIcon size={120} />
           <Spacer />
           <Text style={style.title}>
             {'Grazie per aver verificato\nla tua email!'}

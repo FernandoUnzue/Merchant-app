@@ -11,6 +11,7 @@ type IdPropsNumber = {
 
 export type LoggedStackParamList = {
   Home: undefined;
+  ChangePasswordSuccess: undefined;
 };
 
 const Stack = createStackNavigator<LoggedStackParamList>();

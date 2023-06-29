@@ -8,12 +8,12 @@ import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
 import { LoginFooter } from '@components/LoginFooter';
 import { WhiskeredButton } from '@components/WhiskeredButton';
-import { Icon } from '@components/Icon';
 import { Spacer } from '@components/Spacer';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@core/redux/store';
 import { LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { LoggedStackParamList } from '@modules/logged';
+import OkIcon from '@core/theme/SVGS/OkIcon';
 
 /**
  * Types
@@ -28,9 +28,9 @@ type ChangePasswordSuccessScreenProps = StackScreenProps<
  * ChangePasswordSuccess Screen
  */
 
-export const ChangePasswordSuccessUnlogged: FC<ChangePasswordSuccessScreenProps> = ({
-  navigation: { navigate },
-}) => {
+export const ChangePasswordSuccessUnlogged: FC<
+  ChangePasswordSuccessScreenProps
+> = ({ navigation: { navigate } }) => {
   useDisableGoBack();
   const style = useThemedStyles(styles);
   const { container } = useLoginContainer();
@@ -38,7 +38,7 @@ export const ChangePasswordSuccessUnlogged: FC<ChangePasswordSuccessScreenProps>
     <>
       <View style={[container, style.body]}>
         <View style={style.content}>
-          <Icon name="Ok" size={120} />
+          <OkIcon size={120} />
           <Spacer />
           <Text style={style.title}>{'La tua password\nè aggiornata!'}</Text>
         </View>
