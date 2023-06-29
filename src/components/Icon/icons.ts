@@ -1,0 +1,11 @@
+export { default as EyeOpen } from '../../../assets/images/icons/eye-open.svg';
+export { default as EyeClosed } from '../../../assets/images/icons/eye-closed.svg';
+export { default as Ok } from '../../../assets/images/icons/ok.svg';
+export { default as Check } from '../../../assets/images/icons/check.svg';
+export { default as Warning } from '../../../assets/images/icons/warning.svg';
+export { default as Plane } from '../../../assets/images/icons/plane.svg';
+export { default as EditForm } from '../../../assets/images/icons/edit-form.svg';
+export { default as Home } from '../../../assets/images/icons/home.svg';
+export { default as HomeNoFill } from '../../../assets/images/icons/home-no-fill.svg';
+export { default as Shop } from '../../../assets/images/icons/shop.svg';
+export { default as Camera } from '../../../assets/images/icons/camera.svg';
