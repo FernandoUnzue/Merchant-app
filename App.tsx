@@ -17,12 +17,14 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { useEffect } from 'react';
 import OneSignal from 'react-native-onesignal';
 import { ONESIGNAL_GLOBAL } from 'react-native-dotenv';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   const persistor = persistStore(store);
 
   const ONESIGNAL_APP_ID = ONESIGNAL_GLOBAL;
-  useEffect(() => {
+  {
+    /*  useEffect(() => {
     // OneSignal Initialization
     OneSignal.setAppId(ONESIGNAL_APP_ID);
 
@@ -50,35 +52,38 @@ const App = () => {
     OneSignal.setNotificationOpenedHandler(notification => {
       console.log('OneSignal: notification opened:', notification);
     });
-  }, []);
+  }, []);*/
+  }
 
   return (
     <SafeAreaProvider style={{ flex: 1 }}>
-      <ThemeProvider>
-        <Provider store={store}>
-          <PersistGate
-            loading={
-              <View style={{ marginTop: 400 }}>
-                <ActivityIndicator size={'large'} />
-              </View>
-            }
-            persistor={persistor}>
-            <SafeAreaView
-              edges={['top']}
-              style={{ flex: 0, backgroundColor: '#fff' }}
-            />
-            <SafeAreaView
-              edges={['left', 'right', 'bottom']}
-              style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
-              <StatusBar
-                backgroundColor={Colors.white}
-                barStyle="dark-content"
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ThemeProvider>
+          <Provider store={store}>
+            <PersistGate
+              loading={
+                <View style={{ marginTop: 400 }}>
+                  <ActivityIndicator size={'large'} />
+                </View>
+              }
+              persistor={persistor}>
+              <SafeAreaView
+                edges={['top']}
+                style={{ flex: 0, backgroundColor: '#fff' }}
               />
-              <RootNavigator />
-            </SafeAreaView>
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
+              <SafeAreaView
+                edges={['left', 'right', 'bottom']}
+                style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
+                <StatusBar
+                  backgroundColor={Colors.white}
+                  barStyle="dark-content"
+                />
+                <RootNavigator />
+              </SafeAreaView>
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };
