@@ -1,5 +1,12 @@
 import { FC, useState } from 'react';
-import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Keyboard,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from 'react-hook-form';
 import { useDisableGoBack } from '@core/hooks';
@@ -7,7 +14,7 @@ import { FormInput } from '@components/FormInput';
 import { LoginFooter } from '@components/LoginFooter';
 import { Spacer } from '@components/Spacer';
 import { WhiskeredButton } from '@components/WhiskeredButton';
-import { ThemeContext, useThemedStyles } from '@core/theme';
+import { Colors, ThemeContext, useThemedStyles } from '@core/theme';
 import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
 import { PASSWORD_REGEX } from '@core/constants';
@@ -16,6 +23,10 @@ import {
   validatePhoneNumber,
 } from '@modules/unlogged/helpers';
 import { useLoginMutation } from '@core/redux/Api/endpoints/Auth';
+import { Button } from '@components/Button';
+import { RootState, store } from '@core/redux/store';
+import { AuthSlice } from '@core/redux/authSlice/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * Types
@@ -58,7 +69,7 @@ export type XMLresp = {
 
 export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
   useDisableGoBack();
-  const style = useThemedStyles(styles);
+  // const style = useThemedStyles(styles);
   const { container } = useLoginContainer();
   const {
     control,
@@ -112,42 +123,58 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       });
   };
 
-  return (
-    <>
-      <Pressable onPress={() => Keyboard.dismiss()} style={container}>
-        {error.isError && (
-          <Text style={{ color: 'orange', textAlign: 'center' }}>
-            {error.message}
-          </Text>
-        )}
-        <View style={style.formWrapper}>
-          <FormInput
-            name="phone"
-            placeholder="Numero cellulare"
-            control={control}
-            rules={{
-              required: true,
-              validate: validatePhoneNumber,
-            }}
-            keyboardType="phone-pad"
-          />
-          <Spacer height={16} />
-          <FormInput
-            name="password"
-            placeholder="Password"
-            autoCapitalize="none"
-            autoCorrect={false}
-            control={control}
-            rules={{
-              required: true,
-              pattern: PASSWORD_REGEX,
-            }}
-            // onPasswordMessagePressed={() => navigate('PasswordError')}
-          />
-        </View>
-      </Pressable>
+  const dispatch = useDispatch();
+  const style = useThemedStyles(styles);
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
 
-      <LoginFooter>
+  return (
+    <ScrollView contentContainerStyle={style.main}>
+      {error.isError && (
+        <Text style={{ color: 'orange', textAlign: 'center' }}>
+          {error.message}
+        </Text>
+      )}
+      <Spacer height={100} />
+      <FormInput
+        name="phone"
+        placeholder="Numero cellulare"
+        control={control}
+        rules={{
+          required: true,
+          validate: validatePhoneNumber,
+        }}
+        keyboardType="phone-pad"
+      />
+      <Spacer height={16} />
+      <FormInput
+        name="password"
+        placeholder="Password"
+        autoCapitalize="none"
+        autoCorrect={false}
+        control={control}
+        rules={{
+          required: true,
+          pattern: PASSWORD_REGEX,
+        }}
+        // onPasswordMessagePressed={() => navigate('PasswordError')}
+      />
+      <Spacer height={200} />
+      <Button
+        accessibilityLabel="entra"
+        title="ENTRA"
+        type="tertiary"
+        disabled={!isDirty || !isValid}
+        loading={isLoading}
+        onPress={handleSubmit(onLoginPressed)}
+      />
+      {/* <Text>{isDarkTheme ? 'DARK' : 'LIGHT'}</Text>
+      <Button
+        accessibilityLabel="toggle theme"
+        title="TOGGLE THEME"
+        type="tertiary"
+        onPress={() => dispatch(AuthSlice.actions.ToggleTheme())}
+      />}
+      {/*<LoginFooter>
         <WhiskeredButton
           accessibilityLabel="accedi"
           title="accedi"
@@ -172,8 +199,8 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
             </Text>
           </Text>
         </View>
-      </LoginFooter>
-    </>
+          </LoginFooter>*/}
+    </ScrollView>
   );
 };
 
@@ -183,6 +210,11 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
+    main: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: 30,
+    },
     formWrapper: {
       flexGrow: 1,
       paddingHorizontal: 80,
@@ -196,7 +228,7 @@ const styles = ({ theme }: ThemeContext) =>
       marginTop: 10,
       fontFamily: theme.fonts.regular,
       fontSize: 12,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
       textAlign: 'center',
     },
     registerWrapper: {
@@ -206,11 +238,11 @@ const styles = ({ theme }: ThemeContext) =>
     notRegistered: {
       fontFamily: theme.fonts.regular,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     register: {
       fontFamily: theme.fonts.bold,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
   });

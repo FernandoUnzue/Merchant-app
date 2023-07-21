@@ -10,7 +10,7 @@ import GiftIcon from '@core/theme/SVGS/TabNav/Gift';
 import SupportIcon from '@core/theme/SVGS/TabNav/Support';
 import { Colors } from '@core/theme';
 import NotFoundView from '@modules/logged/not found';
-import { HomeStack } from '@modules/logged';
+import LoggedStack from '../logged';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -42,7 +42,7 @@ export const BottomTabNavigator: React.FC<Props> = ({ RootNavigation }) => {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeStack}
+        component={LoggedStack}
         options={{
           // unmountOnBlur: true,
           // tabBarIcon: ({ focused }) => (
@@ -57,7 +57,7 @@ export const BottomTabNavigator: React.FC<Props> = ({ RootNavigation }) => {
 
       <Tab.Screen
         name="Shop"
-        component={HomeStack}
+        component={LoggedStack}
         options={{
           // unmountOnBlur: true,
           // tabBarLabel: 'Profile',
@@ -84,7 +84,7 @@ export const BottomTabNavigator: React.FC<Props> = ({ RootNavigation }) => {
         {() => <NotFoundView navigation={RootNavigation} />}
       </Tab.Screen>
       <Tab.Screen
-        component={HomeStack}
+        component={LoggedStack}
         name="Gift"
         // component={NotFoundView}
         options={{
@@ -114,7 +114,7 @@ export const BottomTabNavigator: React.FC<Props> = ({ RootNavigation }) => {
       </Tab.Screen>
       <Tab.Screen
         name="Profile"
-        component={HomeStack}
+        component={LoggedStack}
         options={{
           tabBarItemStyle: { display: 'none' },
           header: () => <TabNav navigation={RootNavigation} />,

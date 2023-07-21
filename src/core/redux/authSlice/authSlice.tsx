@@ -24,6 +24,7 @@ interface AuthProps {
   checking: boolean;
   loggedIn: boolean;
   showModal: boolean;
+  darkMode: boolean;
 }
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   loggedIn: false,
   checking: true,
   showModal: false,
+  darkMode: false,
 } as AuthProps;
 
 export const AuthSlice = createSlice({
@@ -42,6 +44,9 @@ export const AuthSlice = createSlice({
     },
     closeModal: state => {
       state.showModal = false;
+    },
+    ToggleTheme: state => {
+      state.darkMode = !state.darkMode;
     },
   },
   extraReducers: builder => {

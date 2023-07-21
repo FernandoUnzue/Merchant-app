@@ -107,7 +107,8 @@ export const UnloggedStack: React.FC<Props> = ({ RootNavigation }) => {
         name="ResetEnterNewPassword"
         component={ResetEnterNewPassword}
       />
-        <Stack.Screen name="ChangePasswordSuccess"
+      <Stack.Screen
+        name="ChangePasswordSuccess"
         component={ChangePasswordSuccessUnlogged}
       />
       <Stack.Screen name="PasswordError" component={PasswordError} />

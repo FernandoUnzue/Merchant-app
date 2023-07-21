@@ -26,7 +26,7 @@ import WarningIcon from '@core/theme/SVGS/WarningIcon';
  */
 
 interface IFormInput<ContentType> extends TextInputProps {
-  control: Control<ContentType, object>;
+  control: any;
   name: Path<ContentType>;
   rules?: {};
   fixed?: boolean;
@@ -38,6 +38,7 @@ interface IFormInput<ContentType> extends TextInputProps {
   confirmPass?: boolean;
   confirmEmail?: boolean;
   styless?: ViewStyle;
+  showIcons?: boolean;
 }
 
 /**
@@ -55,6 +56,7 @@ export function FormInput<ContentType>({
   passValue,
   confirmEmail = false,
   confirmPass = false,
+  showIcons = true,
   styless,
   onPasswordMessagePressed,
   ...props
@@ -119,7 +121,7 @@ export function FormInput<ContentType>({
                 )}
               </Pressable>
             </ShowIf>
-            <ShowIf condition={isDirty || fixed}>
+            <ShowIf condition={(isDirty || fixed) && showIcons}>
               <View style={style.icon}>
                 {!error || fixed ? (
                   <CheckIcon size={20} />
@@ -193,9 +195,9 @@ const styles = ({ theme }: ThemeContext) =>
     container: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.background,
       width: '100%',
-      borderBottomColor: theme.colors.text,
+      borderBottomColor: theme.colors.textPrimary,
       borderBottomWidth: 1,
     },
     input: {
@@ -204,22 +206,22 @@ const styles = ({ theme }: ThemeContext) =>
       marginLeft: -4,
       paddingHorizontal: 5,
       fontSize: 14,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     editableInput: {
       fontFamily: theme.fonts.regular,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     fixedInput: {
       fontFamily: theme.fonts.bold,
-      color: theme.colors.textGrey,
+      color: theme.colors.textDisabled,
     },
     icon: {
       marginLeft: 8,
       alignSelf: 'center',
     },
     placeholder: {
-      color: theme.colors.text,
+      color: theme.colors.textSecondary,
     },
     errorWrapper: {
       marginTop: 5,
@@ -227,20 +229,20 @@ const styles = ({ theme }: ThemeContext) =>
     },
     message: {
       fontSize: 11,
-      color: theme.colors.bgLoginFooter,
+      color: theme.colors.textPrimary,
       alignSelf: 'stretch',
       fontWeight: 'bold',
     },
     errorMessage: {
       fontFamily: theme.fonts.bold,
       fontSize: 10,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
       alignSelf: 'stretch',
     },
     errorLink: {
       fontFamily: theme.fonts.bold,
       fontSize: 10,
-      color: theme.colors.accent,
+      color: theme.colors.textPrimary,
       alignSelf: 'stretch',
     },
   });

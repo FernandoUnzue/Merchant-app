@@ -132,7 +132,7 @@ const styles = ({ theme }: ThemeContext) =>
     buttonBase: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 5,
+      borderRadius: 50,
       width: '100%',
       height: 60,
       zIndex: 4,
@@ -141,7 +141,7 @@ const styles = ({ theme }: ThemeContext) =>
     buttonBaseWithIcon: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 5,
+      borderRadius: 50,
       width: '100%',
       height: 60,
       zIndex: 4,
@@ -161,7 +161,7 @@ const styles = ({ theme }: ThemeContext) =>
       width: 50,
     },
     button_primary: {
-      backgroundColor: theme.colors.btnPrimary,
+      backgroundColor: theme.colors.background,
     },
     button_secondary: {
       backgroundColor: theme.colors.btnSecondary,
@@ -169,12 +169,12 @@ const styles = ({ theme }: ThemeContext) =>
     button_tertiary: {
       backgroundColor: theme.colors.btnPrimary,
       borderWidth: 1,
-      borderColor: theme.colors.text,
+      borderColor: theme.colors.textPrimary,
     },
     button_quaternarySec: {
       backgroundColor: theme.colors.btnPrimary,
       borderWidth: 2,
-      borderColor: theme.colors.accent,
+      borderColor: theme.colors.background,
     },
     button_quaternary: {
       backgroundColor: theme.colors.btnQuaternary,
@@ -183,12 +183,14 @@ const styles = ({ theme }: ThemeContext) =>
       backgroundColor: theme.colors.btnDisabled,
     },
     btnBottomBorder: {
-      marginTop: -5,
-      height: 10,
-      borderBottomLeftRadius: 5,
-      borderBottomRightRadius: 5,
+      marginTop: 0,
+      height: 0,
+      borderBottomLeftRadius: 250,
+      borderBottomRightRadius: 250,
       backgroundColor: theme.colors.btnQuaternaryShadow,
       zIndex: 1,
+      width: '100%',
+      alignSelf: 'center',
     },
     textBase: {
       textTransform: 'uppercase',
@@ -196,13 +198,13 @@ const styles = ({ theme }: ThemeContext) =>
       fontSize: 20,
     },
     text_primary: {
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     text_secondary: {
       color: theme.colors.textSecondary,
     },
     text_tertiary: {
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     text_quaternary: {
       textTransform: 'capitalize',
@@ -221,7 +223,7 @@ const styles = ({ theme }: ThemeContext) =>
       top: 20,
     },
     timer: {
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
       fontFamily: theme.fonts.bold,
       fontSize: 13,
     },

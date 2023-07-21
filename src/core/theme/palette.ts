@@ -20,5 +20,6 @@ export const palette = {
   skylla: '#040505',
   grey: '#F5F5F5',
   darkGrey: '#9B9B9B',
-  hightLight: '#AFFFF8'
-};
+  hightLight: '#AFFFF8',
+  blueBack: '#626AF1'
+}

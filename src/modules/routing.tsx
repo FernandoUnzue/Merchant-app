@@ -17,6 +17,16 @@ import {
 } from '@core/helpers/utils';
 import { useCheckAuthMutation } from '@core/redux/Api/endpoints/Auth';
 import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
+import {
+  Colors,
+  ColorsLight,
+  themeContent,
+  themeContentDark,
+  ThemeProvider,
+} from '@core/theme';
+import { StatusBar, useColorScheme } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import LoggedStack from './logged';
 
 /**
  * Deep Linking
@@ -47,6 +57,8 @@ export const RootNavigator: FC = () => {
   const user = useSelector((state: RootState) => state.auth);
   //  console.log('auth: ' + user.loggedIn);
   const dispatch = useDispatch<AppDispatch>();
+  const colorScheme = useColorScheme();
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   const [checkAuth, { isLoading }] = useCheckAuthMutation();
 
   const [error, setError] = useState<{ isError: boolean; message: string }>({
@@ -187,17 +199,40 @@ export const RootNavigator: FC = () => {
   if (loadingBiometric) {
     return <Loading error={error.isError ? error.message : undefined} />;
   }
+
   return (
     <>
-      <NavigationContainer
-        linking={LINKING_DEFAULT_CONFIG_UNLOGGED}
-        ref={navigationRef}>
-        {user.loggedIn ? (
-          <BottomTabNavigator RootNavigation={RootNavigation} />
-        ) : (
-          <UnloggedStack RootNavigation={RootNavigation} />
-        )}
-      </NavigationContainer>
+      <SafeAreaView
+        edges={['top']}
+        style={{
+          flex: 0,
+          backgroundColor:
+            colorScheme === 'dark' || isDarkTheme
+              ? Colors.backgroundDark
+              : ColorsLight.backgroundDark,
+        }}
+      />
+      <SafeAreaView
+        edges={['left', 'right', 'bottom']}
+        style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
+        <StatusBar backgroundColor={Colors.white} barStyle={'default'} />
+        <ThemeProvider
+          theme={
+            colorScheme === 'dark' || isDarkTheme
+              ? themeContentDark
+              : themeContent
+          }>
+          <NavigationContainer
+            linking={LINKING_DEFAULT_CONFIG_UNLOGGED}
+            ref={navigationRef}>
+            {user.loggedIn ? (
+              <LoggedStack RootNavigation={RootNavigation} />
+            ) : (
+              <UnloggedStack RootNavigation={RootNavigation} />
+            )}
+          </NavigationContainer>
+        </ThemeProvider>
+      </SafeAreaView>
       <ModalToken show={user.showModal} />
     </>
   );

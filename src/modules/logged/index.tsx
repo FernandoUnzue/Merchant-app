@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './home';
+import TabNav from '@components/NavBar/NavBar';
 
 /**
  * Types
@@ -12,6 +13,7 @@ type IdPropsNumber = {
 export type LoggedStackParamList = {
   Home: undefined;
   ChangePasswordSuccess: undefined;
+  TabNav: undefined;
 };
 
 const Stack = createStackNavigator<LoggedStackParamList>();
@@ -19,18 +21,23 @@ const Stack = createStackNavigator<LoggedStackParamList>();
 /**
  * Navigator
  */
+interface Props {
+  RootNavigation: any;
+}
 
-export const HomeStack: FC = () => {
+const LoggedStack: FC<Props> = ({ RootNavigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
         component={Home}
         options={{
-          headerShown: false,
           headerLeftLabelVisible: true,
+          header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
     </Stack.Navigator>
   );
 };
+
+export default LoggedStack;

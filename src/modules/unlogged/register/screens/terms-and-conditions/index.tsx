@@ -31,7 +31,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
  * TermsAndConditions Screen
  */
 
-export const TermsAndConditions: FC<TermsAndConditionsScreenProps> = ({
+const TermsAndConditions: FC<TermsAndConditionsScreenProps> = ({
   navigation: { goBack },
 }) => {
   const style = useThemedStyles(styles);
@@ -75,7 +75,7 @@ const styles = ({ theme }: ThemeContext) =>
     title: {
       fontFamily: theme.fonts.bold,
       fontSize: 14,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     text: {
       textAlign: 'justify',

@@ -2,15 +2,22 @@ import {
   ActivityIndicator,
   Platform,
   StatusBar,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Colors } from '@core/theme';
-import { ThemeProvider } from '@core/theme/ThemeProvider';
+import { Colors, ColorsLight } from '@core/theme';
+import {
+  ThemeContext,
+  ThemeProvider,
+  useThemedStyles,
+  themeContent,
+  themeContentDark,
+} from '@core/theme/ThemeProvider';
 import { RootNavigator } from '@modules/routing';
-import { Provider } from 'react-redux';
-import { store } from '@core/redux/store';
+import { Provider, useSelector } from 'react-redux';
+import { RootState, store } from '@core/redux/store';
 import persistStore from 'redux-persist/lib/persistStore';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 //import Loading from '@components/Loading';
@@ -18,6 +25,7 @@ import { useEffect } from 'react';
 import OneSignal from 'react-native-onesignal';
 import { ONESIGNAL_GLOBAL } from 'react-native-dotenv';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useColorScheme } from 'react-native';
 
 const App = () => {
   const persistor = persistStore(store);
@@ -58,31 +66,17 @@ const App = () => {
   return (
     <SafeAreaProvider style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <ThemeProvider>
-          <Provider store={store}>
-            <PersistGate
-              loading={
-                <View style={{ marginTop: 400 }}>
-                  <ActivityIndicator size={'large'} />
-                </View>
-              }
-              persistor={persistor}>
-              <SafeAreaView
-                edges={['top']}
-                style={{ flex: 0, backgroundColor: '#fff' }}
-              />
-              <SafeAreaView
-                edges={['left', 'right', 'bottom']}
-                style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
-                <StatusBar
-                  backgroundColor={Colors.white}
-                  barStyle="dark-content"
-                />
-                <RootNavigator />
-              </SafeAreaView>
-            </PersistGate>
-          </Provider>
-        </ThemeProvider>
+        <Provider store={store}>
+          <PersistGate
+            loading={
+              <View style={{ marginTop: 400 }}>
+                <ActivityIndicator size={'large'} />
+              </View>
+            }
+            persistor={persistor}>
+            <RootNavigator />
+          </PersistGate>
+        </Provider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );

@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { isSmallDevice } from '@core/helpers';
 import { useNavigation } from '@react-navigation/native';
+import LogoMia from '@core/theme/SVGS/Logo';
 
 /**
  * LoginHeader
@@ -36,7 +37,7 @@ export const LoginHeader: FC = () => {
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.white,
+      backgroundColor: theme.colors.background,
       alignItems: 'center',
     },
     image: {
