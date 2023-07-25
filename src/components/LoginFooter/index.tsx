@@ -32,7 +32,7 @@ export const LoginFooter: FC<LoginFooterProps> = ({
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.bgLoginFooter,
+      backgroundColor: theme.colors.background,
       flex: 1,
       alignSelf: 'stretch',
     },

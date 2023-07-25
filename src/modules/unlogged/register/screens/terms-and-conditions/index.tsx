@@ -16,7 +16,7 @@ import { Modal } from '@components/Modal';
 
 type TermsAndConditionsScreenProps = StackScreenProps<
   UnloggedStackParamList,
-  'PasswordError'
+  'TermsAndConditions'
 >;
 
 /**
@@ -31,7 +31,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
  * TermsAndConditions Screen
  */
 
-const TermsAndConditions: FC<TermsAndConditionsScreenProps> = ({
+export const TermsAndConditions: FC<TermsAndConditionsScreenProps> = ({
   navigation: { goBack },
 }) => {
   const style = useThemedStyles(styles);
@@ -62,6 +62,7 @@ const TermsAndConditions: FC<TermsAndConditionsScreenProps> = ({
     </>
   );
 };
+export default TermsAndConditions;
 
 /**
  * Styles

@@ -97,7 +97,7 @@ export const UnloggedStack: React.FC<Props> = ({ RootNavigation }) => {
         gestureEnabled: false,
         header: () => <LoginHeader />,
       }}
-      initialRouteName="Presentation">
+      initialRouteName="Login">
       <Stack.Screen name="Presentation" component={Presentation} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} />

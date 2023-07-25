@@ -11,7 +11,7 @@ export const useLoginContainer = (): StyleProp<any> => {
     StyleSheet.create({
       container: {
         height: windowHeigth * FORM_WINDOW_HEIGHT_RATIO,
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.background,
       },
     }),
   );

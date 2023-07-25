@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   Platform,
@@ -10,9 +10,15 @@ import {
 } from 'react-native';
 
 import { ContainerTabNav, ContainerNav, ContainerSelect } from './styles';
-import { useSelector } from 'react-redux';
-import { RootState } from '@core/redux/store';
-import { Colors, Fonts, ThemeContext, useThemedStyles } from '@core/theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@core/redux/store';
+import {
+  Colors,
+  Fonts,
+  ThemeContext,
+  useTheme,
+  useThemedStyles,
+} from '@core/theme';
 import { isSmallDevice } from '@core/helpers';
 import LogoMia from '@core/theme/SVGS/Logo';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -26,6 +32,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import ArrowDown from '@core/theme/SVGS/ArrowDown';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useGetCountNotiQuery } from '@core/redux/Api/endpoints/Notifications';
+import SettingsIcon from '@core/theme/SVGS/Movements/Settings';
+import { LogOutAsync } from '@core/redux/authSlice/authSlice';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -37,6 +45,17 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   const style = useThemedStyles(styles);
   const route = useRoute();
   const { data, refetch } = useGetCountNotiQuery();
+
+  const [option, setOption] = useState<string>('');
+
+  const ref = useRef();
+  const dispatch = useDispatch<AppDispatch>();
+  const logoutIntern = () => {
+    dispatch(LogOutAsync());
+  };
+
+  const theme = useTheme();
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       refetch();
@@ -45,18 +64,18 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(() => {
+    if (option === 'logout') {
+      logoutIntern();
+    } else if (option === 'modificapass') {
+      navigation.navigate('ChangePasswordDraft');
+    }
+  }, [option]);
+
   // const navigationTab = useNavigation();
   console.log(route);
   return (
-    <ContainerNav
-      style={{
-        shadowColor: '#000',
-        shadowOffset: { width: 1, height: 1 },
-        shadowOpacity: 0.4,
-        shadowRadius: 3,
-        elevation: 5,
-        //  paddingTop: Platform.OS === 'ios' ? StatusBar.currentHeight : 10,
-      }}>
+    <View style={style.containerNav}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <LogoMia size={65} textColor={'#000'} />
         {/* <ContainerSelect>
@@ -110,36 +129,31 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
           />
         </ContainerSelect>*/}
       </View>
-      <ContainerTabNav>
-        {/*<TouchableOpacity
-          onPress={() => console.log('press 1')}
-          style={{ marginRight: 10 }}>
-          <MapPinIcon size={30} color={'#000'} />
-      </TouchableOpacity>*/}
-        <TouchableOpacity
-          onPress={() => console.log('press 2')}
-          style={{ marginRight: 10 }}>
-          <EuroIcon size={30} color={'#000'} />
-        </TouchableOpacity>
-        <Pressable
-          onPress={() => navigation.navigate('Profile')}
-          style={{ marginRight: 10 }}
-          hitSlop={20}>
-          <View style={{ position: 'relative' }}>
-            {data && data.notificationCount > 0 && (
-              <View style={style.badge}>
-                <Text style={style.textBadge}>{data.notificationCount}</Text>
-              </View>
-            )}
 
-            <ProfileIcon
-              size={30}
-              color={route.name === 'Profile' ? Colors.accent : '#000'}
-            />
-          </View>
-        </Pressable>
-      </ContainerTabNav>
-    </ContainerNav>
+      <View style={style.containerTabNav}>
+        <RNPickerSelect
+          ref={() => ref}
+          onValueChange={value => setOption(value)}
+          items={[
+            {
+              label: 'Modifica Password',
+              value: 'modificapass',
+            },
+            {
+              label: 'Log Out',
+              value: 'logout',
+            },
+          ]}>
+          <SettingsIcon
+            size={40}
+            styless={{
+              marginTop: 10,
+            }}
+            color={theme.theme.colors.textPrimary}
+          />
+        </RNPickerSelect>
+      </View>
+    </View>
   );
 };
 
@@ -169,6 +183,29 @@ const styles = ({ theme }: ThemeContext) =>
       textAlign: 'center',
       fontFamily: theme.fonts.bold,
     },
+    containerNav: {
+      width: '100%',
+      backgroundColor: theme.colors.background,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ddd',
+      height: 60,
+      shadowColor: '#000',
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 0.4,
+      shadowRadius: 3,
+      elevation: 5,
+    },
+    containerTabNav: {
+      backgroundColor: 'transparent',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: 'auto',
+      gap: 10,
+    },
   });
 const pickerSelectStyles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
@@ -177,7 +214,7 @@ const pickerSelectStyles = ({ theme }: ThemeContext) =>
       justifyContent: 'space-between',
       //  backgroundColor: 'white',
       width: '100%',
-      borderBottomColor: Colors.text,
+      borderBottomColor: theme.colors.textPrimary,
       borderBottomWidth: 1,
     },
     inputIOS: {
@@ -193,7 +230,7 @@ const pickerSelectStyles = ({ theme }: ThemeContext) =>
       justifyContent: 'space-between',
       //  backgroundColor: 'white',
       width: '100%',
-      borderBottomColor: theme.colors.text,
+      borderBottomColor: theme.colors.textPrimary,
       borderBottomWidth: 1,
     },
     inputAndroid: {
@@ -203,11 +240,11 @@ const pickerSelectStyles = ({ theme }: ThemeContext) =>
       paddingHorizontal: 5,
       fontFamily: theme.fonts.bold,
       fontSize: 15,
-      color: Colors.text,
+      color: theme.colors.textPrimary,
     },
     placeholder: {
       fontFamily: theme.fonts.regular,
       fontSize: 18,
-      color: Colors.text,
+      color: theme.colors.textPrimary,
     },
   });

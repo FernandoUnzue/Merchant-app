@@ -19,13 +19,11 @@ export const LoginHeader: FC = () => {
 
   return (
     <View style={[style.container]}>
-      <Pressable onPress={() => navifgation.navigate('Presentation' as never)}>
-        <Image
-          source={require('../../../assets/images/mia-logo.png')}
-          style={style.image}
-          resizeMode="contain"
-        />
-      </Pressable>
+      <Image
+        source={require('../../../assets/images/mia-logo.png')}
+        style={style.image}
+        resizeMode="contain"
+      />
     </View>
   );
 };

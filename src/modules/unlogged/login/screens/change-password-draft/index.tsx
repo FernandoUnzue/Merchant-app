@@ -10,7 +10,7 @@ import {
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from 'react-hook-form';
 
-import { ThemeContext, useThemedStyles } from '@core/theme';
+import { ThemeContext, useTheme, useThemedStyles } from '@core/theme';
 import { useDisableGoBack } from '@core/hooks';
 import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
@@ -26,6 +26,7 @@ import { Api } from '@core/clients/axioss';
 import { BASIC_AUTH_PASSWORD, BASIC_AUTH_USERNAME } from 'react-native-dotenv';
 import { LoggedStackParamList } from '@modules/logged';
 import ArrowLeftBack from '@core/theme/SVGS/ArrowLeftBack';
+import { Button } from '@components/Button';
 
 /**
  * Types
@@ -150,6 +151,8 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
     trigger('rPassword');
   }, [pwd]);
 
+  const theme = useTheme();
+
   return (
     <>
       <Pressable onPress={() => Keyboard.dismiss()} style={container}>
@@ -171,6 +174,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             <ArrowLeftBack
               size={18}
               styles={{ marginLeft: 20, marginTop: 7 }}
+              color={theme.theme.colors.textPrimary}
             />
           </Pressable>
         </View>
@@ -200,7 +204,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
               required: true,
               pattern: PASSWORD_REGEX,
             }}
-            onPasswordMessagePressed={() => navigate('PasswordError')}
+            onPasswordMessagePressed={() => navigate('PasswordError' as never)}
             blurOnSubmit={false}
           />
           <Spacer height={16} />
@@ -223,14 +227,16 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
       </Pressable>
 
       <LoginFooter containerStyle={style.loginFooter}>
-        <WhiskeredButton
-          accessibilityLabel="conferma"
-          title="conferma"
-          type="tertiary"
-          loading={loading}
-          disabled={!isDirty || !isValid}
-          onPress={handleSubmit(onChangePasswordPressed)}
-        />
+        <View style={{ width: '80%', alignSelf: 'center' }}>
+          <Button
+            accessibilityLabel="conferma"
+            title="conferma"
+            type="tertiary"
+            loading={loading}
+            disabled={!isDirty || !isValid}
+            onPress={handleSubmit(onChangePasswordPressed)}
+          />
+        </View>
         {/*   <Text style={style.loginWrapper}>
           <Text style={style.goback}>Torna alla </Text>
           <Text
@@ -259,7 +265,7 @@ const styles = ({ theme }: ThemeContext) =>
     title: {
       fontFamily: theme.fonts.bold,
       fontSize: 22,
-      color: theme.colors.black,
+      color: theme.colors.textPrimary,
       textAlign: 'center',
     },
     loginFooter: {
@@ -272,11 +278,11 @@ const styles = ({ theme }: ThemeContext) =>
     goback: {
       fontFamily: theme.fonts.regular,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     loginLink: {
       fontFamily: theme.fonts.bold,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
   });

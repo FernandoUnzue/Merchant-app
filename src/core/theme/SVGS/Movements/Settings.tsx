@@ -1,18 +1,24 @@
 import * as React from 'react';
+import { ViewStyle } from 'react-native';
 import Svg, { SvgProps, Path } from 'react-native-svg';
 
 const SettingsIcon = ({
   color = '#000',
   size = 25,
+  styless,
 }: {
   color?: string;
   size?: number;
+  styless?: ViewStyle;
 }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 33 33"
     height={size}
-    width={size}>
+    width={size}
+    style={{
+      ...styless,
+    }}>
     <Path
       d="M13.22 9.05c-.21-.31-.47-.58-.77-.82-.51-.4-1.13-.68-1.81-.77h0c-1.02-.14-2.01.15-2.77.72a3.75 3.75 0 0 0-1.45 2.48h0c-.14 1.03.15 2.01.73 2.77a3.75 3.75 0 0 0 3.4 1.46c.06 0 .11-.01.17-.02"
       style={{

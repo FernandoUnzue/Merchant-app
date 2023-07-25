@@ -8,12 +8,13 @@ import {
   View,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { LoggedStackParamList } from '..';
+import { LoggedStackParamList } from '../..';
 import ToggleMenu from '@components/ToggleMenu';
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { useForm } from 'react-hook-form';
 import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
+import BackNav from '@components/BackNav';
 
 /**
  * Types
@@ -43,6 +44,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
         flex: 1,
         padding: 20,
       }}>
+      <BackNav navigation={navigation} />
       <View style={style.container}>
         <FormInput
           control={control}
@@ -57,7 +59,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() => Alert.alert('Push Button')}
+          onPress={() => navigation.navigate('SuccessBurnCouponScreen')}
         />
       </View>
       {/*  <View
@@ -79,7 +81,6 @@ const styles = ({ theme }: ThemeContext) =>
       width: '100%',
       height: 200,
       backgroundColor: theme.colors.btnDisabled,
-      opacity: 0.6,
       padding: 20,
       alignSelf: 'center',
       paddingBottom: 50,

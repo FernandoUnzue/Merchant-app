@@ -80,7 +80,7 @@ const styles = ({ theme }: ThemeContext) =>
     title: {
       fontFamily: theme.fonts.bold,
       fontSize: 22,
-      color: theme.colors.black,
+      color: theme.colors.textPrimary,
       textAlign: 'center',
     },
     loginFooter: {
@@ -93,11 +93,11 @@ const styles = ({ theme }: ThemeContext) =>
     goback: {
       fontFamily: theme.fonts.regular,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     loginLink: {
       fontFamily: theme.fonts.bold,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
   });
