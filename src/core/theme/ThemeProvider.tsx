@@ -1,5 +1,5 @@
 import { RootState, store } from '@core/redux/store';
-import { createContext, FC, ReactNode, useContext } from 'react';
+import { createContext, FC, ReactNode, useContext, useEffect } from 'react';
 import { StyleProp } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -23,7 +23,7 @@ export interface ThemeContext {
 const isDarkTheme = (): boolean => {
   const state: RootState = store.getState();
   console.log(state.auth.darkMode);
-  return state.auth.darkMode;
+  return !!state.auth.darkMode;
 };
 
 export const themeContent: ThemeContext = {
@@ -40,30 +40,22 @@ export const themeContentDark: ThemeContext = {
   },
 };
 
-export const ThemeContext = createContext(themeContent);
+export const ThemeContext = createContext(
+  isDarkTheme() ? themeContentDark : themeContent,
+);
 
 export const ThemeContextDark = createContext(themeContentDark);
 
 export const ThemeProvider: FC<{
   children: ReactNode;
-  theme?: ThemeContext;
+  theme: ThemeContext;
 }> = ({ children, theme }) => {
-  const isDark = useSelector((state: RootState) => state.auth.darkMode);
-  if (theme) {
-    return (
-      <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
-    );
-  } else {
-    return (
-      <ThemeContext.Provider value={isDark ? themeContentDark : themeContent}>
-        {children}
-      </ThemeContext.Provider>
-    );
-  }
+  return (
+    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+  );
 };
 
-export const useTheme = () =>
-  useContext(isDarkTheme() ? ThemeContextDark : ThemeContext);
+export const useTheme = () => useContext(ThemeContext);
 
 export const useThemedStyles = (
   styles: ({ theme }: ThemeContext) => StyleProp<any>,

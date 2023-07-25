@@ -33,7 +33,7 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
         accessibilityLabel="OK"
         title="OK"
         onPress={() => navigation.goBack()}
-        type="quaternary"
+        type="primary"
       />
     </ScrollView>
   );

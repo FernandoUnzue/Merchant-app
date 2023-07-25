@@ -33,7 +33,8 @@ import ArrowDown from '@core/theme/SVGS/ArrowDown';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useGetCountNotiQuery } from '@core/redux/Api/endpoints/Notifications';
 import SettingsIcon from '@core/theme/SVGS/Movements/Settings';
-import { LogOutAsync } from '@core/redux/authSlice/authSlice';
+import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
+import { Switch } from 'react-native';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -56,6 +57,15 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
 
   const theme = useTheme();
 
+  const isDarkMode = useSelector((state: RootState) => state.auth.darkMode);
+
+  const [enabled, setEnabled] = useState<boolean>(isDarkMode);
+
+  const toggleEnabled = () => {
+    setEnabled(!enabled);
+    dispatch(AuthSlice.actions.ToggleTheme());
+  };
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       refetch();
@@ -72,8 +82,14 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
     }
   }, [option]);
 
-  // const navigationTab = useNavigation();
-  console.log(route);
+  useEffect(() => {
+    if (isDarkMode) {
+      setEnabled(true);
+    } else if (!isDarkMode) {
+      setEnabled(false);
+    }
+  }, [isDarkMode]);
+
   return (
     <View style={style.containerNav}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -131,6 +147,13 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
       </View>
 
       <View style={style.containerTabNav}>
+        <Switch
+          trackColor={{ false: '#767577', true: '#81b0ff' }}
+          thumbColor={enabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleEnabled}
+          value={enabled}
+        />
         <RNPickerSelect
           ref={() => ref}
           onValueChange={value => setOption(value)}

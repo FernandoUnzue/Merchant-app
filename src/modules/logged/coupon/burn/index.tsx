@@ -15,6 +15,9 @@ import { useForm } from 'react-hook-form';
 import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
 import BackNav from '@components/BackNav';
+import { useDispatch } from 'react-redux';
+import { AuthSlice } from '@core/redux/authSlice/authSlice';
+import { Spacer } from '@components/Spacer';
 
 /**
  * Types
@@ -38,6 +41,8 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     //   defaultValues: DEFAULT_VALUES,
     //   resolver: yupResolver(userSchema),
   });
+
+  const dispatch = useDispatch();
   return (
     <ScrollView
       contentContainerStyle={{
@@ -62,6 +67,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
           onPress={() => navigation.navigate('SuccessBurnCouponScreen')}
         />
       </View>
+
       {/*  <View
         style={{
           position: 'absolute',

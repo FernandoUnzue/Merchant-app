@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { UnloggedStack } from './unlogged';
 import { BottomTabNavigator } from './unlogged/tabs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,7 @@ import {
   themeContent,
   themeContentDark,
   ThemeProvider,
+  useTheme,
 } from '@core/theme';
 import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -188,6 +189,17 @@ export const RootNavigator: FC = () => {
       setLoadingBiometric(false);
     }
   };
+
+  const theme = useTheme();
+
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: 'rgb(255, 45, 85)',
+    },
+  };
+
   //  console.log('user: ' + user.user);
   useEffect(() => {
     const rnBiometrics = new ReactNativeBiometrics({
@@ -202,26 +214,34 @@ export const RootNavigator: FC = () => {
 
   return (
     <>
-      <SafeAreaView
-        edges={['top']}
-        style={{
-          flex: 0,
-          backgroundColor:
-            colorScheme === 'dark' || isDarkTheme
-              ? Colors.backgroundDark
-              : ColorsLight.backgroundDark,
-        }}
-      />
-      <SafeAreaView
-        edges={['left', 'right', 'bottom']}
-        style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
-        <StatusBar backgroundColor={Colors.white} barStyle={'default'} />
-        <ThemeProvider
-          theme={
-            colorScheme === 'dark' || isDarkTheme
-              ? themeContentDark
-              : themeContent
-          }>
+      <ThemeProvider
+        theme={
+          colorScheme === 'dark' || isDarkTheme
+            ? themeContentDark
+            : themeContent
+        }>
+        <SafeAreaView
+          edges={['top']}
+          style={{
+            flex: 0,
+            backgroundColor:
+              colorScheme === 'dark' || isDarkTheme
+                ? Colors.backgroundDark
+                : ColorsLight.backgroundDark,
+          }}
+        />
+        <SafeAreaView
+          edges={['left', 'right', 'bottom']}
+          style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
+          <StatusBar
+            backgroundColor={Colors.white}
+            barStyle={
+              colorScheme === 'dark' || isDarkTheme
+                ? 'light-content'
+                : 'dark-content'
+            }
+          />
+
           <NavigationContainer
             linking={LINKING_DEFAULT_CONFIG_UNLOGGED}
             ref={navigationRef}>
@@ -231,8 +251,8 @@ export const RootNavigator: FC = () => {
               <UnloggedStack RootNavigation={RootNavigation} />
             )}
           </NavigationContainer>
-        </ThemeProvider>
-      </SafeAreaView>
+        </SafeAreaView>
+      </ThemeProvider>
       <ModalToken show={user.showModal} />
     </>
   );
