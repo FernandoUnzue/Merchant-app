@@ -20,6 +20,8 @@ import { ShowIf } from '@components/ShowIf';
 import SvgComponent from '@core/theme/warning';
 import CheckIcon from '@core/theme/SVGS/Movements/Check';
 import WarningIcon from '@core/theme/SVGS/WarningIcon';
+import EyeOpenIcon from '@core/theme/Merchant/EyeOpen';
+import EyeClosedIcon from '@core/theme/Merchant/EyeClosed';
 
 /**
  * Types
@@ -39,6 +41,7 @@ interface IFormInput<ContentType> extends TextInputProps {
   confirmEmail?: boolean;
   styless?: ViewStyle;
   showIcons?: boolean;
+  negativeColor?: boolean;
 }
 
 /**
@@ -57,6 +60,7 @@ export function FormInput<ContentType>({
   confirmEmail = false,
   confirmPass = false,
   showIcons = true,
+  negativeColor = false,
   styless,
   onPasswordMessagePressed,
   ...props
@@ -85,18 +89,31 @@ export function FormInput<ContentType>({
         fieldState: { isDirty, error },
       }) => (
         <>
-          <View style={{ ...style.container, ...styless }}>
+          <View
+            style={{
+              ...style[`${negativeColor ? 'containerNegative' : 'container'}`],
+              ...styless,
+            }}>
             <TextInput
               value={value as string}
-              placeholderTextColor={style.placeholder.color}
+              selectionColor={negativeColor ? '#fff' : '#000'}
+              placeholderTextColor={negativeColor ? '#fff' : '#000'}
               onChangeText={onChange}
               onBlur={onBlur}
               onFocus={() => disablePaste && resetClipboard()}
               onSelectionChange={() => disablePaste && resetClipboard()}
               onSubmitEditing={Keyboard.dismiss}
               style={[
-                style.input,
-                fixed ? style.fixedInput : style.editableInput,
+                style[`${negativeColor ? 'inputNegative' : 'input'}`],
+                fixed
+                  ? style.fixedInput
+                  : style[
+                      `${
+                        negativeColor
+                          ? 'editableInputNegative'
+                          : 'editableInput'
+                      }`
+                    ],
                 { height: props.multiline ? 150 : 50 },
               ]}
               editable={!fixed}
@@ -109,15 +126,9 @@ export function FormInput<ContentType>({
                 hitSlop={5}
                 onPress={onEyeIconPress}>
                 {showPassword ? (
-                  <Image
-                    source={require('../../../assets/images/icons/eye-open.svg')}
-                    style={{ width: 20 }}
-                  />
+                  <EyeOpenIcon size={20} />
                 ) : (
-                  <Image
-                    source={require('../../../assets/images/icons/eye-closed.svg')}
-                    style={{ width: 20 }}
-                  />
+                  <EyeClosedIcon size={20} />
                 )}
               </Pressable>
             </ShowIf>
@@ -135,7 +146,9 @@ export function FormInput<ContentType>({
           <View style={style.errorWrapper}>
             <ShowIf condition={onPasswordMessagePressed && !error}>
               <Text
-                style={style.message}
+                style={
+                  style[`${negativeColor ? 'messageNegative' : 'message'}`]
+                }
                 onPress={onPasswordMessagePressed}
                 suppressHighlighting>
                 Regole di creazione password
@@ -143,11 +156,22 @@ export function FormInput<ContentType>({
             </ShowIf>
             <ShowIf condition={onPasswordMessagePressed && !!error}>
               <Text>
-                <Text style={style.errorMessage}>
+                <Text
+                  style={
+                    style[
+                      `${
+                        negativeColor ? 'errorMessageNegative' : 'errorMessage'
+                      }`
+                    ]
+                  }>
                   La password non rispetta i{' '}
                 </Text>
                 <Text
-                  style={style.errorLink}
+                  style={
+                    style[
+                      `${negativeColor ? 'errorLinkNegative' : 'errorLink'}`
+                    ]
+                  }
                   onPress={onPasswordMessagePressed}
                   suppressHighlighting>
                   requisiti
@@ -156,14 +180,28 @@ export function FormInput<ContentType>({
             </ShowIf>
             <ShowIf condition={passValue !== value && confirmPass && !!error}>
               <Text>
-                <Text style={style.errorMessage}>
+                <Text
+                  style={
+                    style[
+                      `${
+                        negativeColor ? 'errorMessageNegative' : 'errorMessage'
+                      }`
+                    ]
+                  }>
                   La password non corrisponde
                 </Text>
               </Text>
             </ShowIf>
             <ShowIf condition={passValue !== value && confirmEmail && !!error}>
               <Text>
-                <Text style={style.errorMessage}>
+                <Text
+                  style={
+                    style[
+                      `${
+                        negativeColor ? 'errorMessageNegative' : 'errorMessage'
+                      }`
+                    ]
+                  }>
                   Le email non corrispondono
                 </Text>
               </Text>
@@ -172,10 +210,22 @@ export function FormInput<ContentType>({
               condition={
                 !!okMessage?.length && isDirty && !error && !errorMessage
               }>
-              <Text style={style.errorMessage}>{okMessage}</Text>
+              <Text
+                style={
+                  style[
+                    `${negativeColor ? 'errorMessageNegative' : 'errorMessage'}`
+                  ]
+                }>
+                {okMessage}
+              </Text>
             </ShowIf>
             <ShowIf condition={!isPassword && (!!error || !!errorMessage)}>
-              <Text style={style.errorMessage}>
+              <Text
+                style={
+                  style[
+                    `${negativeColor ? 'errorMessageNegative' : 'errorMessage'}`
+                  ]
+                }>
                 {error?.message || errorMessage || errorGeneric()}
               </Text>
             </ShowIf>
@@ -200,6 +250,14 @@ const styles = ({ theme }: ThemeContext) =>
       borderBottomColor: theme.colors.textPrimary,
       borderBottomWidth: 1,
     },
+    containerNegative: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      backgroundColor: theme.colors.backgroundNegative,
+      width: '100%',
+      borderBottomColor: theme.colors.textNegative,
+      borderBottomWidth: 1,
+    },
     input: {
       flex: 1,
       marginBottom: -8,
@@ -208,9 +266,21 @@ const styles = ({ theme }: ThemeContext) =>
       fontSize: 14,
       color: theme.colors.textPrimary,
     },
+    inputNegative: {
+      flex: 1,
+      marginBottom: -8,
+      marginLeft: -4,
+      paddingHorizontal: 5,
+      fontSize: 14,
+      color: theme.colors.textNegative,
+    },
     editableInput: {
       fontFamily: theme.fonts.regular,
       color: theme.colors.textPrimary,
+    },
+    editableInputNegative: {
+      fontFamily: theme.fonts.regular,
+      color: theme.colors.textNegative,
     },
     fixedInput: {
       fontFamily: theme.fonts.bold,
@@ -223,6 +293,9 @@ const styles = ({ theme }: ThemeContext) =>
     placeholder: {
       color: theme.colors.textSecondary,
     },
+    placeholderNegative: {
+      color: theme.colors.textNegative,
+    },
     errorWrapper: {
       marginTop: 5,
       height: 20,
@@ -233,16 +306,34 @@ const styles = ({ theme }: ThemeContext) =>
       alignSelf: 'stretch',
       fontWeight: 'bold',
     },
+    messageNegative: {
+      fontSize: 11,
+      color: theme.colors.textNegative,
+      alignSelf: 'stretch',
+      fontWeight: 'bold',
+    },
     errorMessage: {
       fontFamily: theme.fonts.bold,
       fontSize: 10,
       color: theme.colors.textPrimary,
       alignSelf: 'stretch',
     },
+    errorMessageNegative: {
+      fontFamily: theme.fonts.bold,
+      fontSize: 10,
+      color: theme.colors.textNegative,
+      alignSelf: 'stretch',
+    },
     errorLink: {
       fontFamily: theme.fonts.bold,
       fontSize: 10,
       color: theme.colors.textPrimary,
+      alignSelf: 'stretch',
+    },
+    errorLinkNegative: {
+      fontFamily: theme.fonts.bold,
+      fontSize: 10,
+      color: theme.colors.textNegative,
       alignSelf: 'stretch',
     },
   });

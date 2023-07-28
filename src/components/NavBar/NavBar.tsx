@@ -35,6 +35,8 @@ import { useGetCountNotiQuery } from '@core/redux/Api/endpoints/Notifications';
 import SettingsIcon from '@core/theme/SVGS/Movements/Settings';
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { Switch } from 'react-native';
+import Impostazioni from '@core/theme/Merchant/Impostazioni';
+import { useColorScheme } from 'react-native';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -59,12 +61,25 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
 
   const isDarkMode = useSelector((state: RootState) => state.auth.darkMode);
 
+  const colorScheme = useColorScheme();
+
   const [enabled, setEnabled] = useState<boolean>(isDarkMode);
 
   const toggleEnabled = () => {
     setEnabled(!enabled);
     dispatch(AuthSlice.actions.ToggleTheme());
   };
+
+  const options = [
+    {
+      label: 'Modifica Password',
+      value: 'modificapass',
+    },
+    {
+      label: 'Log Out',
+      value: 'logout',
+    },
+  ];
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -93,7 +108,11 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={style.containerNav}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <LogoMia size={65} textColor={'#000'} />
+        <LogoMia
+          size={65}
+          textColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
+          miaColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
+        />
         {/* <ContainerSelect>
           <RNPickerSelect
             placeholder={{
@@ -147,32 +166,27 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
       </View>
 
       <View style={style.containerTabNav}>
-        <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={enabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleEnabled}
-          value={enabled}
-        />
+        {/*  <View style={{ flexDirection: 'row' }}>
+          <Text style={style.text}>Dark mode:</Text>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={enabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleEnabled}
+            value={enabled}
+          />
+      </View>*/}
         <RNPickerSelect
-          ref={() => ref}
+          value={option}
+          onClose={() => setOption('')}
           onValueChange={value => setOption(value)}
-          items={[
-            {
-              label: 'Modifica Password',
-              value: 'modificapass',
-            },
-            {
-              label: 'Log Out',
-              value: 'logout',
-            },
-          ]}>
-          <SettingsIcon
+          items={options}>
+          <Impostazioni
             size={40}
-            styless={{
+            styles={{
               marginTop: 10,
             }}
-            color={theme.theme.colors.textPrimary}
+            color={theme.theme.colors.textNegative}
           />
         </RNPickerSelect>
       </View>
@@ -208,7 +222,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     containerNav: {
       width: '100%',
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.backgroundNegative,
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingHorizontal: 20,
@@ -228,6 +242,12 @@ const styles = ({ theme }: ThemeContext) =>
       alignItems: 'center',
       width: 'auto',
       gap: 10,
+    },
+    text: {
+      fontSize: 9,
+      marginRight: 10,
+      marginTop: 10,
+      color: theme.colors.textNegative,
     },
   });
 const pickerSelectStyles = ({ theme }: ThemeContext) =>

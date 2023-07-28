@@ -14,7 +14,7 @@ import { FormInput } from '@components/FormInput';
 import { LoginFooter } from '@components/LoginFooter';
 import { Spacer } from '@components/Spacer';
 import { WhiskeredButton } from '@components/WhiskeredButton';
-import { Colors, ThemeContext, useThemedStyles } from '@core/theme';
+import { Colors, ThemeContext, useTheme, useThemedStyles } from '@core/theme';
 import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
 import { PASSWORD_REGEX } from '@core/constants';
@@ -122,7 +122,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         resetError();
       });
   };
-
+  const theme = useTheme();
   const dispatch = useDispatch();
   const style = useThemedStyles(styles);
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
@@ -144,6 +144,8 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           validate: validatePhoneNumber,
         }}
         keyboardType="phone-pad"
+        negativeColor={true}
+        styless={style.backNegative}
       />
       <Spacer height={16} />
       <FormInput
@@ -156,13 +158,15 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           required: true,
           pattern: PASSWORD_REGEX,
         }}
+        negativeColor={true}
+        styless={style.backNegative}
         // onPasswordMessagePressed={() => navigate('PasswordError')}
       />
       <Spacer height={200} />
       <Button
         accessibilityLabel="entra"
         title="ENTRA"
-        type="tertiary"
+        type="secondary"
         disabled={!isDirty || !isValid}
         loading={isLoading}
         onPress={handleSubmit(onLoginPressed)}
@@ -212,8 +216,12 @@ const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     main: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.backgroundNegative,
       paddingHorizontal: 30,
+    },
+    backNegative: {
+      backgroundColor: theme.colors.backgroundNegative,
+      color: theme.colors.textNegative,
     },
     formWrapper: {
       flexGrow: 1,

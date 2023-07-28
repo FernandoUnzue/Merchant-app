@@ -44,12 +44,9 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const dispatch = useDispatch();
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: 1,
-        padding: 20,
-      }}>
+    <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
+      <Text style={style.title}>Burn Coupon</Text>
       <View style={style.container}>
         <FormInput
           control={control}
@@ -59,12 +56,21 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
             backgroundColor: 'transparent',
           }}
           showIcons={false}
+          rules={{
+            required: true,
+            minLenght: 1,
+          }}
         />
         <Button
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() => navigation.navigate('SuccessBurnCouponScreen')}
+          onPress={() =>
+            navigation.navigate('PreviewScreenCouponBurn', {
+              isDirty: isDirty,
+              isValid: isValid,
+            })
+          }
         />
       </View>
 
@@ -83,6 +89,18 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
+    main: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: theme.colors.background,
+    },
+    title: {
+      fontFamily: theme.fonts.bold,
+      fontSize: 22,
+      textAlign: 'center',
+      paddingBottom: 20,
+      color: theme.colors.textPrimary,
+    },
     container: {
       width: '100%',
       height: 200,
@@ -91,6 +109,7 @@ const styles = ({ theme }: ThemeContext) =>
       alignSelf: 'center',
       paddingBottom: 50,
       borderRadius: 30,
+      // opacity: 0.7,
     },
     sectionContainer: {
       marginTop: 32,

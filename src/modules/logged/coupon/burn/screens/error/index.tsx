@@ -12,12 +12,12 @@ import { Button } from '@components/Button';
  * Types
  */
 
-type SuccessBurnCouponScreenProps = StackScreenProps<
+type ErrorCouponScreenProps = StackScreenProps<
   LoggedStackParamList,
-  'SuccessBurnCouponScreen'
+  'ErrorScreenCouponBurn'
 >;
 
-const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
+const ErrorScreenCouponBurn: React.FC<ErrorCouponScreenProps> = ({
   navigation,
   route,
 }) => {
@@ -25,10 +25,10 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
   return (
     <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
-      <Text style={style.title}>Success Burn Coupon Screen</Text>
+      <Text style={style.title}>Error Screen Coupon Burn</Text>
       <Spacer height={50} />
       <Image
-        source={require('../../../../../../../assets/images/Image-success.png')}
+        source={require('../../../../../../../assets/images/Image-error.png')}
         style={style.image}
       />
       <Spacer height={50} />
@@ -42,7 +42,7 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
   );
 };
 
-export default SuccessBurnCouponScreen;
+export default ErrorScreenCouponBurn;
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({

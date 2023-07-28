@@ -1,6 +1,6 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { ThemeContext, useThemedStyles } from '@core/theme';
+import { ColorsGeneralLight, ThemeContext, useThemedStyles } from '@core/theme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList } from '@modules/logged';
 import OkIcon from '@core/theme/SVGS/OkIcon';
@@ -12,37 +12,43 @@ import { Button } from '@components/Button';
  * Types
  */
 
-type SuccessBurnCouponScreenProps = StackScreenProps<
+type PreviewScreenCouponBurnProps = StackScreenProps<
   LoggedStackParamList,
-  'SuccessBurnCouponScreen'
+  'PreviewScreenCouponBurn'
 >;
 
-const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
+const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
   navigation,
   route,
 }) => {
+  const { isDirty, isValid } = route.params;
   const style = useThemedStyles(styles);
   return (
     <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
-      <Text style={style.title}>Success Burn Coupon Screen</Text>
+      <Text style={style.title}>Preview Screen Coupon Burn</Text>
       <Spacer height={50} />
-      <Image
-        source={require('../../../../../../../assets/images/Image-success.png')}
-        style={style.image}
+      <OkIcon
+        size={200}
+        styles={{ alignSelf: 'center' }}
+        color={ColorsGeneralLight.backgroundNegative}
       />
       <Spacer height={50} />
       <Button
         accessibilityLabel="OK"
         title="OK"
-        onPress={() => navigation.goBack()}
+        onPress={
+          !isDirty || !isValid
+            ? () => navigation.navigate('ErrorScreenCouponBurn')
+            : () => navigation.navigate('SuccessBurnCouponScreen')
+        }
         type="primary"
       />
     </ScrollView>
   );
 };
 
-export default SuccessBurnCouponScreen;
+export default PreviewScreenCouponBurn;
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
@@ -50,11 +56,6 @@ const styles = ({ theme }: ThemeContext) =>
       flex: 1,
       padding: 20,
       backgroundColor: theme.colors.background,
-    },
-    image: {
-      width: 200,
-      height: 180,
-      alignSelf: 'center',
     },
     title: {
       fontSize: 22,

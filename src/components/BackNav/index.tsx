@@ -1,7 +1,14 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import ArrowLeftBack from '@core/theme/SVGS/ArrowLeftBack';
 import { ThemeContext, useTheme } from '@core/theme';
+import BackArrowIcon from '@core/theme/Merchant/BackArrow';
 
 type Props = {
   navigation: any;
@@ -14,7 +21,7 @@ const BackNav: React.FC<Props> = ({
   navigation,
   OnPress,
   title,
-  text = true,
+  text = false,
 }) => {
   const theme = useTheme();
   return (
@@ -25,14 +32,14 @@ const BackNav: React.FC<Props> = ({
         alignItems: 'flex-end',
         paddingVertical: 10,
       }}>
-      <Pressable
+      <TouchableOpacity
         onPress={OnPress ? () => OnPress() : () => navigation.goBack()}
         hitSlop={20}>
         <View style={{ flexDirection: 'row' }}>
-          <ArrowLeftBack
-            size={18}
+          <BackArrowIcon
+            size={35}
             styles={{ marginRight: 5 }}
-            color={theme.theme.colors.textPrimary}
+            color={theme.theme.colors.backgroundNegative}
           />
           {text && (
             <Text
@@ -41,7 +48,7 @@ const BackNav: React.FC<Props> = ({
             </Text>
           )}
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

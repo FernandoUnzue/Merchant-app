@@ -19,6 +19,8 @@ import { useCheckAuthMutation } from '@core/redux/Api/endpoints/Auth';
 import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 import {
   Colors,
+  ColorsGeneralDark,
+  ColorsGeneralLight,
   ColorsLight,
   themeContent,
   themeContentDark,
@@ -226,19 +228,23 @@ export const RootNavigator: FC = () => {
             flex: 0,
             backgroundColor:
               colorScheme === 'dark' || isDarkTheme
-                ? Colors.backgroundDark
-                : ColorsLight.backgroundDark,
+                ? ColorsGeneralDark.backgroundNegative
+                : ColorsGeneralLight.backgroundNegative,
           }}
         />
         <SafeAreaView
           edges={['left', 'right', 'bottom']}
           style={{ flex: 1, backgroundColor: '#3a3a3a' }}>
           <StatusBar
-            backgroundColor={Colors.white}
+            backgroundColor={
+              colorScheme === 'dark' || isDarkTheme
+                ? ColorsGeneralLight.backgroundNegative
+                : ColorsGeneralDark.backgroundNegative
+            }
             barStyle={
               colorScheme === 'dark' || isDarkTheme
-                ? 'light-content'
-                : 'dark-content'
+                ? 'dark-content'
+                : 'light-content'
             }
           />
 

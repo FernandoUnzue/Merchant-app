@@ -3,6 +3,7 @@ import {
   Alert,
   Keyboard,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -27,6 +28,7 @@ import { BASIC_AUTH_PASSWORD, BASIC_AUTH_USERNAME } from 'react-native-dotenv';
 import { LoggedStackParamList } from '@modules/logged';
 import ArrowLeftBack from '@core/theme/SVGS/ArrowLeftBack';
 import { Button } from '@components/Button';
+import BackNav from '@components/BackNav';
 
 /**
  * Types
@@ -61,7 +63,7 @@ const SUCCESS_RESPONSE = 'Your password succesfully updated.';
  */
 
 export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
-  navigation: { navigate, goBack },
+  navigation,
 }) => {
   useDisableGoBack();
   const style = useThemedStyles(styles);
@@ -113,7 +115,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
       });
       setLoading(false);
       if (response.status === 200) {
-        navigate('ChangePasswordSuccess');
+        navigation.navigate('ChangePasswordSuccess');
       }
     } catch (e: any) {
       setLoading(false);
@@ -154,7 +156,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
   const theme = useTheme();
 
   return (
-    <>
+    <ScrollView contentContainerStyle={style.main}>
       <Pressable onPress={() => Keyboard.dismiss()} style={container}>
         <Spacer />
         {error.isError && (
@@ -162,22 +164,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             {error.message}
           </Text>
         )}
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingBottom: 20,
-          }}>
-          <Text style={style.title}>{'Modifica password'}</Text>
-          <Pressable onPress={() => goBack()}>
-            <ArrowLeftBack
-              size={18}
-              styles={{ marginLeft: 20, marginTop: 7 }}
-              color={theme.theme.colors.textPrimary}
-            />
-          </Pressable>
-        </View>
+        <BackNav navigation={navigation} />
 
         <View style={style.formWrapper}>
           <FormInput
@@ -204,7 +191,9 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
               required: true,
               pattern: PASSWORD_REGEX,
             }}
-            onPasswordMessagePressed={() => navigate('PasswordError' as never)}
+            onPasswordMessagePressed={() =>
+              navigation.navigate('PasswordError' as never)
+            }
             blurOnSubmit={false}
           />
           <Spacer height={16} />
@@ -231,7 +220,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
           <Button
             accessibilityLabel="conferma"
             title="conferma"
-            type="tertiary"
+            type="primary"
             loading={loading}
             disabled={!isDirty || !isValid}
             onPress={handleSubmit(onChangePasswordPressed)}
@@ -247,7 +236,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
           </Text>
           </Text>*/}
       </LoginFooter>
-    </>
+    </ScrollView>
   );
 };
 
@@ -257,6 +246,11 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
+    main: {
+      padding: 10,
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
     formWrapper: {
       flexGrow: 1,
       paddingHorizontal: 80,

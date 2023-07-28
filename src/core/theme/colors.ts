@@ -36,11 +36,13 @@ export const ColorsLight = {
 
 
 export const ColorsGeneralLight = {
-  background: palette.white,
+  background: palette.clearPurple,
+  backgroundNegative: palette.blueBack,
   textPrimary: palette.black,
   textSecondary: palette.blackHowl,
+  textNegative: palette.white,
   btnPrimary: palette.snowBank,
-  btnSecondary: palette.hightLight,
+  btnSecondary: palette.carbon,
   textDisabled: palette.tin,
   btnQuaternaryShadow: palette.pluto,
   btnDisabled: palette.snowBank,
@@ -51,8 +53,10 @@ export const ColorsGeneralLight = {
 
 export const ColorsGeneralDark = {
   background: palette.blueBack,
+  backgroundNegative: palette.clearPurple,
   textPrimary: palette.white,
   textSecondary: palette.ellieGrey,
+  textNegative: palette.darkNight,
   btnPrimary: palette.blackHowl,
   btnSecondary: palette.carbon,
   textDisabled: palette.tin,

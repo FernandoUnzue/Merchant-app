@@ -161,7 +161,7 @@ const styles = ({ theme }: ThemeContext) =>
       width: 50,
     },
     button_primary: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.backgroundNegative,
     },
     button_secondary: {
       backgroundColor: theme.colors.btnSecondary,
@@ -198,10 +198,10 @@ const styles = ({ theme }: ThemeContext) =>
       fontSize: 20,
     },
     text_primary: {
-      color: theme.colors.textPrimary,
+      color: theme.colors.textNegative,
     },
     text_secondary: {
-      color: theme.colors.textSecondary,
+      color: theme.colors.textNegative,
     },
     text_tertiary: {
       color: theme.colors.textPrimary,

@@ -8,12 +8,15 @@ import {
 } from '@modules/unlogged/login';
 import SuccessBurnCouponScreen from './coupon/burn/screens/success';
 import { PasswordError } from '@modules/unlogged/password-error';
+import ErrorScreenCouponBurn from './coupon/burn/screens/error';
+import PreviewScreenCouponBurn from './coupon/burn/screens/preview';
 
 /**
  * Types
  */
-type IdPropsNumber = {
-  id: number;
+type PreviewProps = {
+  isValid: boolean;
+  isDirty: boolean;
 };
 
 export type LoggedStackParamList = {
@@ -23,6 +26,8 @@ export type LoggedStackParamList = {
   TabNav: undefined;
   SuccessBurnCouponScreen: undefined;
   PasswordError: undefined;
+  ErrorScreenCouponBurn: undefined;
+  PreviewScreenCouponBurn: PreviewProps;
 };
 
 const Stack = createStackNavigator<LoggedStackParamList>();
@@ -69,6 +74,23 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
+      <Stack.Screen
+        name="ErrorScreenCouponBurn"
+        component={ErrorScreenCouponBurn}
+        options={{
+          headerLeftLabelVisible: true,
+          header: () => <TabNav navigation={RootNavigation} />,
+        }}
+      />
+      <Stack.Screen
+        name="PreviewScreenCouponBurn"
+        component={PreviewScreenCouponBurn}
+        options={{
+          headerLeftLabelVisible: true,
+          header: () => <TabNav navigation={RootNavigation} />,
+        }}
+      />
+
       <Stack.Screen
         name="PasswordError"
         component={PasswordError}

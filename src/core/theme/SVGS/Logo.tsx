@@ -6,9 +6,11 @@ const LogoMia = ({
   size = 25,
   textColor,
   styles,
+  miaColor,
 }: {
   size?: number;
   textColor?: string;
+  miaColor?: string;
   styles?: ViewStyle;
 }) => (
   <Svg
@@ -24,26 +26,26 @@ const LogoMia = ({
       <Path
         d="M46.64,.74V39.24h-9.38V15.16l-8.34,24.08h-8.12L12.42,15.11v24.13H3.04V.74H14.5l10.48,26.82L35.23,.74h11.41Z"
         style={{
-          fill: '#88dad4',
+          fill: `${miaColor ? miaColor : '#88dad4'}`,
         }}
       />
       <Path
         d="M62.49,.74V39.24h-9.38V.74h9.38Z"
         style={{
-          fill: '#88dad4',
+          fill: `${miaColor ? miaColor : '#88dad4'}`,
         }}
       />
       <G>
         <Path
           d="M68.19,.74h10.8l14.2,38.5h-9.98L68.19,.74Z"
           style={{
-            fill: '#88dad4',
+            fill: `${miaColor ? miaColor : '#88dad4'}`,
           }}
         />
         <Path
           d="M84.05,34.93h-13.56v-6.24h13.56v6.24Z"
           style={{
-            fill: '#88dad4',
+            fill: `${miaColor ? miaColor : '#88dad4'}`,
           }}
         />
       </G>

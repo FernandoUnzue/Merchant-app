@@ -21,5 +21,6 @@ export const palette = {
   grey: '#F5F5F5',
   darkGrey: '#9B9B9B',
   hightLight: '#AFFFF8',
-  blueBack: '#626AF1'
+  blueBack: '#626AF1',
+  clearPurple: '#F4F6FB'
 }
