@@ -10,6 +10,27 @@ export interface CategoryProp {
   subCategories: Preferezes[];
 }
 
+export interface Coupon {
+  id: number;
+  tittle: string;
+  description: string;
+  condition: string;
+  mainImage: string;
+  mainVideo: string;
+  publicDateFrom: string;
+  publicDateTo: string;
+  validateDateFrom: string;
+  validateDateTo: string;
+  dailyValidHour: string;
+  weekOpen: number;
+  status: number;
+  quantity: number;
+  qtyUsed: number;
+  fnetCatalogId: number;
+  createdAt: string;
+  shopId: number;
+}
+
 export interface ProfileResponse {
   balance: {
     balanceId: number;

@@ -126,9 +126,15 @@ export function FormInput<ContentType>({
                 hitSlop={5}
                 onPress={onEyeIconPress}>
                 {showPassword ? (
-                  <EyeOpenIcon size={20} />
+                  <EyeOpenIcon
+                    size={20}
+                    color={negativeColor ? '#fff' : '#000'}
+                  />
                 ) : (
-                  <EyeClosedIcon size={20} />
+                  <EyeClosedIcon
+                    size={20}
+                    color={negativeColor ? '#fff' : '#000'}
+                  />
                 )}
               </Pressable>
             </ShowIf>

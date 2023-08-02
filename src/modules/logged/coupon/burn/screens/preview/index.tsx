@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { ColorsGeneralLight, ThemeContext, useThemedStyles } from '@core/theme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList } from '@modules/logged';
@@ -7,6 +7,7 @@ import OkIcon from '@core/theme/SVGS/OkIcon';
 import BackNav from '@components/BackNav';
 import { Spacer } from '@components/Spacer';
 import { Button } from '@components/Button';
+import { useBurnCouponMutation } from '@core/redux/Api/endpoints/Merchant';
 
 /**
  * Types
@@ -21,28 +22,70 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
   navigation,
   route,
 }) => {
-  const { isDirty, isValid } = route.params;
+  const { isDirty, isValid, couponInfo } = route.params;
   const style = useThemedStyles(styles);
+
+  const [burnCoupon, { isLoading }] = useBurnCouponMutation();
+
+  const [error, setError] = useState<{ isError: boolean; message: string }>({
+    isError: false,
+    message: '',
+  });
+
+  const resetError = () => {
+    setTimeout(() => {
+      setError({
+        isError: false,
+        message: '',
+      });
+    }, 3000);
+  };
+
+  const burnCouponFunc = async () => {
+    await burnCoupon({ merchantFNId: couponInfo?.fnetCatalogId })
+      .unwrap()
+      .then(() => {
+        navigation.navigate('SuccessBurnCouponScreen', {
+          coupon: couponInfo,
+        });
+      })
+      .catch(error => {
+        navigation.navigate('ErrorScreenCouponBurn', {
+          coupon: couponInfo,
+        });
+        setError({
+          isError: true,
+          message: 'Error with request',
+        });
+        resetError();
+      });
+  };
+
   return (
     <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
       <Text style={style.title}>Preview Screen Coupon Burn</Text>
       <Spacer height={50} />
-      <OkIcon
-        size={200}
-        styles={{ alignSelf: 'center' }}
-        color={ColorsGeneralLight.backgroundNegative}
-      />
+      <View
+        style={{ alignItems: 'center', backgroundColor: '#fff', padding: 10 }}>
+        <Text style={style.title1}>Coupon</Text>
+        <Text>Title:</Text>
+        <Text>{couponInfo?.tittle}</Text>
+        <Text>Quantity:</Text>
+        <Text>{couponInfo?.quantity}</Text>
+        <Text>Description:</Text>
+        <Text>{couponInfo?.description}</Text>
+        <Text>Condition:</Text>
+        <Text>{couponInfo?.condition}</Text>
+      </View>
       <Spacer height={50} />
       <Button
-        accessibilityLabel="OK"
-        title="OK"
-        onPress={
-          !isDirty || !isValid
-            ? () => navigation.navigate('ErrorScreenCouponBurn')
-            : () => navigation.navigate('SuccessBurnCouponScreen')
-        }
+        accessibilityLabel="conferma"
+        title="CONFERMA"
+        onPress={() => burnCouponFunc()}
+        loading={isLoading}
         type="primary"
+        disabled={!isDirty || !isValid}
       />
     </ScrollView>
   );
@@ -61,5 +104,11 @@ const styles = ({ theme }: ThemeContext) =>
       fontSize: 22,
       fontFamily: theme.fonts.bold,
       color: theme.colors.textPrimary,
+    },
+    title1: {
+      fontSize: 18,
+      fontFamily: theme.fonts.bold,
+      textAlign: 'center',
+      paddingBottom: 20,
     },
   });

@@ -1,5 +1,5 @@
 import { RootState } from '@core/redux/store';
-import { Colors } from '@core/theme';
+import { Colors, ColorsGeneralLight } from '@core/theme';
 import LogoMia from '@core/theme/SVGS/Logo';
 import React from 'react';
 import {
@@ -24,7 +24,10 @@ const Loading: React.FC<LoadingProps> = ({ logo = true, error }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor:
+          colorScheme === 'dark' || isDarkMode
+            ? ColorsGeneralLight.backgroundNegative
+            : ColorsGeneralLight.backgroundNegative,
         height: 100,
       }}>
       <View
@@ -33,7 +36,7 @@ const Loading: React.FC<LoadingProps> = ({ logo = true, error }) => {
           alignItems: 'center',
           paddingVertical: '65%',
         }}>
-        <ActivityIndicator size="large" color={Colors.accent} />
+        <ActivityIndicator size="large" color={'#fff'} />
         {logo && (
           <LogoMia
             size={100}

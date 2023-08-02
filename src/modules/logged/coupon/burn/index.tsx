@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,9 @@ import BackNav from '@components/BackNav';
 import { useDispatch } from 'react-redux';
 import { AuthSlice } from '@core/redux/authSlice/authSlice';
 import { Spacer } from '@components/Spacer';
+import { useGetOfferCouponQuery } from '@core/redux/Api/endpoints/Merchant';
+import { Coupon } from '@core/interfaces';
+import { Api } from '@core/clients/axioss';
 
 /**
  * Types
@@ -42,7 +46,45 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     //   resolver: yupResolver(userSchema),
   });
 
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [error, setError] = useState<{ isError: boolean; message: string }>({
+    isError: false,
+    message: '',
+  });
+
+  const resetError = () => {
+    setTimeout(() => {
+      setError({
+        isError: false,
+        message: '',
+      });
+    }, 3000);
+  };
+
+  const getOfferCouponInfo = async (id: string) => {
+    try {
+      setLoading(true);
+      const response = await Api({ endpoint: `/merchant/offer-coupon/${id}` });
+      if (response.status === 200) {
+        navigation.navigate('PreviewScreenCouponBurn', {
+          isDirty: isDirty,
+          isValid: isValid,
+          couponInfo: response.data,
+        });
+      }
+      setLoading(false);
+    } catch (error: any) {
+      setError({
+        isError: true,
+        message: error.response.data.errorMessage,
+      });
+      console.log(error.response.data);
+      resetError();
+      setLoading(false);
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
@@ -58,22 +100,29 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
           showIcons={false}
           rules={{
             required: true,
-            minLenght: 1,
+            minLength: 4,
           }}
         />
+
         <Button
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() =>
-            navigation.navigate('PreviewScreenCouponBurn', {
-              isDirty: isDirty,
-              isValid: isValid,
-            })
-          }
+          onPress={() => getOfferCouponInfo(watch('search'))}
+          loading={loading}
+          disabled={!isDirty || !isValid}
         />
+        {error.isError ? (
+          <Text
+            style={{ color: 'red', textAlign: 'center', paddingVertical: 5 }}>
+            {error.message}
+          </Text>
+        ) : null}
       </View>
-
+      <Image
+        source={require('../../../../../assets/images/barras.png')}
+        style={style.image}
+      />
       {/*  <View
         style={{
           position: 'absolute',
@@ -94,6 +143,10 @@ const styles = ({ theme }: ThemeContext) =>
       padding: 20,
       backgroundColor: theme.colors.background,
     },
+    image: {
+      width: '100%',
+      alignSelf: 'center',
+    },
     title: {
       fontFamily: theme.fonts.bold,
       fontSize: 22,
@@ -104,7 +157,7 @@ const styles = ({ theme }: ThemeContext) =>
     container: {
       width: '100%',
       height: 200,
-      backgroundColor: theme.colors.btnDisabled,
+      backgroundColor: '#ddd',
       padding: 20,
       alignSelf: 'center',
       paddingBottom: 50,
