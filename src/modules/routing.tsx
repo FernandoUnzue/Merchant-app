@@ -27,7 +27,7 @@ import {
   ThemeProvider,
   useTheme,
 } from '@core/theme';
-import { StatusBar, useColorScheme } from 'react-native';
+import { Platform, StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LoggedStack from './logged';
 
@@ -238,8 +238,8 @@ export const RootNavigator: FC = () => {
           <StatusBar
             backgroundColor={
               colorScheme === 'dark' || isDarkTheme
-                ? ColorsGeneralLight.backgroundNegative
-                : ColorsGeneralDark.backgroundNegative
+                ? ColorsGeneralDark.backgroundNegative
+                : ColorsGeneralLight.backgroundNegative
             }
             barStyle={
               colorScheme === 'dark' || isDarkTheme

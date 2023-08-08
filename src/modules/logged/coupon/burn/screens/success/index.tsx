@@ -22,15 +22,20 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
   route,
 }) => {
   const style = useThemedStyles(styles);
+  const { coupon } = route.params;
   return (
     <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
       <Text style={style.title}>Success Burn Coupon Screen</Text>
       <Spacer height={50} />
-      <Image
-        source={require('../../../../../../../assets/images/Image-success.png')}
-        style={style.image}
-      />
+      <View style={style.square}>
+        <OkIcon size={100} color={'green'} styles={{ alignSelf: 'center' }} />
+        <Spacer height={30} />
+        <Image
+          source={require('../../../../../../../assets/images/Image-success.png')}
+          style={style.image}
+        />
+      </View>
       <Spacer height={50} />
       <Button
         accessibilityLabel="OK"
@@ -50,6 +55,12 @@ const styles = ({ theme }: ThemeContext) =>
       flex: 1,
       padding: 20,
       backgroundColor: theme.colors.background,
+    },
+    square: {
+      backgroundColor: '#fff',
+      borderWidth: 1,
+      borderColor: '#ddd',
+      padding: 20,
     },
     image: {
       width: 200,

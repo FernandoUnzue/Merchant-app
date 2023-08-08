@@ -26,6 +26,7 @@ import OneSignal from 'react-native-onesignal';
 import { ONESIGNAL_GLOBAL } from 'react-native-dotenv';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native';
+import Loading from '@components/Loading';
 
 const App = () => {
   const persistor = persistStore(store);
@@ -67,13 +68,7 @@ const App = () => {
     <SafeAreaProvider style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
-          <PersistGate
-            loading={
-              <View style={{ marginTop: 400 }}>
-                <ActivityIndicator size={'large'} />
-              </View>
-            }
-            persistor={persistor}>
+          <PersistGate loading={<Loading />} persistor={persistor}>
             <RootNavigator />
           </PersistGate>
         </Provider>

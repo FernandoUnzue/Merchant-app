@@ -66,8 +66,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
       <BackNav navigation={navigation} />
       <Text style={style.title}>Preview Screen Coupon Burn</Text>
       <Spacer height={50} />
-      <View
-        style={{ alignItems: 'center', backgroundColor: '#fff', padding: 10 }}>
+      <View style={style.square}>
         <Text style={style.title1}>Coupon</Text>
         <Text>Title:</Text>
         <Text>{couponInfo?.tittle}</Text>
@@ -77,6 +76,10 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         <Text>{couponInfo?.description}</Text>
         <Text>Condition:</Text>
         <Text>{couponInfo?.condition}</Text>
+        <Text>Prize:</Text>
+        <Text>{couponInfo?.normalPrize}</Text>
+        <Text>Promo Prize:</Text>
+        <Text>{couponInfo?.promoPrize}</Text>
       </View>
       <Spacer height={50} />
       <Button
@@ -99,6 +102,13 @@ const styles = ({ theme }: ThemeContext) =>
       flex: 1,
       padding: 20,
       backgroundColor: theme.colors.background,
+    },
+    square: {
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      padding: 10,
+      borderWidth: 1,
+      borderColor: '#ddd',
     },
     title: {
       fontSize: 22,

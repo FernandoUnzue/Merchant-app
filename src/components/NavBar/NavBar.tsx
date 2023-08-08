@@ -186,7 +186,7 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
             styles={{
               marginTop: 10,
             }}
-            color={theme.theme.colors.textNegative}
+            color={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
           />
         </RNPickerSelect>
       </View>

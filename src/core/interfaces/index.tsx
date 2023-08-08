@@ -29,6 +29,8 @@ export interface Coupon {
   fnetCatalogId: number;
   createdAt: string;
   shopId: number;
+  normalPrize: number | null;
+  promoPrize: number | null;
 }
 
 export interface ProfileResponse {
