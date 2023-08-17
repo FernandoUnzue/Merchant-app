@@ -234,7 +234,12 @@ export const RootNavigator: FC = () => {
         />
         <SafeAreaView
           edges={['left', 'right', 'bottom']}
-          style={{ flex: 1, backgroundColor: 'transparent' }}>
+          style={{
+            flex: 1,
+            backgroundColor: user.loggedIn
+              ? ColorsGeneralDark.backgroundNegative
+              : ColorsGeneralLight.backgroundNegative,
+          }}>
           <StatusBar
             backgroundColor={
               colorScheme === 'dark' || isDarkTheme

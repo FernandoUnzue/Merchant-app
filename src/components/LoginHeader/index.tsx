@@ -33,7 +33,7 @@ export const LoginHeader: FC = () => {
   return (
     <View style={[style.container]}>
       <LogoMia
-        size={130}
+        size={80}
         textColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
         miaColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
       />

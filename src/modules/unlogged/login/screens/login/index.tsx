@@ -27,6 +27,7 @@ import { Button } from '@components/Button';
 import { RootState, store } from '@core/redux/store';
 import { AuthSlice } from '@core/redux/authSlice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /**
  * Types
@@ -128,7 +129,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
 
   return (
-    <ScrollView contentContainerStyle={style.main}>
+    <KeyboardAwareScrollView contentContainerStyle={style.main}>
       {error.isError && (
         <Text style={{ color: 'orange', textAlign: 'center' }}>
           {error.message}
@@ -162,7 +163,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         styless={style.backNegative}
         // onPasswordMessagePressed={() => navigate('PasswordError')}
       />
-      <Spacer height={200} />
+      <Spacer height={'30%'} />
       <Button
         accessibilityLabel="entra"
         title="ENTRA"
@@ -204,7 +205,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           </Text>
         </View>
           </LoginFooter>*/}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
