@@ -8,7 +8,7 @@ export const ApiRedux = createApi({
     'Auth',
     'User',
     'Movement',
-    'Merchant',
+    'Coupon',
     'Notifications',
     'Tickets',
     'GiftCard',

@@ -417,6 +417,24 @@ export interface RespGiftCardsList {
   empty: boolean;
 }
 
+export interface CouponBuy {
+  id: number;
+  offerCouponId: number;
+  couponByOcId: number;
+  userId: number;
+  tittle: string;
+  condition: string;
+  quantity: number;
+  mainImage: string;
+  normalPrize: number;
+  promoPrize: number;
+  validateDateFrom: string;
+  validateDateTo: string;
+  paymentMethod: string;
+  exchangeCode: number;
+  burnedDate: string | null;
+}
+
 export interface RespPaginated<T> {
   content: Array<T>;
   pageable: {

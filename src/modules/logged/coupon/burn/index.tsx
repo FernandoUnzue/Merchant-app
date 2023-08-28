@@ -19,7 +19,10 @@ import BackNav from '@components/BackNav';
 import { useDispatch } from 'react-redux';
 import { AuthSlice } from '@core/redux/authSlice/authSlice';
 import { Spacer } from '@components/Spacer';
-import { useGetOfferCouponQuery } from '@core/redux/Api/endpoints/Merchant';
+import {
+  useGetCouponByECQuery,
+  useGetOfferCouponQuery,
+} from '@core/redux/Api/endpoints/Coupon';
 import { Coupon } from '@core/interfaces';
 import { Api } from '@core/clients/axioss';
 
@@ -62,15 +65,22 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     }, 3000);
   };
 
-  const getOfferCouponInfo = async (id: string) => {
+  const [exchangeCode, setExchangeCode] = useState<number>();
+
+  const getOfferCouponInfo = async (id: number) => {
     try {
       setLoading(true);
-      const response = await Api({ endpoint: `/merchant/offer-coupon/${id}` });
+      const response = await Api({
+        endpoint: `/merchant/offer-coupon/buy`,
+        params: { filter: `exchangeCode,${id}` },
+      });
       if (response.status === 200) {
         navigation.navigate('PreviewScreenCouponBurn', {
           isDirty: isDirty,
           isValid: isValid,
-          couponInfo: response.data,
+          couponInfo: response.data.content[0],
+          valueSearch: watch('search'),
+          functionSubmit: getOfferCouponInfo,
         });
       }
       setLoading(false);

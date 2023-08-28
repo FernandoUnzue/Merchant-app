@@ -10,7 +10,7 @@ import SuccessBurnCouponScreen from './coupon/burn/screens/success';
 import { PasswordError } from '@modules/unlogged/password-error';
 import ErrorScreenCouponBurn from './coupon/burn/screens/error';
 import PreviewScreenCouponBurn from './coupon/burn/screens/preview';
-import { Coupon } from '@core/interfaces';
+import { Coupon, CouponBuy } from '@core/interfaces';
 
 /**
  * Types
@@ -18,11 +18,11 @@ import { Coupon } from '@core/interfaces';
 type PreviewProps = {
   isValid: boolean;
   isDirty: boolean;
-  couponInfo: Coupon;
+  couponInfo: CouponBuy;
 };
 
 type CouponProp = {
-  coupon: Coupon;
+  coupon: CouponBuy;
 };
 
 export type LoggedStackParamList = {
