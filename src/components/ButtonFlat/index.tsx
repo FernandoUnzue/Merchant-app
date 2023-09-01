@@ -47,11 +47,11 @@ const ButtonFlat: React.FC<Props> = ({
         style={[
           !disable
             ? {
-                ...styless,
                 ...style.container,
                 width: widthButton ? widthButton : '100%',
                 backgroundColor: color ? color : Colors.accent,
                 height: heightButton ? heightButton : 60,
+                ...styless,
               }
             : {
                 ...styless,
@@ -88,7 +88,7 @@ export default ButtonFlat;
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.accent,
+      backgroundColor: theme.colors.background,
       borderRadius: 10,
       height: 60,
       paddingVertical: 15,
@@ -106,7 +106,7 @@ const styles = ({ theme }: ThemeContext) =>
     title: {
       fontSize: 18,
       fontFamily: theme.fonts.bold,
-      color: theme.colors.black,
+      color: theme.colors.textPrimary,
       textAlign: 'center',
     },
     rowContent: {

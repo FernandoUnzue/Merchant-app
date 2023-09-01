@@ -27,6 +27,7 @@ import { ONESIGNAL_GLOBAL } from 'react-native-dotenv';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native';
 import Loading from '@components/Loading';
+import 'react-native-reanimated';
 
 const App = () => {
   const persistor = persistStore(store);

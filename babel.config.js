@@ -32,5 +32,11 @@ module.exports = {
         runtime: 'automatic',
       },
     ],
+    [
+      'react-native-reanimated/plugin',
+      {
+        globals: ['__scanCodes'],
+      },
+    ],
   ],
 };

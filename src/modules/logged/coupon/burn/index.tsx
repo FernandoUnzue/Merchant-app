@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Alert,
   Image,
@@ -11,7 +11,7 @@ import {
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList } from '../..';
 import ToggleMenu from '@components/ToggleMenu';
-import { ThemeContext, useThemedStyles } from '@core/theme';
+import { ColorsGeneralDark, ThemeContext, useThemedStyles } from '@core/theme';
 import { useForm } from 'react-hook-form';
 import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
@@ -25,15 +25,22 @@ import {
 } from '@core/redux/Api/endpoints/Coupon';
 import { Coupon } from '@core/interfaces';
 import { Api } from '@core/clients/axioss';
+import CameraScanner from '@components/CameraBarCodeScanner';
+import ButtonFlat from '@components/ButtonFlat';
 
 /**
  * Types
  */
 
-type HomeScreenProps = StackScreenProps<LoggedStackParamList, 'Home'>;
+type HomeScreenBurnCouponProps = StackScreenProps<
+  LoggedStackParamList,
+  'HomeBurnCoupon'
+>;
 
-const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
+const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
   const { height: windowHeigth, width: windowWidth } = useWindowDimensions();
+
+  const { qrfound } = route.params;
 
   const style = useThemedStyles(styles);
   const {
@@ -41,10 +48,11 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     handleSubmit,
     watch,
     trigger,
+    setValue,
     reset,
     formState: { isDirty, isValid, errors },
   } = useForm({
-    mode: 'all',
+    mode: 'onChange',
     //   defaultValues: DEFAULT_VALUES,
     //   resolver: yupResolver(userSchema),
   });
@@ -87,13 +95,19 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     } catch (error: any) {
       setError({
         isError: true,
-        message: error.response.data.errorMessage,
+        message: 'Error with request check exchange code',
       });
       console.log(error.response.data);
       resetError();
       setLoading(false);
     }
   };
+  const validateField = async () => {};
+
+  useEffect(() => {
+    setValue('search', qrfound);
+    trigger('search');
+  }, [qrfound]);
 
   return (
     <ScrollView contentContainerStyle={style.main}>
@@ -103,13 +117,12 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
         <FormInput
           control={control}
           name={'search'}
-          placeholder="NUMERO CARD"
+          placeholder="EXCHANGE CODE"
           styless={{
             backgroundColor: 'transparent',
           }}
           showIcons={false}
           rules={{
-            required: true,
             minLength: 4,
           }}
         />
@@ -120,7 +133,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
           type="primary"
           onPress={() => getOfferCouponInfo(watch('search'))}
           loading={loading}
-          disabled={!isDirty || !isValid}
+          disabled={watch('sarch') !== '' && watch('search') ? false : true}
         />
         {error.isError ? (
           <Text
@@ -133,6 +146,27 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
         source={require('../../../../../assets/images/barras.png')}
         style={style.image}
       />
+      <Text style={{ ...style.title, fontSize: 16 }}>Scanner BarCode</Text>
+      <View
+        style={{
+          alignSelf: 'center',
+          width: 250,
+        }}>
+        <ButtonFlat
+          title="APRI LA FOTOCAMERA"
+          widthButton="200"
+          heightButton={55}
+          color={ColorsGeneralDark.background}
+          textStyles={{
+            color: 'white',
+          }}
+          fontSize={16}
+          styless={{
+            borderRadius: 100,
+          }}
+          onPress={() => navigation.navigate('CameraScannerScreen')}
+        />
+      </View>
       {/*  <View
         style={{
           position: 'absolute',
@@ -166,7 +200,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     container: {
       width: '100%',
-      height: 200,
+      maxHeight: 350,
       backgroundColor: '#ddd',
       padding: 20,
       alignSelf: 'center',
