@@ -3,6 +3,7 @@ import React from 'react';
 import ModalNew from '@components/ModalNew/ModalNew';
 import { Colors, Fonts } from '@core/theme';
 import { Button } from '@components/Button';
+import { Spacer } from '@components/Spacer';
 
 type Props = {
   show: boolean;
@@ -72,6 +73,7 @@ const ModalAsk: React.FC<Props> = ({
             }}
             loading={loading ? loading : false}
           />
+          <Spacer height={10} />
           <Button
             accessibilityLabel="Cancella"
             title="Cancella"

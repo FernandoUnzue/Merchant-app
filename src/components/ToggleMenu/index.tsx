@@ -102,7 +102,10 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
         </Animated.ScrollView>
         <ModalAsk
           show={showModalLogOut}
-          closeModal={() => setShowModalLogOut(false)}
+          closeModal={() => {
+            setShowModalLogOut(false);
+            dispatch(AuthSlice.actions.closeModal());
+          }}
           onPressConfirm={() => logoutIntern()}
           width={350}
           height={230}

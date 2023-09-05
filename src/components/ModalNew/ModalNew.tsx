@@ -54,12 +54,10 @@ const ModalNew: React.FC<Props> = ({
                 justifyContent: 'flex-end',
                 width: '100%',
                 flexDirection: 'row',
-                paddingBottom: 8,
+                paddingBottom: 20,
               }}>
               <Pressable onPress={() => closeModal()} hitSlop={35}>
-                <Text style={{ fontSize: 22 }}>
-                  <CloseIcon size={20} color={closeColor} />
-                </Text>
+                <CloseIcon size={20} color={closeColor} />
               </Pressable>
             </View>
           )}

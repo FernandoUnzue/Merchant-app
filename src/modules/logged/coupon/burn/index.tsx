@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -10,22 +9,11 @@ import {
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList } from '../..';
-import ToggleMenu from '@components/ToggleMenu';
 import { ColorsGeneralDark, ThemeContext, useThemedStyles } from '@core/theme';
 import { useForm } from 'react-hook-form';
 import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
-import BackNav from '@components/BackNav';
-import { useDispatch } from 'react-redux';
-import { AuthSlice } from '@core/redux/authSlice/authSlice';
-import { Spacer } from '@components/Spacer';
-import {
-  useGetCouponByECQuery,
-  useGetOfferCouponQuery,
-} from '@core/redux/Api/endpoints/Coupon';
-import { Coupon } from '@core/interfaces';
 import { Api } from '@core/clients/axioss';
-import CameraScanner from '@components/CameraBarCodeScanner';
 import ButtonFlat from '@components/ButtonFlat';
 
 /**
@@ -110,7 +98,6 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
       setLoading(false);
     }
   };
-  const validateField = async () => {};
 
   useEffect(() => {
     setValue('search', qrfound);
@@ -119,7 +106,6 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
 
   return (
     <ScrollView contentContainerStyle={style.main}>
-      <BackNav navigation={navigation} />
       <Text style={style.title}>Burn Coupon</Text>
       <View style={style.container}>
         <FormInput
