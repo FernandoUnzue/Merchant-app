@@ -60,7 +60,10 @@ interface Props {
 
 const LoggedStack: FC<Props> = ({ RootNavigation }) => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerMode: 'float',
+      }}>
       <Stack.Screen
         name="HomeBurnCoupon"
         component={Home}
@@ -68,7 +71,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
           qrfound: '',
         }}
         options={{
-          headerLeftLabelVisible: true,
+          //  headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
@@ -76,7 +79,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         name="ChangePasswordSuccess"
         component={ChangePasswordSuccess}
         options={{
-          headerLeftLabelVisible: true,
+          //  headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
@@ -84,7 +87,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         name="ChangePasswordDraft"
         component={ChangePasswordDraft}
         options={{
-          headerLeftLabelVisible: true,
+          //   headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
@@ -92,7 +95,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         name="SuccessBurnCouponScreen"
         component={SuccessBurnCouponScreen}
         options={{
-          headerLeftLabelVisible: true,
+          //   headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
@@ -100,7 +103,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         name="ErrorScreenCouponBurn"
         component={ErrorScreenCouponBurn}
         options={{
-          headerLeftLabelVisible: true,
+          //  headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
@@ -117,7 +120,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         name="CameraScannerScreen"
         component={CameraScannerScreen}
         options={{
-          headerLeftLabelVisible: true,
+          //    headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />
@@ -126,7 +129,7 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         name="PasswordError"
         component={PasswordError}
         options={{
-          headerLeftLabelVisible: true,
+          //   headerLeftLabelVisible: true,
           header: () => <TabNav navigation={RootNavigation} />,
         }}
       />

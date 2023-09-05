@@ -81,6 +81,14 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         <Text style={style.title1}>Coupon</Text>
         <Text style={style.bold}>Title:</Text>
         <Text>{couponInfo?.tittle}</Text>
+        <Text style={style.bold}>Validate from:</Text>
+        <Text>
+          {moment(couponInfo?.validateDateFrom).format('DD/MM/YYY HH:MM:SS')}
+        </Text>
+        <Text style={style.bold}>Validate to:</Text>
+        <Text>
+          {moment(couponInfo?.validateDateTo).format('DD/MM/YYY HH:MM:SS')}
+        </Text>
         <Text style={style.bold}>Quantity:</Text>
         <Text>{couponInfo?.quantity}</Text>
         <Text style={style.bold}>Condition:</Text>

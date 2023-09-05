@@ -1,6 +1,6 @@
 import CloseIcon from '@core/theme/SVGS/CloseX';
 import React from 'react';
-import { Pressable, Text, View, ViewStyle } from 'react-native';
+import { DimensionValue, Pressable, Text, View, ViewStyle } from 'react-native';
 import Modal from 'react-native-modal';
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
   children: React.ReactNode;
   styles?: ViewStyle;
   overlayColor?: string;
-  width?: number | string;
-  height?: number | string;
+  width?: DimensionValue;
+  height?: DimensionValue;
   backColor?: string;
   close?: boolean;
   closeColor?: string;
@@ -45,7 +45,7 @@ const ModalNew: React.FC<Props> = ({
             ...styles,
             width,
             height,
-            backgroundColor: backColor,
+            backgroundColor: backColor ? backColor : '#fff',
           }}>
           {close && (
             <View
@@ -54,8 +54,9 @@ const ModalNew: React.FC<Props> = ({
                 justifyContent: 'flex-end',
                 width: '100%',
                 flexDirection: 'row',
+                paddingBottom: 8,
               }}>
-              <Pressable onPress={() => closeModal()} hitSlop={25}>
+              <Pressable onPress={() => closeModal()} hitSlop={35}>
                 <Text style={{ fontSize: 22 }}>
                   <CloseIcon size={20} color={closeColor} />
                 </Text>

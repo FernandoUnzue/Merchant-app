@@ -36,7 +36,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 type LoginScreenProps = StackScreenProps<UnloggedStackParamList, 'Login'>;
 
 type LoginData = {
-  phone: string;
+  username: string;
   password: string;
 };
 
@@ -45,7 +45,7 @@ type LoginData = {
  */
 
 const DEFAULT_VALUES: LoginData = {
-  phone: '',
+  username: '',
   password: '',
 };
 
@@ -95,9 +95,9 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
 
   const [login, { isLoading }] = useLoginMutation();
 
-  const onLoginPressed = async ({ phone, password }: LoginData) => {
+  const onLoginPressed = async ({ username, password }: LoginData) => {
     await login({
-      username: formatPhoneNumber(phone),
+      username: username,
       password,
       grant_type: 'password',
     })
@@ -109,11 +109,8 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         if (err.status === 400) {
           setError({
             isError: true,
-            message: 'Numero di telefono o password errati',
+            message: 'Username o password errati',
           });
-        } else if (err.status === 428) {
-          // if the user not complete the full registration
-          navigate('RegisterPersonalData', { phone: formatPhoneNumber(phone) });
         } else {
           setError({
             isError: true,
@@ -137,14 +134,16 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       )}
       <Spacer height={100} />
       <FormInput
-        name="phone"
-        placeholder="Numero cellulare"
+        name="username"
+        placeholder="Username"
         control={control}
+        autoCapitalize={'none'}
+        autoCorrect={false}
         rules={{
           required: true,
-          validate: validatePhoneNumber,
+          //   validate: validatePhoneNumber,
         }}
-        keyboardType="phone-pad"
+        //  keyboardType="phone-pad"
         negativeColor={true}
         styless={style.backNegative}
       />

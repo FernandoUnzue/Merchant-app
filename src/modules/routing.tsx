@@ -27,9 +27,10 @@ import {
   ThemeProvider,
   useTheme,
 } from '@core/theme';
-import { Platform, StatusBar, useColorScheme } from 'react-native';
+import { Platform, StatusBar, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LoggedStack from './logged';
+import ToggleMenu from '@components/ToggleMenu';
 
 /**
  * Deep Linking
@@ -264,7 +265,16 @@ export const RootNavigator: FC = () => {
           </NavigationContainer>
         </SafeAreaView>
       </ThemeProvider>
-      <ModalToken show={user.showModal} />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          //  maxHeight: windowHeigth - 155,
+          alignSelf: 'center',
+        }}>
+        <ToggleMenu navigation={RootNavigation} />
+      </View>
     </>
   );
 };

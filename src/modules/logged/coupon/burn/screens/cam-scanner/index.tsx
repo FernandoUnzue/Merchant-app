@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: 'black',
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
     padding: 10,
     marginTop: 16,

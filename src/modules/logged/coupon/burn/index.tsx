@@ -83,13 +83,21 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
         params: { filter: `exchangeCode,${id}` },
       });
       if (response.status === 200) {
-        navigation.navigate('PreviewScreenCouponBurn', {
-          isDirty: isDirty,
-          isValid: isValid,
-          couponInfo: response.data.content[0],
-          valueSearch: watch('search'),
-          functionSubmit: getOfferCouponInfo,
-        });
+        if (response.data.content.length > 0) {
+          navigation.navigate('PreviewScreenCouponBurn', {
+            isDirty: isDirty,
+            isValid: isValid,
+            couponInfo: response.data.content[0],
+            valueSearch: watch('search'),
+            functionSubmit: getOfferCouponInfo,
+          });
+        } else {
+          setError({
+            isError: true,
+            message: 'Not exist coupon with this exchange code',
+          });
+          resetError();
+        }
       }
       setLoading(false);
     } catch (error: any) {
@@ -167,15 +175,6 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           onPress={() => navigation.navigate('CameraScannerScreen')}
         />
       </View>
-      {/*  <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          maxHeight: windowHeigth - 155,
-        }}>
-        <ToggleMenu navigation={navigation} />
-      </View>*/}
     </ScrollView>
   );
 };

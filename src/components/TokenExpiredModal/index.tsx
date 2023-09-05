@@ -17,8 +17,8 @@ export const ModalToken: React.FC<Props> = ({ show }) => {
     <ModalNew
       modalShow={show}
       closeModal={() => dispatch(AuthSlice.actions.closeModal())}
-      width="80%"
-      height="28%"
+      width={300}
+      height={200}
       styles={{
         borderRadius: 20,
         paddingVertical: 30,

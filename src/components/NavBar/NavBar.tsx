@@ -47,7 +47,6 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const style = useThemedStyles(styles);
   const route = useRoute();
-  const { data, refetch } = useGetCountNotiQuery();
 
   const [option, setOption] = useState<string>('');
 
@@ -58,6 +57,8 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   };
 
   const theme = useTheme();
+
+  const showMenu = useSelector((state: RootState) => state.auth.showModal);
 
   const isDarkMode = useSelector((state: RootState) => state.auth.darkMode);
 
@@ -80,14 +81,6 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
       value: 'logout',
     },
   ];
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      refetch();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
 
   useEffect(() => {
     if (option === 'logout') {
@@ -113,74 +106,16 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
           textColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
           miaColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
         />
-        {/* <ContainerSelect>
-          <RNPickerSelect
-            placeholder={{
-              label: 'location',
-              value: '',
-            }}
-            onValueChange={value => console.log('value: ' + value)}
-            items={[
-              {
-                label: 'MI',
-                value: 'MI',
-              },
-            ]}
-            useNativeAndroidPickerStyle={false}
-            style={{
-              ...pickerSelectStyles,
-
-              inputAndroid: {
-                fontSize: 18,
-                fontFamily: Fonts.bold,
-                color: Colors.black,
-                alignSelf: 'center',
-              },
-              inputAndroidContainer: {
-                height: 45,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingLeft: 5,
-              },
-              inputIOSContainer: {
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                //  backgroundColor: 'white',
-                width: '100%',
-                // borderBottomColor: Colors.black,
-                // borderBottomWidth: 1,
-              },
-              inputIOS: {
-                flex: 1,
-                height: 40,
-                paddingHorizontal: 5,
-                fontFamily: Fonts.bold,
-                fontSize: 18,
-                color: Colors.text,
-              },
-            }}
-            value={'MI'}
-            Icon={() => <ArrowDown size={20} styles={{ marginTop: 5 }} />}
-          />
-        </ContainerSelect>*/}
       </View>
-
       <View style={style.containerTabNav}>
-        {/*  <View style={{ flexDirection: 'row' }}>
-          <Text style={style.text}>Dark mode:</Text>
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={enabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleEnabled}
-            value={enabled}
-          />
-      </View>*/}
-        <RNPickerSelect
-          value={option}
-          onClose={() => setOption('')}
-          onValueChange={value => setOption(value)}
-          items={options}>
+        <TouchableOpacity
+          onPress={() => {
+            if (showMenu) {
+              dispatch(AuthSlice.actions.closeModal());
+            } else {
+              dispatch(AuthSlice.actions.openModal());
+            }
+          }}>
           <Impostazioni
             size={40}
             styles={{
@@ -188,7 +123,7 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
             }}
             color={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
           />
-        </RNPickerSelect>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -231,7 +166,7 @@ const styles = ({ theme }: ThemeContext) =>
       height: 60,
       shadowColor: '#000',
       shadowOffset: { width: 1, height: 1 },
-      shadowOpacity: 0.4,
+      //  shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 5,
     },
