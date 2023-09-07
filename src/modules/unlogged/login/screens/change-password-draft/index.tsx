@@ -104,7 +104,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
 
     try {
       const response = await Api({
-        endpoint: '/api/change-password',
+        endpoint: '/backoffice/change-password',
         method: 'PUT',
         _data: {
           oldPassword,

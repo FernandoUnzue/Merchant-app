@@ -26,23 +26,40 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
   return (
     <ScrollView contentContainerStyle={style.main}>
       <BackNav navigation={navigation} />
-      <Text style={style.title}>Success Burn Coupon Screen</Text>
-      <Spacer height={50} />
+      <Spacer height={30} />
+      {coupon ? (
+        <View style={style.squareCoupon}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={style.text} numberOfLines={1} ellipsizeMode={'tail'}>
+              {coupon.tittle}
+            </Text>
+            <Text style={style.number}>{`${coupon?.normalPrize
+              .toFixed(2)
+              .replace('.', ',')}€`}</Text>
+          </View>
+        </View>
+      ) : null}
+      <Spacer height={20} />
       <View style={style.square}>
-        <OkIcon size={100} color={'green'} styles={{ alignSelf: 'center' }} />
+        <OkIcon size={50} color={'green'} styles={{ alignSelf: 'center' }} />
+        <Spacer height={20} />
+        <Text style={style.title}>CONFERMA</Text>
+
+        <Text style={{ textAlign: 'center' }}>Coupon approvato</Text>
         <Spacer height={30} />
         <Image
           source={require('../../../../../../../assets/images/Image-success.png')}
           style={style.image}
         />
+        <Spacer height={50} />
+        <Button
+          accessibilityLabel="torna alla home"
+          title="TORNA ALLA HOME"
+          onPress={() => navigation.goBack()}
+          type="primary"
+        />
       </View>
-      <Spacer height={50} />
-      <Button
-        accessibilityLabel="OK"
-        title="OK"
-        onPress={() => navigation.goBack()}
-        type="primary"
-      />
     </ScrollView>
   );
 };
@@ -56,11 +73,28 @@ const styles = ({ theme }: ThemeContext) =>
       padding: 20,
       backgroundColor: theme.colors.background,
     },
+    number: {
+      fontSize: 25,
+      fontFamily: theme.fonts.bold,
+    },
+    text: {
+      fontSize: 18,
+      fontFamily: theme.fonts.bold,
+      width: 200,
+    },
     square: {
       backgroundColor: '#fff',
       borderWidth: 1,
       borderColor: '#ddd',
       padding: 20,
+      borderRadius: 20,
+    },
+    squareCoupon: {
+      backgroundColor: '#fff',
+      borderWidth: 1,
+      borderColor: theme.colors.backgroundNegative,
+      padding: 20,
+      borderRadius: 20,
     },
     image: {
       width: 200,
@@ -68,8 +102,9 @@ const styles = ({ theme }: ThemeContext) =>
       alignSelf: 'center',
     },
     title: {
-      fontSize: 22,
+      fontSize: 16,
       fontFamily: theme.fonts.bold,
       color: theme.colors.textPrimary,
+      textAlign: 'center',
     },
   });

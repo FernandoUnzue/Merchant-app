@@ -25,7 +25,7 @@ type PreviewProps = {
 };
 
 type CouponProp = {
-  coupon: CouponBuy;
+  coupon?: CouponBuy;
 };
 
 type CamScnannerProps = {

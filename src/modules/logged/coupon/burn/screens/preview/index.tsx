@@ -43,8 +43,8 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
     }, 3000);
   };
 
-  const burnCouponFunc = async () => {
-    await burnCoupon({ exchangeCode: couponInfo?.exchangeCode })
+  const burnCouponFunc = async (code: number) => {
+    await burnCoupon({ exchangeCode: code })
       .unwrap()
       .then(r => {
         console.log(r);
@@ -83,22 +83,16 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         <Text>{couponInfo?.tittle}</Text>
         <Text style={style.bold}>Validate from:</Text>
         <Text>
-          {moment(couponInfo?.validateDateFrom).format('DD/MM/YYY HH:MM:SS')}
+          {moment(couponInfo?.validateDateFrom).format('DD/MM/YYYY HH:MM:SS')}
         </Text>
         <Text style={style.bold}>Validate to:</Text>
         <Text>
-          {moment(couponInfo?.validateDateTo).format('DD/MM/YYY HH:MM:SS')}
+          {moment(couponInfo?.validateDateTo).format('DD/MM/YYYY HH:MM:SS')}
         </Text>
-        <Text style={style.bold}>Quantity:</Text>
-        <Text>{couponInfo?.quantity}</Text>
         <Text style={style.bold}>Condition:</Text>
         <Text>{couponInfo?.condition}</Text>
-        <Text style={style.bold}>Prize:</Text>
-        <Text style={style.number}>{`${couponInfo?.normalPrize
-          .toFixed(2)
-          .replace('.', ',')}€`}</Text>
         <Text style={style.bold}>Promo Prize:</Text>
-        <Text style={style.number}>{`${couponInfo?.promoPrize
+        <Text style={style.number}>{`${couponInfo?.normalPrize
           .toFixed(2)
           .replace('.', ',')}€`}</Text>
       </View>
@@ -106,7 +100,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
       <Button
         accessibilityLabel="conferma"
         title="CONFERMA"
-        onPress={() => burnCouponFunc()}
+        onPress={() => burnCouponFunc(couponInfo.exchangeCode)}
         loading={isLoading}
         type="primary"
         disabled={!isDirty || !isValid || couponInfo?.burnedDate !== null}
@@ -114,7 +108,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
       {couponInfo?.burnedDate !== null ? (
         <Text style={style.disabledText}>
           Coupon already burned at{' '}
-          {moment(couponInfo?.burnedDate).format('DD/MM/YYYY hh:mm:ss A')}
+          {moment(couponInfo?.burnedDate).format('DD/MM/YYYY HH:MM:SS')}
         </Text>
       ) : null}
     </ScrollView>
@@ -136,6 +130,7 @@ const styles = ({ theme }: ThemeContext) =>
       padding: 10,
       borderWidth: 1,
       borderColor: '#ddd',
+      borderRadius: 20,
     },
     title: {
       fontSize: 22,
@@ -149,7 +144,7 @@ const styles = ({ theme }: ThemeContext) =>
       paddingBottom: 20,
     },
     number: {
-      fontSize: 25,
+      fontSize: 30,
       color: 'green',
       fontFamily: theme.fonts.bold,
     },

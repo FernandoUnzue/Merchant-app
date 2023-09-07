@@ -15,6 +15,7 @@ import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
 import { Api } from '@core/clients/axioss';
 import ButtonFlat from '@components/ButtonFlat';
+import { CouponBuy } from '@core/interfaces';
 
 /**
  * Types
@@ -62,6 +63,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
   };
 
   const [exchangeCode, setExchangeCode] = useState<number>();
+  const [coupon, setCoupon] = useState<CouponBuy>();
 
   const getOfferCouponInfo = async (id: number) => {
     try {
@@ -72,6 +74,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
       });
       if (response.status === 200) {
         if (response.data.content.length > 0) {
+          setCoupon(response.data.content[0]);
           navigation.navigate('PreviewScreenCouponBurn', {
             isDirty: isDirty,
             isValid: isValid,
