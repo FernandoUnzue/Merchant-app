@@ -14,6 +14,7 @@ import { AppDispatch } from '@core/redux/store';
 import { LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { LoggedStackParamList } from '@modules/logged';
 import OkIcon from '@core/theme/SVGS/OkIcon';
+import { Button } from '@components/Button';
 
 /**
  * Types
@@ -44,12 +45,14 @@ export const ChangePasswordSuccessUnlogged: FC<
         </View>
       </View>
       <LoginFooter containerStyle={style.loginFooter}>
-        <WhiskeredButton
-          accessibilityLabel="accedi"
-          title="accedi"
-          type="tertiary"
-          onPress={() => navigate('Login')}
-        />
+        <View style={{ paddingHorizontal: 50 }}>
+          <Button
+            accessibilityLabel="accedi"
+            title="accedi"
+            type="primary"
+            onPress={() => navigate('Login')}
+          />
+        </View>
         {/*<Text style={style.loginWrapper}>
           <Text style={style.goback}>Torna alla </Text>
           <Text
@@ -79,7 +82,7 @@ const styles = ({ theme }: ThemeContext) =>
     title: {
       fontFamily: theme.fonts.bold,
       fontSize: 22,
-      color: theme.colors.black,
+      color: theme.colors.textPrimary,
       textAlign: 'center',
     },
     loginFooter: {
@@ -92,11 +95,11 @@ const styles = ({ theme }: ThemeContext) =>
     goback: {
       fontFamily: theme.fonts.regular,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
     loginLink: {
       fontFamily: theme.fonts.bold,
       fontSize: 16,
-      color: theme.colors.text,
+      color: theme.colors.textPrimary,
     },
   });

@@ -14,6 +14,7 @@ import { AppDispatch } from '@core/redux/store';
 import { LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { LoggedStackParamList } from '@modules/logged';
 import OkIcon from '@core/theme/SVGS/OkIcon';
+import { Button } from '@components/Button';
 
 /**
  * Types
@@ -29,7 +30,7 @@ type ChangePasswordSuccessScreenProps = StackScreenProps<
  */
 
 export const ChangePasswordSuccess: FC<ChangePasswordSuccessScreenProps> = ({
-  navigation: { navigate },
+  navigation: { navigate, goBack, push },
 }) => {
   useDisableGoBack();
   const style = useThemedStyles(styles);
@@ -45,12 +46,15 @@ export const ChangePasswordSuccess: FC<ChangePasswordSuccessScreenProps> = ({
         </View>
       </View>
       <LoginFooter containerStyle={style.loginFooter}>
-        <WhiskeredButton
-          accessibilityLabel="accedi"
-          title="accedi"
-          type="tertiary"
-          onPress={() => dispatch(LogOutAsync())}
-        />
+        <View style={{ paddingHorizontal: 50 }}>
+          <Button
+            accessibilityLabel="accedi"
+            title="accedi"
+            type="primary"
+            onPress={() => push('HomeBurnCoupon', { qrfound: undefined })}
+          />
+        </View>
+
         {/*<Text style={style.loginWrapper}>
           <Text style={style.goback}>Torna alla </Text>
           <Text
