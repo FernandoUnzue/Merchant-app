@@ -5,7 +5,14 @@
 import BackNav from '@components/BackNav';
 import { Button } from '@components/Button';
 import ButtonFlat from '@components/ButtonFlat';
-import { ColorsGeneralDark } from '@core/theme';
+import { RootState } from '@core/redux/store';
+import {
+  ColorsGeneralDark,
+  ColorsGeneralLight,
+  themeContent,
+  ThemeContext,
+  useThemedStyles,
+} from '@core/theme';
 import { LoggedStackParamList } from '@modules/logged';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
@@ -21,10 +28,12 @@ import {
   Platform,
   StyleSheet,
   Alert,
+  useColorScheme,
 } from 'react-native';
 
 // import CameraScreen
 import { CameraScreen } from 'react-native-camera-kit';
+import { useSelector } from 'react-redux';
 
 /**
  * Types
@@ -46,7 +55,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
     // If scanned then function to open URL in Browser
     Linking.openURL(qrvalue);
   };
-
+  const style = useThemedStyles(styles);
   const onBarcodeScan = (qrvalue: any) => {
     // Called after te successful scanning of QRCode/Barcode
     setQrvalue(qrvalue);
@@ -86,20 +95,18 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
       setOpneScanner(true);
     }
   };
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
+  const colorScheme = useColorScheme();
   useEffect(() => {
     onOpneScanner();
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
+    <SafeAreaView style={style.safeAreaStyle}>
+      <View style={style.subcontainer}>
         <BackNav navigation={navigation} text={false} />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-          <Text style={styles.textStyle}>
+        <View style={style.square}>
+          <Text style={style.textStyle}>
             {qrvalue ? 'Scanned Result: ' + qrvalue : ''}
           </Text>
           <View
@@ -117,9 +124,13 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
                 borderRadius: 150,
               }}
               textStyles={{
-                color: 'white',
+                color: isDarkTheme || colorScheme === 'dark' ? '#000' : 'white',
               }}
-              color={ColorsGeneralDark.background}
+              color={
+                isDarkTheme || colorScheme === 'dark'
+                  ? ColorsGeneralLight.background
+                  : ColorsGeneralDark.background
+              }
               onPress={() =>
                 navigation.push('HomeBurnCoupon', { qrfound: qrvalue })
               }
@@ -156,39 +167,53 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
 
 export default CameraScannerScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 10,
-    alignItems: 'center',
-  },
-  titleText: {
-    fontSize: 22,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  textStyle: {
-    color: 'black',
-    fontSize: 14,
-    textAlign: 'center',
-    padding: 10,
-    marginTop: 16,
-  },
-  buttonStyle: {
-    fontSize: 16,
-    color: 'white',
-    backgroundColor: 'green',
-    padding: 5,
-    minWidth: 250,
-  },
-  buttonTextStyle: {
-    padding: 5,
-    color: 'white',
-    textAlign: 'center',
-  },
-  textLinkStyle: {
-    color: 'blue',
-    paddingVertical: 20,
-  },
-});
+const styles = ({ theme }: ThemeContext) =>
+  StyleSheet.create({
+    safeAreaStyle: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    subcontainer: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      padding: 10,
+      alignItems: 'center',
+    },
+    square: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.background,
+    },
+    titleText: {
+      fontSize: 22,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    textStyle: {
+      color: 'black',
+      fontSize: 14,
+      textAlign: 'center',
+      padding: 10,
+      marginTop: 16,
+    },
+    buttonStyle: {
+      fontSize: 16,
+      color: 'white',
+      backgroundColor: 'green',
+      padding: 5,
+      minWidth: 250,
+    },
+    buttonTextStyle: {
+      padding: 5,
+      color: 'white',
+      textAlign: 'center',
+    },
+    textLinkStyle: {
+      color: 'blue',
+      paddingVertical: 20,
+    },
+  });

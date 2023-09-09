@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useColorScheme,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -16,6 +17,9 @@ import { Button } from '@components/Button';
 import { Api } from '@core/clients/axioss';
 import ButtonFlat from '@components/ButtonFlat';
 import { CouponBuy } from '@core/interfaces';
+import { useClipboard } from '@react-native-community/clipboard';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
 
 /**
  * Types
@@ -101,6 +105,8 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
       setLoading(false);
     }
   };
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     setValue('search', qrfound);
@@ -118,6 +124,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           styless={{
             backgroundColor: 'transparent',
           }}
+          negativeColor={false}
           showIcons={false}
           rules={{
             minLength: 4,
@@ -149,18 +156,10 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           alignSelf: 'center',
           width: 250,
         }}>
-        <ButtonFlat
+        <Button
           title="APRI LA FOTOCAMERA"
-          widthButton="200"
-          heightButton={55}
-          color={ColorsGeneralDark.background}
-          textStyles={{
-            color: 'white',
-          }}
-          fontSize={16}
-          styless={{
-            borderRadius: 100,
-          }}
+          accessibilityLabel="APRI LA FOTOCAMERA"
+          type="primary"
           onPress={() => navigation.navigate('CameraScannerScreen')}
         />
       </View>
@@ -178,6 +177,10 @@ const styles = ({ theme }: ThemeContext) =>
     image: {
       width: '100%',
       alignSelf: 'center',
+    },
+    backNegative: {
+      backgroundColor: theme.colors.backgroundNegative,
+      color: theme.colors.textPrimary,
     },
     title: {
       fontFamily: theme.fonts.bold,

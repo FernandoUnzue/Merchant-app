@@ -253,7 +253,7 @@ const styles = ({ theme }: ThemeContext) =>
       justifyContent: 'space-between',
       backgroundColor: theme.colors.background,
       width: '100%',
-      borderBottomColor: theme.colors.textPrimary,
+      borderBottomColor: '#000',
       borderBottomWidth: 1,
     },
     containerNegative: {
@@ -261,7 +261,7 @@ const styles = ({ theme }: ThemeContext) =>
       justifyContent: 'space-between',
       backgroundColor: theme.colors.backgroundNegative,
       width: '100%',
-      borderBottomColor: theme.colors.textNegative,
+      borderBottomColor: '#fff',
       borderBottomWidth: 1,
     },
     input: {
@@ -278,15 +278,15 @@ const styles = ({ theme }: ThemeContext) =>
       marginLeft: -4,
       paddingHorizontal: 5,
       fontSize: 14,
-      color: theme.colors.textNegative,
+      color: theme.colors.textPrimary,
     },
     editableInput: {
       fontFamily: theme.fonts.regular,
-      color: theme.colors.textPrimary,
+      color: '#000',
     },
     editableInputNegative: {
       fontFamily: theme.fonts.regular,
-      color: theme.colors.textNegative,
+      color: '#fff',
     },
     fixedInput: {
       fontFamily: theme.fonts.bold,
@@ -308,26 +308,26 @@ const styles = ({ theme }: ThemeContext) =>
     },
     message: {
       fontSize: 11,
-      color: theme.colors.textPrimary,
+      color: '#000',
       alignSelf: 'stretch',
       fontWeight: 'bold',
     },
     messageNegative: {
       fontSize: 11,
-      color: theme.colors.textNegative,
+      color: '#fff',
       alignSelf: 'stretch',
       fontWeight: 'bold',
     },
     errorMessage: {
       fontFamily: theme.fonts.bold,
       fontSize: 10,
-      color: theme.colors.textPrimary,
+      color: '#000',
       alignSelf: 'stretch',
     },
     errorMessageNegative: {
       fontFamily: theme.fonts.bold,
       fontSize: 10,
-      color: theme.colors.textNegative,
+      color: '#fff',
       alignSelf: 'stretch',
     },
     errorLink: {

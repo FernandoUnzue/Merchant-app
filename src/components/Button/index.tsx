@@ -6,11 +6,14 @@ import {
   StyleSheet,
   Text,
   TextStyle,
+  useColorScheme,
   View,
 } from 'react-native';
 
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { ShowIf } from '@components/ShowIf';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
 
 /**
  * Types
@@ -72,6 +75,8 @@ export const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const style = useThemedStyles(styles);
+  const colorScheme = useColorScheme();
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
 
   return (
     <>
@@ -163,6 +168,7 @@ const styles = ({ theme }: ThemeContext) =>
     button_primary: {
       backgroundColor: theme.colors.backgroundNegative,
     },
+
     button_secondary: {
       backgroundColor: theme.colors.btnSecondary,
     },
@@ -200,8 +206,11 @@ const styles = ({ theme }: ThemeContext) =>
     text_primary: {
       color: theme.colors.textNegative,
     },
-    text_secondary: {
+    text_primaryNegative: {
       color: theme.colors.textNegative,
+    },
+    text_secondary: {
+      color: '#fff',
     },
     text_tertiary: {
       color: theme.colors.textPrimary,

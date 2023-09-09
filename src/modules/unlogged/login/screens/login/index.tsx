@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -124,6 +125,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
   const style = useThemedStyles(styles);
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
+  const colorScheme = useColorScheme();
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={style.main}>
@@ -144,8 +146,12 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           //   validate: validatePhoneNumber,
         }}
         //  keyboardType="phone-pad"
-        negativeColor={true}
-        styless={style.backNegative}
+        negativeColor={isDarkTheme || colorScheme === 'dark' ? false : true}
+        styless={
+          isDarkTheme || colorScheme === 'dark'
+            ? style.back
+            : style.backNegative
+        }
       />
       <Spacer height={16} />
       <FormInput
@@ -158,7 +164,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           required: true,
           pattern: PASSWORD_REGEX,
         }}
-        negativeColor={true}
+        negativeColor={isDarkTheme || colorScheme === 'dark' ? false : true}
         styless={style.backNegative}
         // onPasswordMessagePressed={() => navigate('PasswordError')}
       />
@@ -221,7 +227,11 @@ const styles = ({ theme }: ThemeContext) =>
     },
     backNegative: {
       backgroundColor: theme.colors.backgroundNegative,
-      color: theme.colors.textNegative,
+      color: theme.colors.textPrimary,
+    },
+    back: {
+      backgroundColor: theme.colors.backgroundNegative,
+      color: theme.colors.textPrimary,
     },
     formWrapper: {
       flexGrow: 1,

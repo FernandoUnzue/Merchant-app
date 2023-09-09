@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -29,6 +30,8 @@ import { LoggedStackParamList } from '@modules/logged';
 import ArrowLeftBack from '@core/theme/SVGS/ArrowLeftBack';
 import { Button } from '@components/Button';
 import BackNav from '@components/BackNav';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
 
 /**
  * Types
@@ -148,6 +151,8 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
       resetError();
     }
   };
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
+  const colorScheme = useColorScheme();
   // validate live pass and confirm pass
   useEffect(() => {
     trigger('rPassword');
@@ -173,9 +178,13 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             autoCapitalize="none"
             autoCorrect={false}
             control={control}
+            negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
             rules={{
               required: true,
               pattern: PASSWORD_REGEX,
+            }}
+            styless={{
+              backgroundColor: 'transparent',
             }}
             //  onPasswordMessagePressed={() => navigate('PasswordError')}
             blurOnSubmit={false}
@@ -187,9 +196,13 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             autoCapitalize="none"
             autoCorrect={false}
             control={control}
+            negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
             rules={{
               required: true,
               pattern: PASSWORD_REGEX,
+            }}
+            styless={{
+              backgroundColor: 'transparent',
             }}
             onPasswordMessagePressed={() =>
               navigation.navigate('PasswordError' as never)
@@ -204,8 +217,12 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             autoCorrect={false}
             control={control}
             disablePaste
+            negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
             confirmPass={true}
             passValue={watch('password')}
+            styless={{
+              backgroundColor: 'transparent',
+            }}
             rules={{
               validate: (value: string) =>
                 value === pwd || 'Le password non coincidono',
@@ -264,6 +281,13 @@ const styles = ({ theme }: ThemeContext) =>
     },
     loginFooter: {
       justifyContent: 'space-between',
+    },
+    backNegative: {
+      backgroundColor: 'transparent',
+      color: theme.colors.textPrimary,
+    },
+    back: {
+      backgroundColor: 'transparent',
     },
     loginWrapper: {
       textAlign: 'center',

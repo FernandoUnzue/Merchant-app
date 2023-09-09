@@ -238,8 +238,16 @@ export const RootNavigator: FC = () => {
           style={{
             flex: 1,
             backgroundColor: user.loggedIn
-              ? ColorsGeneralDark.backgroundNegative
-              : ColorsGeneralLight.backgroundNegative,
+              ? `${
+                  isDarkTheme || colorScheme === 'dark'
+                    ? ColorsGeneralLight.backgroundNegative
+                    : ColorsGeneralDark.backgroundNegative
+                }`
+              : `${
+                  isDarkTheme || colorScheme === 'dark'
+                    ? ColorsGeneralDark.backgroundNegative
+                    : ColorsGeneralLight.backgroundNegative
+                }`,
           }}>
           <StatusBar
             backgroundColor={
