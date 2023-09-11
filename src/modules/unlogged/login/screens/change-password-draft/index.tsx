@@ -169,7 +169,6 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             {error.message}
           </Text>
         )}
-        <BackNav navigation={navigation} />
 
         <View style={style.formWrapper}>
           <FormInput

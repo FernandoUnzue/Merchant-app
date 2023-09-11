@@ -91,7 +91,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         </Text>
         <Text style={style.bold}>Condition:</Text>
         <Text>{couponInfo?.condition}</Text>
-        <Text style={style.bold}>Promo Prize:</Text>
+        <Text style={style.bold}>Prize:</Text>
         <Text style={style.number}>{`${couponInfo?.normalPrize
           .toFixed(2)
           .replace('.', ',')}€`}</Text>

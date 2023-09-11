@@ -30,7 +30,11 @@ import { LoggedStackParamList } from '@modules/logged';
 import { SelectInput } from '@components/SelectInput';
 import RNPickerSelect from 'react-native-picker-select';
 import ArrowDown from '@core/theme/SVGS/ArrowDown';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  DrawerActions,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { useGetCountNotiQuery } from '@core/redux/Api/endpoints/Notifications';
 import SettingsIcon from '@core/theme/SVGS/Movements/Settings';
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
@@ -82,6 +86,8 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
     },
   ];
 
+  const nav = useNavigation();
+
   useEffect(() => {
     if (option === 'logout') {
       logoutIntern();
@@ -109,13 +115,7 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
       </View>
       <View style={style.containerTabNav}>
         <TouchableOpacity
-          onPress={() => {
-            if (showMenu) {
-              dispatch(AuthSlice.actions.closeModal());
-            } else {
-              dispatch(AuthSlice.actions.openModal());
-            }
-          }}>
+          onPress={() => nav.dispatch(DrawerActions.openDrawer)}>
           <Impostazioni
             size={40}
             styles={{

@@ -141,6 +141,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         control={control}
         autoCapitalize={'none'}
         autoCorrect={false}
+        fixed={isLoading}
         rules={{
           required: true,
           //   validate: validatePhoneNumber,
@@ -159,6 +160,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         placeholder="Password"
         autoCapitalize="none"
         autoCorrect={false}
+        fixed={isLoading}
         control={control}
         rules={{
           required: true,

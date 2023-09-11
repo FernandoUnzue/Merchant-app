@@ -12,6 +12,8 @@ import ErrorScreenCouponBurn from './coupon/burn/screens/error';
 import PreviewScreenCouponBurn from './coupon/burn/screens/preview';
 import { Coupon, CouponBuy } from '@core/interfaces';
 import CameraScannerScreen from './coupon/burn/screens/cam-scanner';
+import DrawerStack from './drawer';
+import MemberCardHome from './memberCard';
 
 /**
  * Types
@@ -47,6 +49,7 @@ export type LoggedStackParamList = {
   ErrorScreenCouponBurn: CouponProp;
   PreviewScreenCouponBurn: PreviewProps;
   CameraScannerScreen: undefined;
+  MemberDrawerStack: undefined;
 };
 
 const Stack = createStackNavigator<LoggedStackParamList>();
@@ -55,14 +58,16 @@ const Stack = createStackNavigator<LoggedStackParamList>();
  * Navigator
  */
 interface Props {
-  RootNavigation: any;
+  RootNavigation?: any;
 }
 
-const LoggedStack: FC<Props> = ({ RootNavigation }) => {
+// burn coupon stack
+
+export const BurnCouponStack: FC<Props> = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerMode: 'float',
+        headerShown: false,
       }}>
       <Stack.Screen
         name="HomeBurnCoupon"
@@ -70,71 +75,84 @@ const LoggedStack: FC<Props> = ({ RootNavigation }) => {
         initialParams={{
           qrfound: '',
         }}
-        options={{
-          //  headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
-      />
-      <Stack.Screen
-        name="ChangePasswordSuccess"
-        component={ChangePasswordSuccess}
-        options={{
-          //  headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
-      />
-      <Stack.Screen
-        name="ChangePasswordDraft"
-        component={ChangePasswordDraft}
-        options={{
-          //   headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
       />
       <Stack.Screen
         name="SuccessBurnCouponScreen"
         component={SuccessBurnCouponScreen}
-        options={{
-          //   headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
       />
       <Stack.Screen
         name="ErrorScreenCouponBurn"
         component={ErrorScreenCouponBurn}
-        options={{
-          //  headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
       />
       <Stack.Screen
         name="PreviewScreenCouponBurn"
         component={PreviewScreenCouponBurn}
-        options={{
-          headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
       />
 
       <Stack.Screen
         name="CameraScannerScreen"
         component={CameraScannerScreen}
-        options={{
-          //    headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
       />
 
-      <Stack.Screen
-        name="PasswordError"
-        component={PasswordError}
-        options={{
-          //   headerLeftLabelVisible: true,
-          header: () => <TabNav navigation={RootNavigation} />,
-        }}
-      />
+      <Stack.Screen name="PasswordError" component={PasswordError} />
     </Stack.Navigator>
   );
 };
 
-export default LoggedStack;
+// member card stack
+
+type HomeMemberCardProps = {
+  qrfound?: string;
+};
+
+export type MemberCardStackParamList = {
+  MemberCardHome: HomeMemberCardProps;
+};
+
+const StackMemberCard = createStackNavigator<MemberCardStackParamList>();
+
+interface MemberCardProps {}
+export const MemberCardStack: React.FC<MemberCardProps> = () => {
+  return (
+    <StackMemberCard.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <StackMemberCard.Screen
+        name="MemberCardHome"
+        component={MemberCardHome}
+        initialParams={{
+          qrfound: '',
+        }}
+      />
+    </StackMemberCard.Navigator>
+  );
+};
+
+// info client stack
+
+export type InfoOperatorParamList = {
+  ChangePasswordDraft: undefined;
+  ChangePasswordSuccess: undefined;
+};
+
+const StackInfoOpeator = createStackNavigator<InfoOperatorParamList>();
+
+interface InfoOperatorStackProps {}
+export const InfoOperatorStack: React.FC<InfoOperatorStackProps> = () => {
+  return (
+    <StackInfoOpeator.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <StackInfoOpeator.Screen
+        name="ChangePasswordDraft"
+        component={ChangePasswordDraft}
+      />
+      <StackInfoOpeator.Screen
+        name="ChangePasswordSuccess"
+        component={ChangePasswordSuccess}
+      />
+    </StackInfoOpeator.Navigator>
+  );
+};

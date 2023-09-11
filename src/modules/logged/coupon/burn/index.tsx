@@ -20,6 +20,9 @@ import { CouponBuy } from '@core/interfaces';
 import { useClipboard } from '@react-native-community/clipboard';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
+import { ApiRedux } from '@core/redux/Api/api';
+import { extendedApiCoupon } from '@core/redux/Api/endpoints/Coupon';
+import { Alert } from 'react-native';
 
 /**
  * Types
@@ -68,6 +71,43 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
 
   const [exchangeCode, setExchangeCode] = useState<number>();
   const [coupon, setCoupon] = useState<CouponBuy>();
+
+  const [getCouponByEC, { isLoading, isFetching }, lastArgs] =
+    extendedApiCoupon.endpoints.getCouponByEC.useLazyQuery();
+
+  const funcGetCoupon = async (id: number) => {
+    setLoading(true);
+    await getCouponByEC({ exchangeCode: id })
+      .unwrap()
+      .then(r => {
+        if (r.content.length > 0) {
+          setLoading(false);
+          setCoupon(r.content[0]);
+          navigation.navigate('PreviewScreenCouponBurn', {
+            isDirty: isDirty,
+            isValid: isValid,
+            couponInfo: r.content[0],
+            valueSearch: watch('search'),
+            functionSubmit: getOfferCouponInfo,
+          });
+        } else {
+          setError({
+            isError: true,
+            message: 'Not exist coupon with this exchange code',
+          });
+          resetError();
+        }
+      })
+      .catch(e => {
+        setError({
+          isError: true,
+          message: 'Error with request check exchange code',
+        });
+        console.log(e.data);
+        resetError();
+        setLoading(false);
+      });
+  };
 
   const getOfferCouponInfo = async (id: number) => {
     try {
@@ -135,8 +175,8 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() => getOfferCouponInfo(watch('search'))}
-          loading={loading}
+          onPress={() => funcGetCoupon(watch('search'))}
+          loading={isLoading || isFetching}
           disabled={watch('sarch') !== '' && watch('search') ? false : true}
         />
         {error.isError ? (
@@ -157,6 +197,9 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           width: 250,
         }}>
         <Button
+          stylesTitle={{
+            fontSize: 16,
+          }}
           title="APRI LA FOTOCAMERA"
           accessibilityLabel="APRI LA FOTOCAMERA"
           type="primary"
