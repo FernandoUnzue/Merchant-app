@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, useColorScheme, View } from 'react-native';
 import React from 'react';
 import ModalNew from '@components/ModalNew/ModalNew';
-import { Colors, Fonts } from '@core/theme';
+import { Colors, ColorsGeneralDark, Fonts } from '@core/theme';
 import { Button } from '@components/Button';
 import { Spacer } from '@components/Spacer';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
 
 type Props = {
   show: boolean;
@@ -13,6 +15,7 @@ type Props = {
   height?: number;
   message: string;
   loading?: boolean;
+  backgroundColor?: string;
 };
 
 const ModalAsk: React.FC<Props> = ({
@@ -23,7 +26,10 @@ const ModalAsk: React.FC<Props> = ({
   loading,
   height,
   message,
+  backgroundColor,
 }) => {
+  const colorScheme = useColorScheme();
+  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   return (
     <ModalNew
       modalShow={show}
@@ -34,6 +40,12 @@ const ModalAsk: React.FC<Props> = ({
         borderRadius: 20,
         padding: 20,
       }}
+      backColor={
+        isDarkTheme || colorScheme === 'dark'
+          ? ColorsGeneralDark.background
+          : ColorsGeneralDark.backgroundNegative
+      }
+      closeColor={isDarkTheme || colorScheme === 'dark' ? '#fff' : '#000'}
       width={width}
       height={height}>
       <View
@@ -50,7 +62,10 @@ const ModalAsk: React.FC<Props> = ({
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#fff',
+            backgroundColor:
+              isDarkTheme || colorScheme === 'dark'
+                ? ColorsGeneralDark.background
+                : ColorsGeneralDark.backgroundNegative,
           }}>
           <Text
             style={{
@@ -58,7 +73,10 @@ const ModalAsk: React.FC<Props> = ({
               fontFamily: Fonts.bold,
               textAlign: 'center',
               fontSize: 16,
-              color: Colors.black,
+              color:
+                isDarkTheme || colorScheme === 'dark'
+                  ? Colors.white
+                  : Colors.black,
               paddingBottom: 12,
             }}>
             {message}
@@ -77,7 +95,7 @@ const ModalAsk: React.FC<Props> = ({
           <Button
             accessibilityLabel="Cancella"
             title="Cancella"
-            type="quaternarySec"
+            type="secondary"
             onPress={() => closeModal()}
             disabled={loading ? loading : false}
           />
