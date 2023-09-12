@@ -8,24 +8,38 @@ interface userInfo {
 }
 
 interface CustomerProps {
-  card: number;
-  amount: number;
-  userInfo: userInfo;
+  card: number | null;
+  registered: boolean;
+  amount: number | null;
+  userInfo: userInfo | null;
 }
 
 const initialState = {
-  card: 0,
-  amount: 0,
-  userInfo: {
-    name: '',
-    lastName: '',
-    phone: '',
-    province: '',
-  },
+  card: null,
+  registered: false,
+  amount: null,
+  userInfo: null,
 } as CustomerProps;
 
 export const CustomerSlice = createSlice({
   name: 'customer',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserTest: state => {
+      state = {
+        card: 100329,
+        registered: true,
+        amount: 100.1,
+        userInfo: {
+          name: 'Julio',
+          lastName: 'Colombo',
+          phone: '32323232',
+          province: 'Firenze',
+        },
+      };
+    },
+    removeCustomer: state => {
+      state = initialState;
+    },
+  },
 });

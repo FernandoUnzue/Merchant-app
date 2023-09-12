@@ -62,7 +62,6 @@ export const RootNavigator: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const colorScheme = useColorScheme();
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
-  const loadingRedux = useSelector((state: RootState) => state.auth.checking);
   const [checkAuth, { isLoading }] = useCheckAuthMutation();
 
   const [error, setError] = useState<{ isError: boolean; message: string }>({
@@ -216,59 +215,73 @@ export const RootNavigator: FC = () => {
   }
 
   return (
-    <ThemeProvider
-      theme={
-        colorScheme === 'dark' || isDarkTheme ? themeContentDark : themeContent
-      }>
-      <SafeAreaView
-        edges={['top']}
-        style={{
-          flex: 0,
-          backgroundColor:
-            colorScheme === 'dark' || isDarkTheme
-              ? ColorsGeneralDark.backgroundNegative
-              : ColorsGeneralLight.backgroundNegative,
-        }}
-      />
-      <SafeAreaView
-        edges={['left', 'right', 'bottom']}
-        style={{
-          flex: 1,
-          backgroundColor: user.loggedIn
-            ? `${
-                isDarkTheme || colorScheme === 'dark'
-                  ? ColorsGeneralLight.backgroundNegative
-                  : ColorsGeneralDark.backgroundNegative
-              }`
-            : `${
-                isDarkTheme || colorScheme === 'dark'
-                  ? ColorsGeneralDark.backgroundNegative
-                  : ColorsGeneralLight.backgroundNegative
-              }`,
-        }}>
-        <StatusBar
-          backgroundColor={
-            colorScheme === 'dark' || isDarkTheme
-              ? ColorsGeneralDark.backgroundNegative
-              : ColorsGeneralLight.backgroundNegative
-          }
-          barStyle={
-            colorScheme === 'dark' || isDarkTheme
-              ? 'dark-content'
-              : 'light-content'
-          }
+    <>
+      <ThemeProvider
+        theme={
+          colorScheme === 'dark' || isDarkTheme
+            ? themeContentDark
+            : themeContent
+        }>
+        <SafeAreaView
+          edges={['top']}
+          style={{
+            flex: 0,
+            backgroundColor:
+              colorScheme === 'dark' || isDarkTheme
+                ? ColorsGeneralDark.backgroundNegative
+                : ColorsGeneralLight.backgroundNegative,
+          }}
         />
+        <SafeAreaView
+          edges={['left', 'right', 'bottom']}
+          style={{
+            flex: 1,
+            backgroundColor: user.loggedIn
+              ? `${
+                  isDarkTheme || colorScheme === 'dark'
+                    ? ColorsGeneralLight.backgroundNegative
+                    : ColorsGeneralDark.backgroundNegative
+                }`
+              : `${
+                  isDarkTheme || colorScheme === 'dark'
+                    ? ColorsGeneralDark.backgroundNegative
+                    : ColorsGeneralLight.backgroundNegative
+                }`,
+          }}>
+          <StatusBar
+            backgroundColor={
+              colorScheme === 'dark' || isDarkTheme
+                ? ColorsGeneralDark.backgroundNegative
+                : ColorsGeneralLight.backgroundNegative
+            }
+            barStyle={
+              colorScheme === 'dark' || isDarkTheme
+                ? 'dark-content'
+                : 'light-content'
+            }
+          />
 
-        <NavigationContainer
-          linking={LINKING_DEFAULT_CONFIG_UNLOGGED}
-          ref={navigationRef}>
-          {user.loggedIn ? (
-            <DrawerStack RootNavigation={RootNavigation} />
-          ) : (
-            <UnloggedStack RootNavigation={RootNavigation} />
-          )}
-        </NavigationContainer>
-      </SafeAreaView>
-    </ThemeProvider>
+          <NavigationContainer
+            linking={LINKING_DEFAULT_CONFIG_UNLOGGED}
+            ref={navigationRef}>
+            {user.loggedIn ? (
+              <DrawerStack RootNavigation={RootNavigation} />
+            ) : (
+              <UnloggedStack RootNavigation={RootNavigation} />
+            )}
+          </NavigationContainer>
+        </SafeAreaView>
+      </ThemeProvider>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          //  maxHeight: windowHeigth - 155,
+          alignSelf: 'center',
+        }}>
+        <ToggleMenu navigation={RootNavigation} />
+      </View>
+    </>
   );
 };

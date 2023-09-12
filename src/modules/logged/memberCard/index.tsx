@@ -12,11 +12,12 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { DrawerStackParamList } from '../drawer';
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { RootState } from '@core/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@core/redux/store';
 import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
 import { MemberCardStackParamList } from '..';
+import { CustomerSlice } from '@core/redux/customerSlice';
 
 /**
  * Types
@@ -63,6 +64,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
       });
     }, 3000);
   };
+  const dispatch = useDispatch<AppDispatch>();
 
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   const colorScheme = useColorScheme();
@@ -94,7 +96,10 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() => null}
+          onPress={() => {
+            dispatch(CustomerSlice.actions.setUserTest());
+            navigation.navigate('MemberCardHomePrivate');
+          }}
           loading={loading}
           disabled={watch('sarch') !== '' && watch('search') ? false : true}
         />

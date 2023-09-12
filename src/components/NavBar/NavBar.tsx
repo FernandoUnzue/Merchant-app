@@ -27,18 +27,15 @@ import EuroIcon from '@core/theme/SVGS/NavBar/Euro';
 import ProfileIcon from '@core/theme/SVGS/NavBar/Profile';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList } from '@modules/logged';
-import { SelectInput } from '@components/SelectInput';
-import RNPickerSelect from 'react-native-picker-select';
-import ArrowDown from '@core/theme/SVGS/ArrowDown';
+
 import {
   DrawerActions,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { useGetCountNotiQuery } from '@core/redux/Api/endpoints/Notifications';
-import SettingsIcon from '@core/theme/SVGS/Movements/Settings';
+
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
-import { Switch } from 'react-native';
+
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useColorScheme } from 'react-native';
 
@@ -48,61 +45,19 @@ interface Props {
   navigation: any;
 }
 export const TabNav: React.FC<Props> = ({ navigation }) => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  const auth = useSelector((state: RootState) => state.auth);
   const style = useThemedStyles(styles);
-  const route = useRoute();
-
-  const [option, setOption] = useState<string>('');
-
-  const ref = useRef();
+  const customer = useSelector((state: RootState) => state.customer);
   const dispatch = useDispatch<AppDispatch>();
   const logoutIntern = () => {
     dispatch(LogOutAsync());
   };
 
-  const theme = useTheme();
-
-  const showMenu = useSelector((state: RootState) => state.auth.showModal);
-
   const isDarkMode = useSelector((state: RootState) => state.auth.darkMode);
 
   const colorScheme = useColorScheme();
 
-  const [enabled, setEnabled] = useState<boolean>(isDarkMode);
-
-  const toggleEnabled = () => {
-    setEnabled(!enabled);
-    dispatch(AuthSlice.actions.ToggleTheme());
-  };
-
-  const options = [
-    {
-      label: 'Modifica Password',
-      value: 'modificapass',
-    },
-    {
-      label: 'Log Out',
-      value: 'logout',
-    },
-  ];
-
   const nav = useNavigation();
-
-  useEffect(() => {
-    if (option === 'logout') {
-      logoutIntern();
-    } else if (option === 'modificapass') {
-      navigation.navigate('ChangePasswordDraft');
-    }
-  }, [option]);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      setEnabled(true);
-    } else if (!isDarkMode) {
-      setEnabled(false);
-    }
-  }, [isDarkMode]);
 
   return (
     <View style={style.containerNav}>
@@ -115,7 +70,15 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
       </View>
       <View style={style.containerTabNav}>
         <TouchableOpacity
-          onPress={() => nav.dispatch(DrawerActions.openDrawer)}>
+          onPress={() =>
+            !customer.registered
+              ? `${
+                  auth.showModal
+                    ? dispatch(AuthSlice.actions.closeModal())
+                    : dispatch(AuthSlice.actions.openModal())
+                }`
+              : nav.dispatch(DrawerActions.openDrawer)
+          }>
           <Impostazioni
             size={40}
             styles={{

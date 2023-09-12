@@ -14,6 +14,7 @@ import { Coupon, CouponBuy } from '@core/interfaces';
 import CameraScannerScreen from './coupon/burn/screens/cam-scanner';
 import DrawerStack from './drawer';
 import MemberCardHome from './memberCard';
+import HomeMemberCardPrivate from './memberCard/screens/home';
 
 /**
  * Types
@@ -107,6 +108,7 @@ type HomeMemberCardProps = {
 
 export type MemberCardStackParamList = {
   MemberCardHome: HomeMemberCardProps;
+  MemberCardHomePrivate: undefined;
 };
 
 const StackMemberCard = createStackNavigator<MemberCardStackParamList>();
@@ -124,6 +126,10 @@ export const MemberCardStack: React.FC<MemberCardProps> = () => {
         initialParams={{
           qrfound: '',
         }}
+      />
+      <StackMemberCard.Screen
+        name="MemberCardHomePrivate"
+        component={HomeMemberCardPrivate}
       />
     </StackMemberCard.Navigator>
   );

@@ -52,6 +52,24 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     },
     {
       id: 2,
+      name: 'Member Card',
+      icon: <Impostazioni size={35} color={'#000'} />,
+      onPress: () => {
+        navigation.navigate('MemberCardHome');
+        dispatch(AuthSlice.actions.closeModal());
+      },
+    },
+    {
+      id: 3,
+      name: 'Burn Coupon',
+      icon: <Impostazioni size={35} color={'#000'} />,
+      onPress: () => {
+        navigation.navigate('BurnCoupon');
+        dispatch(AuthSlice.actions.closeModal());
+      },
+    },
+    {
+      id: 4,
       name: 'LogOut',
       icon: <LogoutIcon size={35} color="#000" />,
       onPress: () => setShowModalLogOut(true),
@@ -130,7 +148,7 @@ const styles = ({ theme }: ThemeContext) =>
       height: 550,
     },
     contToggle: {
-      height: 130,
+      height: 250,
     },
     badge: {
       borderRadius: 100,
