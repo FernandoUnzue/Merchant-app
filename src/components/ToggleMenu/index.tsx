@@ -55,7 +55,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       name: 'Member Card',
       icon: <Impostazioni size={35} color={'#000'} />,
       onPress: () => {
-        navigation.navigate('MemberCardHome');
+        navigation.navigate('MemberCardStack');
         dispatch(AuthSlice.actions.closeModal());
       },
     },

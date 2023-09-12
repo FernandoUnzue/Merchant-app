@@ -23,23 +23,23 @@ const initialState = {
 
 export const CustomerSlice = createSlice({
   name: 'customer',
-  initialState,
+  initialState: initialState,
   reducers: {
-    setUserTest: state => {
-      state = {
+    setUserTest: state =>
+      (state = {
         card: 100329,
         registered: true,
-        amount: 100.1,
+        amount: 100,
         userInfo: {
           name: 'Julio',
           lastName: 'Colombo',
           phone: '32323232',
           province: 'Firenze',
         },
-      };
-    },
-    removeCustomer: state => {
-      state = initialState;
-    },
+      }),
+
+    removeCustomer: state => (state = initialState),
   },
 });
+
+export const { setUserTest, removeCustomer } = CustomerSlice.actions;

@@ -14,7 +14,8 @@ import { Coupon, CouponBuy } from '@core/interfaces';
 import CameraScannerScreen from './coupon/burn/screens/cam-scanner';
 import DrawerStack from './drawer';
 import MemberCardHome from './memberCard';
-import HomeMemberCardPrivate from './memberCard/screens/home';
+import HomeMemberCardPrivate from './memberCard/screens/spesa';
+import HomeSpesa from './memberCard/screens/spesa';
 
 /**
  * Types
@@ -127,11 +128,27 @@ export const MemberCardStack: React.FC<MemberCardProps> = () => {
           qrfound: '',
         }}
       />
-      <StackMemberCard.Screen
-        name="MemberCardHomePrivate"
-        component={HomeMemberCardPrivate}
-      />
     </StackMemberCard.Navigator>
+  );
+};
+
+// spesa stack
+
+export type SpesaStackParamList = {
+  HomeSpesa: undefined;
+};
+
+const SpesaStack = createStackNavigator<SpesaStackParamList>();
+
+interface SpesaProps {}
+export const SpesaFlowStack: React.FC<SpesaProps> = () => {
+  return (
+    <SpesaStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <SpesaStack.Screen name="HomeSpesa" component={HomeSpesa} />
+    </SpesaStack.Navigator>
   );
 };
 

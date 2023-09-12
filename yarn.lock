@@ -6711,6 +6711,11 @@ react-native-confirmation-code-field@7.3.0:
   resolved "https://registry.yarnpkg.com/react-native-confirmation-code-field/-/react-native-confirmation-code-field-7.3.0.tgz#828527001be9f30fd63e12ac4be66845f5036b5e"
   integrity sha512-o/ByEXh0+9aEehboH/MJorlwELDWpsViedf6Putogsxx2493dzFsZ9P/R9m3qZJ6s2AnWWL9Ja4qjzO9WE5zVg==
 
+react-native-currency-input@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-currency-input/-/react-native-currency-input-1.1.0.tgz#2f86e6ad4d47518df0c5ade06f5e0f5afa0aeb11"
+  integrity sha512-TNyqQ98pB6WdLJiEz5NIZWUT1zpzJNBUCGS+5PGO0QCmbssSA/n4zVC7+msX5Z0Wl+iwhpTPsCckDJeRIlxwKg==
+
 react-native-date-picker@4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.2.tgz#07fb8a9021fb48ef9a20b043d33c14e858220883"

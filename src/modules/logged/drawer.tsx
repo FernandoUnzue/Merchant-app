@@ -6,6 +6,7 @@ import { ColorsGeneralDark } from '@core/theme';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import LogoutIcon from '@core/theme/SVGS/Movements/Logout';
 import UserDataIcon from '@core/theme/SVGS/Movements/UserData';
+import RiscattoIcon from '@core/theme/SVGS/RiscattoIcon';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -14,7 +15,12 @@ import {
 } from '@react-navigation/drawer';
 import { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BurnCouponStack, InfoOperatorStack, MemberCardStack } from '.';
+import {
+  BurnCouponStack,
+  InfoOperatorStack,
+  MemberCardStack,
+  SpesaFlowStack,
+} from '.';
 import MemberCardHome from './memberCard';
 
 interface HomeLoggedProps {
@@ -25,6 +31,8 @@ export type DrawerStackParamList = {
   BurnCoupon: HomeLoggedProps;
   MemberCardStack: HomeLoggedProps;
   ModificaPassword: undefined;
+  Spesa: undefined;
+  InfoClient: undefined;
 };
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -34,7 +42,9 @@ const Drawer = createDrawerNavigator<DrawerStackParamList>();
 interface Props {
   RootNavigation: any;
 }
+
 const DrawerStack: FC<Props> = ({ RootNavigation }) => {
+  const customer = useSelector((state: RootState) => state.customer);
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -48,6 +58,20 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
       }}
       drawerContent={props => <DrawerContent {...props} />}
       initialRouteName={'MemberCardStack'}>
+      <Drawer.Screen
+        name="MemberCardStack"
+        component={MemberCardStack}
+        options={{
+          drawerItemStyle: { display: 'none' },
+          drawerLabel: 'Member Card',
+          drawerIcon: resp => (
+            <Impostazioni
+              size={30}
+              color={resp.focused ? ColorsGeneralDark.background : '#000'}
+            />
+          ),
+        }}
+      />
       <Drawer.Screen
         name="ModificaPassword"
         component={InfoOperatorStack}
@@ -74,19 +98,37 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
           ),
         }}
       />
-      <Drawer.Screen
-        name="MemberCardStack"
-        component={MemberCardStack}
-        options={{
-          drawerLabel: 'Member Card',
-          drawerIcon: resp => (
-            <Impostazioni
-              size={30}
-              color={resp.focused ? ColorsGeneralDark.background : '#000'}
-            />
-          ),
-        }}
-      />
+
+      <Drawer.Group>
+        <Drawer.Screen
+          name="Spesa"
+          component={SpesaFlowStack}
+          options={{
+            drawerItemStyle: customer.registered ? null : { display: 'none' },
+            drawerLabel: 'Spesa',
+            drawerIcon: resp => (
+              <RiscattoIcon
+                size={30}
+                color={resp.focused ? ColorsGeneralDark.background : '#000'}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="InfoClient"
+          component={MemberCardStack}
+          options={{
+            drawerItemStyle: customer.registered ? null : { display: 'none' },
+            drawerLabel: 'Info Client',
+            drawerIcon: resp => (
+              <UserDataIcon
+                size={30}
+                color={resp.focused ? ColorsGeneralDark.background : '#000'}
+              />
+            ),
+          }}
+        />
+      </Drawer.Group>
     </Drawer.Navigator>
   );
 };

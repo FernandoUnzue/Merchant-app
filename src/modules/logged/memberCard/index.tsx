@@ -18,6 +18,7 @@ import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
 import { MemberCardStackParamList } from '..';
 import { CustomerSlice } from '@core/redux/customerSlice';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 /**
  * Types
@@ -67,7 +68,10 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
+  const customer = useSelector((state: RootState) => state.customer);
   const colorScheme = useColorScheme();
+
+  const nav = useNavigation();
 
   useEffect(() => {
     setValue('search', qrfound);
@@ -98,7 +102,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
           type="primary"
           onPress={() => {
             dispatch(CustomerSlice.actions.setUserTest());
-            navigation.navigate('MemberCardHomePrivate');
+            nav.navigate('Spesa' as never);
           }}
           loading={loading}
           disabled={watch('sarch') !== '' && watch('search') ? false : true}
