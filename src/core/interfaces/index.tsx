@@ -1,3 +1,5 @@
+import { NationalNumber } from 'libphonenumber-js';
+
 export interface Preferezes {
   subCategoryId: number;
   name: string;
@@ -35,6 +37,17 @@ export interface Coupon {
 
 export interface ProfileResponse {
   balance: {
+    userId: number;
+    pointsCharged: number;
+    pointsUsed: number;
+    pointsChargedCount: number;
+    pointsUsedCount: number;
+    cashbackUsed: number;
+    totalMoneyInSale: number;
+    paidMoneyInSale: number;
+    kycDigitale: any | null;
+    invitorCode: string;
+    updatedAt: string;
     balanceId: number;
     balancePoints: number;
     bankBalance: number;
@@ -63,6 +76,7 @@ export interface ProfileResponse {
   username: string;
   enabledEmail: boolean;
   email_old: string | null;
+  oneSignalId: string;
 }
 
 export interface MovementsProps {

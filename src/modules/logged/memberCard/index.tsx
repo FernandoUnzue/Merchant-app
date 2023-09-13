@@ -19,6 +19,7 @@ import { Button } from '@components/Button';
 import { MemberCardStackParamList } from '..';
 import { CustomerSlice } from '@core/redux/customerSlice';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { extendedApiUser } from '@core/redux/Api/endpoints/User';
 
 /**
  * Types
@@ -70,6 +71,27 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   const customer = useSelector((state: RootState) => state.customer);
   const colorScheme = useColorScheme();
+  const [getMemberByCard, { isLoading, isFetching }, lastArgs] =
+    extendedApiUser.endpoints.getMemberByCard.useLazyQuery();
+
+  const funcGetMemberByCard = async (id: string) => {
+    setLoading(true);
+    await getMemberByCard({ card: id })
+      .unwrap()
+      .then(r => {
+        setLoading(false);
+        nav.navigate('Spesa' as never);
+      })
+      .catch(e => {
+        setError({
+          isError: true,
+          message: 'Error with request check exchange code',
+        });
+        console.log(e.data);
+        resetError();
+        setLoading(false);
+      });
+  };
 
   const nav = useNavigation();
 
@@ -100,10 +122,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() => {
-            dispatch(CustomerSlice.actions.setUserTest());
-            nav.navigate('Spesa' as never);
-          }}
+          onPress={() => funcGetMemberByCard(watch('search'))}
           loading={loading}
           disabled={watch('sarch') !== '' && watch('search') ? false : true}
         />

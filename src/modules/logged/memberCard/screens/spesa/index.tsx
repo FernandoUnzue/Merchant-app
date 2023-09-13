@@ -15,6 +15,8 @@ import { useForm } from 'react-hook-form';
 import { CurrencyFormInput } from '@components/CurrencyInput';
 import EuroIcon from '@core/theme/SVGS/NavBar/Euro';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
+import { useNavigation } from '@react-navigation/native';
+import { extendedApiUser } from '@core/redux/Api/endpoints/User';
 
 /**
  * Types
@@ -39,13 +41,15 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
   const amount = customer.amount ? customer.amount : 0;
   const dispatch = useDispatch<AppDispatch>();
 
+  const nav = useNavigation();
+
   return (
     <View style={style.main}>
-      <Spacer height={50} />
+      <Spacer height={20} />
       <View style={style.walletCont}>
         <EuroIcon size={15} color={style.textWallet.color} />
         <Text style={style.textWallet}>Saldo Wallet</Text>
-        <Text style={style.textWallet}>{`${
+        <Text style={style.textWalletNumber}>{`${
           customer.amount
             ? customer.amount?.toFixed(2).replace('.', ',')
             : '-----'
@@ -53,7 +57,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
       </View>
       <Text style={style.title}>SPESA</Text>
 
-      <Text style={style.textBold}>Inserici importo</Text>
+      <Text style={style.textBold}>Inserisci importo</Text>
 
       <CurrencyFormInput
         icon={false}
@@ -79,7 +83,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           <Spacer height={35} />
           <Text style={style.text}>Cardholder name</Text>
           <Text>
-            {user?.name} {user?.lastName}
+            {user?.first_name} {user?.last_name}
           </Text>
         </View>
         <View
@@ -108,7 +112,10 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         type="secondary"
         accessibilityLabel="REMOVE CUSTOMER"
         title="REMOVE CUSTOMER"
-        onPress={() => dispatch(CustomerSlice.actions.removeCustomer())}
+        onPress={() => {
+          dispatch(CustomerSlice.actions.removeCustomer());
+          nav.navigate('MemberCardStack' as never);
+        }}
       />
       <Spacer height={20} />
     </View>
@@ -175,6 +182,11 @@ const styles = ({ theme }: ThemeContext) =>
     },
     textWallet: {
       fontSize: 12,
+      color: theme.colors.backgroundNegative,
+    },
+    textWalletNumber: {
+      fontSize: 13,
+      fontFamily: theme.fonts.bold,
       color: theme.colors.backgroundNegative,
     },
     errorMessage: {

@@ -128,6 +128,10 @@ export const MemberCardStack: React.FC<MemberCardProps> = () => {
           qrfound: '',
         }}
       />
+      <Stack.Screen
+        name="CameraScannerScreen"
+        component={CameraScannerScreen}
+      />
     </StackMemberCard.Navigator>
   );
 };
