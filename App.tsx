@@ -1,11 +1,5 @@
-import {
-  ActivityIndicator,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, ColorsLight } from '@core/theme';
 import {
@@ -27,7 +21,6 @@ import { ONESIGNAL_GLOBAL } from 'react-native-dotenv';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native';
 import Loading from '@components/Loading';
-import 'react-native-reanimated';
 
 const App = () => {
   const persistor = persistStore(store);

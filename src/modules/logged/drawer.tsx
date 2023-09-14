@@ -32,7 +32,6 @@ export type DrawerStackParamList = {
   MemberCardStack: HomeLoggedProps;
   ModificaPassword: undefined;
   Spesa: undefined;
-  InfoClient: undefined;
 };
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -99,22 +98,20 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
         }}
       />
 
-      <Drawer.Group>
-        <Drawer.Screen
-          name="Spesa"
-          component={SpesaFlowStack}
-          options={{
-            drawerItemStyle: customer.registered ? null : { display: 'none' },
-            drawerLabel: 'Spesa',
-            drawerIcon: resp => (
-              <RiscattoIcon
-                size={30}
-                color={resp.focused ? ColorsGeneralDark.background : '#000'}
-              />
-            ),
-          }}
-        />
-      </Drawer.Group>
+      <Drawer.Screen
+        name="Spesa"
+        component={SpesaFlowStack}
+        options={{
+          drawerItemStyle: customer.registered ? null : { display: 'none' },
+          drawerLabel: 'Spesa',
+          drawerIcon: resp => (
+            <RiscattoIcon
+              size={30}
+              color={resp.focused ? ColorsGeneralDark.background : '#000'}
+            />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
