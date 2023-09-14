@@ -85,7 +85,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
       .catch(e => {
         setError({
           isError: true,
-          message: 'Error with request check exchange code',
+          message: 'Error with request please check card number',
         });
         console.log(e.data);
         resetError();
@@ -150,7 +150,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
           title="APRI LA FOTOCAMERA"
           accessibilityLabel="APRI LA FOTOCAMERA"
           type="primary"
-          onPress={() => null}
+          onPress={() => navigation.navigate('CameraScannerScreen')}
         />
       </View>
     </ScrollView>

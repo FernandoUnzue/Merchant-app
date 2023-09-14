@@ -34,7 +34,7 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
             <Text style={style.text} numberOfLines={1} ellipsizeMode={'tail'}>
               {coupon.tittle}
             </Text>
-            <Text style={style.number}>{`${coupon?.normalPrize
+            <Text style={style.number}>{`${coupon?.promoPrize
               .toFixed(2)
               .replace('.', ',')}€`}</Text>
           </View>

@@ -114,20 +114,6 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
             ),
           }}
         />
-        <Drawer.Screen
-          name="InfoClient"
-          component={MemberCardStack}
-          options={{
-            drawerItemStyle: customer.registered ? null : { display: 'none' },
-            drawerLabel: 'Info Client',
-            drawerIcon: resp => (
-              <UserDataIcon
-                size={30}
-                color={resp.focused ? ColorsGeneralDark.background : '#000'}
-              />
-            ),
-          }}
-        />
       </Drawer.Group>
     </Drawer.Navigator>
   );

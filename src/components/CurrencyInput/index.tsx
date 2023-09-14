@@ -11,7 +11,7 @@ import { Control, Controller, Path } from 'react-hook-form';
 import Clipboard from '@react-native-community/clipboard';
 
 import { ThemeContext, useThemedStyles } from '@core/theme';
-import CurrencyInput from 'react-native-currency-input';
+import CurrencyInput, { FakeCurrencyInput } from 'react-native-currency-input';
 import { ShowIf } from '@components/ShowIf';
 import CheckIcon from '@core/theme/SVGS/Movements/Check';
 import WarningIcon from '@core/theme/SVGS/WarningIcon';
@@ -30,6 +30,7 @@ interface IFormInput<ContentType> extends TextInputProps {
   disablePaste?: boolean;
   styless?: ViewStyle;
   errorMessagesStyles?: TextStyle;
+  fake?: boolean;
 }
 
 /**
@@ -44,6 +45,7 @@ export function CurrencyFormInput<ContentType>({
   disabled = false,
   disablePaste = false,
   errorMessagesStyles,
+  fake = false,
   styless,
   ...props
 }: IFormInput<ContentType>) {
@@ -62,26 +64,49 @@ export function CurrencyFormInput<ContentType>({
       }) => (
         <>
           <View style={{ ...style.container, ...styless }}>
-            <CurrencyInput
-              value={value}
-              onChangeValue={onChange}
-              style={[
-                style.input,
-                disabled ? style.fixedInput : style.editableInput,
-                { height: props.multiline ? 150 : 50 },
-              ]}
-              prefix="€"
-              delimiter="."
-              maxValue={20000}
-              separator=","
-              precision={2}
-              onBlur={onBlur}
-              onFocus={() => disablePaste && resetClipboard()}
-              onSelectionChange={() => disablePaste && resetClipboard()}
-              onSubmitEditing={Keyboard.dismiss}
-              editable={!disabled}
-              {...props}
-            />
+            {!fake ? (
+              <CurrencyInput
+                value={value}
+                onChangeValue={onChange}
+                style={[
+                  style.input,
+                  disabled ? style.fixedInput : style.editableInput,
+                  { height: props.multiline ? 150 : 50 },
+                ]}
+                prefix="€"
+                delimiter="."
+                maxValue={20000}
+                separator=","
+                precision={2}
+                onBlur={onBlur}
+                onFocus={() => disablePaste && resetClipboard()}
+                onSelectionChange={() => disablePaste && resetClipboard()}
+                onSubmitEditing={Keyboard.dismiss}
+                editable={!disabled}
+                {...props}
+              />
+            ) : (
+              <FakeCurrencyInput
+                value={value}
+                onChangeValue={onChange}
+                style={[
+                  style.input,
+                  disabled ? style.fixedInput : style.editableInput,
+                  { height: props.multiline ? 150 : 50 },
+                ]}
+                prefix="€"
+                delimiter="."
+                maxValue={20000}
+                separator=","
+                precision={2}
+                onBlur={onBlur}
+                onFocus={() => disablePaste && resetClipboard()}
+                onSelectionChange={() => disablePaste && resetClipboard()}
+                onSubmitEditing={Keyboard.dismiss}
+                editable={!disabled}
+                {...props}
+              />
+            )}
             <ShowIf condition={icon}>
               <ShowIf condition={isDirty || disabled}>
                 <View style={style.icon}>

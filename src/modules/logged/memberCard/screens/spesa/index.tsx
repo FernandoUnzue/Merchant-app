@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MemberCardStackParamList, SpesaStackParamList } from '@modules/logged';
 import { ColorsGeneralDark, ThemeContext, useThemedStyles } from '@core/theme';
@@ -17,6 +17,7 @@ import EuroIcon from '@core/theme/SVGS/NavBar/Euro';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useNavigation } from '@react-navigation/native';
 import { extendedApiUser } from '@core/redux/Api/endpoints/User';
+import { FakeCurrencyInput } from 'react-native-currency-input';
 
 /**
  * Types
@@ -37,6 +38,8 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
   });
   const customer = useSelector((state: RootState) => state.customer);
   const user = useSelector((state: RootState) => state.customer.userInfo);
+
+  const [number, setNumber] = useState<number>(0);
 
   const amount = customer.amount ? customer.amount : 0;
   const dispatch = useDispatch<AppDispatch>();

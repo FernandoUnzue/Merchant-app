@@ -16,6 +16,7 @@ import DrawerStack from './drawer';
 import MemberCardHome from './memberCard';
 import HomeMemberCardPrivate from './memberCard/screens/spesa';
 import HomeSpesa from './memberCard/screens/spesa';
+import CameraScannerScreenCard from './memberCard/screens/cam-scanner-card';
 
 /**
  * Types
@@ -109,7 +110,7 @@ type HomeMemberCardProps = {
 
 export type MemberCardStackParamList = {
   MemberCardHome: HomeMemberCardProps;
-  MemberCardHomePrivate: undefined;
+  CameraScannerScreen: undefined;
 };
 
 const StackMemberCard = createStackNavigator<MemberCardStackParamList>();
@@ -128,9 +129,9 @@ export const MemberCardStack: React.FC<MemberCardProps> = () => {
           qrfound: '',
         }}
       />
-      <Stack.Screen
+      <StackMemberCard.Screen
         name="CameraScannerScreen"
-        component={CameraScannerScreen}
+        component={CameraScannerScreenCard}
       />
     </StackMemberCard.Navigator>
   );
