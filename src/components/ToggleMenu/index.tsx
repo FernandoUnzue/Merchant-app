@@ -46,7 +46,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       name: 'Modifica password',
       icon: <Impostazioni size={35} color={'#000'} />,
       onPress: () => {
-        navigation.navigate('ChangePasswordDraft');
+        navigation.navigate('ModificaPassword');
         dispatch(AuthSlice.actions.closeModal());
       },
     },

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MemberCardStackParamList, SpesaStackParamList } from '@modules/logged';
@@ -66,9 +66,8 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         icon={false}
         control={control}
         name="importo"
-        placeholder="€0,00"
-        cursorColor={'#ddd'}
-        keyboardType="number-pad"
+        placeholder={Platform.OS === 'ios' ? '€0,00' : '€0,000'}
+        keyboardType="numeric"
         styless={style.numberCont}
         style={style.number}
         errorMessagesStyles={style.errorMessage}
@@ -146,7 +145,9 @@ const styles = ({ theme }: ThemeContext) =>
       fontFamily: theme.fonts.bold,
       color: '#ddd',
       borderBottomWidth: 0,
-      //  width: 250,
+
+      verticalAlign: 'center',
+      width: 250,
     },
     number: {
       fontSize: 50,

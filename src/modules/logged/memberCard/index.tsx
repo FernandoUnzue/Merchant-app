@@ -111,6 +111,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
           styless={{
             backgroundColor: 'transparent',
           }}
+          keyboardType={'numeric'}
           negativeColor={false}
           showIcons={false}
           rules={{
