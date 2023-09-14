@@ -59,6 +59,17 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
 
   const nav = useNavigation();
 
+  const funcFinal = () => {
+    if (!customer.registered) {
+      if (auth.showModal) {
+        return dispatch(AuthSlice.actions.closeModal());
+      } else {
+        return dispatch(AuthSlice.actions.openModal());
+      }
+    }
+    return nav.dispatch(DrawerActions.openDrawer);
+  };
+
   return (
     <View style={style.containerNav}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -69,16 +80,7 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
         />
       </View>
       <View style={style.containerTabNav}>
-        <TouchableOpacity
-          onPress={() =>
-            !customer.registered
-              ? `${
-                  auth.showModal
-                    ? dispatch(AuthSlice.actions.closeModal())
-                    : dispatch(AuthSlice.actions.openModal())
-                }`
-              : nav.dispatch(DrawerActions.openDrawer)
-          }>
+        <TouchableOpacity onPress={() => funcFinal()}>
           <Impostazioni
             size={40}
             styles={{

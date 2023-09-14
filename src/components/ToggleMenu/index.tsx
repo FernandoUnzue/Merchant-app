@@ -10,6 +10,7 @@ import UserDataIcon from '@core/theme/SVGS/Movements/UserData';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Animated,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -78,8 +79,8 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
 
   if (showMenu) {
     return (
-      <Animated.View style={style.menuContainer}>
-        <Animated.ScrollView style={style.contToggle}>
+      <View style={style.menuContainer}>
+        <ScrollView style={style.contToggle}>
           {items.map(item => {
             return (
               <TouchableOpacity onPress={item.onPress} key={item.id}>
@@ -117,7 +118,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
               </TouchableOpacity>
             );
           })}
-        </Animated.ScrollView>
+        </ScrollView>
         <ModalAsk
           show={showModalLogOut}
           closeModal={() => {
@@ -130,7 +131,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
           message={'¿Sei sicuro di voler uscire?'}
           loading={false}
         />
-      </Animated.View>
+      </View>
     );
   } else {
     return null;
