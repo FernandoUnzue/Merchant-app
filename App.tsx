@@ -1,5 +1,5 @@
-import 'react-native-reanimated';
 import 'react-native-gesture-handler';
+import 'react-native-reanimated';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, ColorsLight } from '@core/theme';
 import {

@@ -71,6 +71,7 @@ export const BurnCouponStack: FC<Props> = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        animationEnabled: false,
       }}>
       <Stack.Screen
         name="HomeBurnCoupon"
@@ -121,6 +122,7 @@ export const MemberCardStack: React.FC<MemberCardProps> = () => {
     <StackMemberCard.Navigator
       screenOptions={{
         headerShown: false,
+        animationEnabled: false,
       }}>
       <StackMemberCard.Screen
         name="MemberCardHome"
@@ -151,6 +153,7 @@ export const SpesaFlowStack: React.FC<SpesaProps> = () => {
     <SpesaStack.Navigator
       screenOptions={{
         headerShown: false,
+        animationEnabled: false,
       }}>
       <SpesaStack.Screen name="HomeSpesa" component={HomeSpesa} />
     </SpesaStack.Navigator>
@@ -172,6 +175,7 @@ export const InfoOperatorStack: React.FC<InfoOperatorStackProps> = () => {
     <StackInfoOpeator.Navigator
       screenOptions={{
         headerShown: false,
+        animationEnabled: false,
       }}>
       <StackInfoOpeator.Screen
         name="ChangePasswordDraft"
