@@ -100,6 +100,10 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
     trigger('search');
   }, [qrfound]);
 
+  if (customer.registered) {
+    nav.navigate('Spesa' as never);
+  }
+
   return (
     <ScrollView contentContainerStyle={style.main}>
       <Text style={style.title}>Member Card</Text>

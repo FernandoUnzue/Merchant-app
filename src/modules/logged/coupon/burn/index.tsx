@@ -84,8 +84,6 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           setLoading(false);
           setCoupon(r.content[0]);
           navigation.navigate('PreviewScreenCouponBurn', {
-            isDirty: isDirty,
-            isValid: isValid,
             couponInfo: r.content[0],
             valueSearch: watch('search'),
             functionSubmit: getOfferCouponInfo,
@@ -120,8 +118,6 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
         if (response.data.content.length > 0) {
           setCoupon(response.data.content[0]);
           navigation.navigate('PreviewScreenCouponBurn', {
-            isDirty: isDirty,
-            isValid: isValid,
             couponInfo: response.data.content[0],
             valueSearch: watch('search'),
             functionSubmit: getOfferCouponInfo,

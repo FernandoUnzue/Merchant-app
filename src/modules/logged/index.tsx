@@ -22,8 +22,6 @@ import CameraScannerScreenCard from './memberCard/screens/cam-scanner-card';
  * Types
  */
 type PreviewProps = {
-  isValid: boolean;
-  isDirty: boolean;
   couponInfo: CouponBuy;
   valueSearch: string;
   functionSubmit: (a: number) => void;

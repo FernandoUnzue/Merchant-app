@@ -23,8 +23,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
   navigation,
   route,
 }) => {
-  const { isDirty, isValid, couponInfo, functionSubmit, valueSearch } =
-    route.params;
+  const { couponInfo, functionSubmit, valueSearch } = route.params;
   const style = useThemedStyles(styles);
 
   const [burnCoupon, { isLoading }] = useBurnCouponMutation();
@@ -103,7 +102,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         onPress={() => burnCouponFunc(couponInfo.exchangeCode)}
         loading={isLoading}
         type="primary"
-        disabled={!isDirty || !isValid || couponInfo?.burnedDate !== null}
+        disabled={couponInfo?.burnedDate !== null}
       />
       {couponInfo?.burnedDate !== null ? (
         <Text style={style.disabledText}>
