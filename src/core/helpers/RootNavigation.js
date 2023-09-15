@@ -17,3 +17,18 @@ export function addListener(name, callback) {
     navigationRef.addListener(name, callback);
   }
 }
+export function getState() {
+  if (navigationRef.isReady()) {
+    return navigationRef.getState();
+  }
+}
+export function getRootState() {
+  if (navigationRef.isReady()) {
+    return navigationRef.getRootState();
+  }
+}
+  export function isFocused() {
+    if (navigationRef.isReady()) {
+     return navigationRef.isFocused();
+    }
+}

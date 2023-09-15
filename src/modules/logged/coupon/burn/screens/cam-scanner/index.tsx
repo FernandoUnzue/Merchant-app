@@ -116,8 +116,8 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
               alignSelf: 'center',
             }}>
             <ButtonFlat
-              title="TAKE"
-              widthButton={83}
+              title="OK"
+              widthButton={65}
               heightButton={50}
               fontSize={14}
               styless={{

@@ -1,12 +1,23 @@
 import ModalAsk from '@components/ModalAsk';
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { AppDispatch, RootState } from '@core/redux/store';
-import { Colors, Fonts, ThemeContext, useThemedStyles } from '@core/theme';
+import {
+  Colors,
+  ColorsGeneralDark,
+  Fonts,
+  ThemeContext,
+  useThemedStyles,
+} from '@core/theme';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import ArrowRightIcon from '@core/theme/SVGS/ArrowRight';
 import BellIcon from '@core/theme/SVGS/Bell';
 import LogoutIcon from '@core/theme/SVGS/Movements/Logout';
 import UserDataIcon from '@core/theme/SVGS/Movements/UserData';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -34,7 +45,9 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     dispatch(LogOutAsync());
     dispatch(AuthSlice.actions.closeModal());
   };
+  const state = navigation.getState();
 
+  console.log(`state ${JSON.stringify(state)}`);
   interface ItemsMenu {
     id: number;
     name: string;
@@ -43,34 +56,50 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
   }
   const items: Array<ItemsMenu> = [
     {
-      id: 1,
-      name: 'Modifica password',
-      icon: <Impostazioni size={35} color={'#000'} />,
-      onPress: () => {
-        navigation.navigate('ModificaPassword');
-        dispatch(AuthSlice.actions.closeModal());
-      },
-    },
-    {
-      id: 2,
+      id: 0,
       name: 'Member Card',
-      icon: <Impostazioni size={35} color={'#000'} />,
+      icon: (
+        <Impostazioni
+          size={35}
+          color={state.index === 0 ? ColorsGeneralDark.background : '#000'}
+        />
+      ),
       onPress: () => {
         navigation.navigate('MemberCardStack');
         dispatch(AuthSlice.actions.closeModal());
       },
     },
     {
-      id: 3,
+      id: 1,
+      name: 'Modifica password',
+      icon: (
+        <Impostazioni
+          size={35}
+          color={state.index === 1 ? ColorsGeneralDark.background : '#000'}
+        />
+      ),
+      onPress: () => {
+        navigation.navigate('ModificaPassword');
+        dispatch(AuthSlice.actions.closeModal());
+      },
+    },
+
+    {
+      id: 2,
       name: 'Burn Coupon',
-      icon: <Impostazioni size={35} color={'#000'} />,
+      icon: (
+        <Impostazioni
+          size={35}
+          color={state.index === 2 ? ColorsGeneralDark.background : '#000'}
+        />
+      ),
       onPress: () => {
         navigation.navigate('BurnCoupon');
         dispatch(AuthSlice.actions.closeModal());
       },
     },
     {
-      id: 4,
+      id: 3,
       name: 'LogOut',
       icon: <LogoutIcon size={35} color="#000" />,
       onPress: () => setShowModalLogOut(true),
@@ -103,7 +132,10 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                         fontSize: 20,
                         fontFamily: Fonts.bold,
                         alignSelf: 'center',
-                        color: Colors.black,
+                        color:
+                          state.index === item.id
+                            ? ColorsGeneralDark.background
+                            : Colors.black,
                       }}>
                       {item.name}
                     </Text>
@@ -112,7 +144,14 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                     style={{
                       marginTop: 10,
                     }}>
-                    <ArrowRightIcon size={30} />
+                    <ArrowRightIcon
+                      size={30}
+                      color={
+                        state.index === item.id
+                          ? ColorsGeneralDark.background
+                          : '#000'
+                      }
+                    />
                   </View>
                 </View>
               </TouchableOpacity>
