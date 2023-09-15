@@ -15,6 +15,7 @@ import { LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { LoggedStackParamList } from '@modules/logged';
 import OkIcon from '@core/theme/SVGS/OkIcon';
 import { Button } from '@components/Button';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Types
@@ -36,6 +37,7 @@ export const ChangePasswordSuccess: FC<ChangePasswordSuccessScreenProps> = ({
   const style = useThemedStyles(styles);
   const { container } = useLoginContainer();
   const dispatch = useDispatch<AppDispatch>();
+  const nav = useNavigation();
   return (
     <>
       <View style={[container, style.body]}>
@@ -51,7 +53,12 @@ export const ChangePasswordSuccess: FC<ChangePasswordSuccessScreenProps> = ({
             accessibilityLabel="accedi"
             title="accedi"
             type="primary"
-            onPress={() => push('HomeBurnCoupon', { qrfound: undefined })}
+            onPress={() =>
+              nav.navigate(
+                'BurnCoupon' as never,
+                { qrfound: undefined } as never,
+              )
+            }
           />
         </View>
 
