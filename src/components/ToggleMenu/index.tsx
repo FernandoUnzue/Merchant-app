@@ -65,7 +65,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       icon: (
         <Impostazioni
           size={35}
-          color={state.index === 0 ? ColorsGeneralDark.background : '#000'}
+          color={state?.index === 0 ? ColorsGeneralDark.background : '#000'}
         />
       ),
       onPress: () => {
@@ -79,7 +79,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       icon: (
         <Impostazioni
           size={35}
-          color={state.index === 1 ? ColorsGeneralDark.background : '#000'}
+          color={state?.index === 1 ? ColorsGeneralDark.background : '#000'}
         />
       ),
       onPress: () => {
@@ -94,7 +94,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       icon: (
         <Impostazioni
           size={35}
-          color={state.index === 2 ? ColorsGeneralDark.background : '#000'}
+          color={state?.index === 2 ? ColorsGeneralDark.background : '#000'}
         />
       ),
       onPress: () => {
@@ -137,7 +137,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                         fontFamily: Fonts.bold,
                         alignSelf: 'center',
                         color:
-                          state.index === item.id
+                          state?.index === item.id
                             ? ColorsGeneralDark.background
                             : Colors.black,
                       }}>
@@ -151,7 +151,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                     <ArrowRightIcon
                       size={30}
                       color={
-                        state.index === item.id
+                        state?.index === item.id
                           ? ColorsGeneralDark.background
                           : '#000'
                       }
