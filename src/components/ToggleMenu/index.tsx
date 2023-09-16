@@ -40,6 +40,10 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
 
   const showMenu = useSelector((state: RootState) => state.auth.showModal);
 
+  const customerRegistered = useSelector(
+    (state: RootState) => state.customer.registered,
+  );
+
   const dispatch = useDispatch<AppDispatch>();
   const logoutIntern = () => {
     dispatch(LogOutAsync());
@@ -106,7 +110,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     },
   ];
 
-  if (showMenu) {
+  if (showMenu && !customerRegistered) {
     return (
       <View style={style.menuContainer}>
         <ScrollView style={style.contToggle}>

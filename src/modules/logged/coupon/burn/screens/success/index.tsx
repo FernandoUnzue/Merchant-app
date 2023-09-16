@@ -56,7 +56,7 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
         <Button
           accessibilityLabel="torna alla home"
           title="TORNA ALLA HOME"
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('HomeBurnCoupon', { qrfound: '' })}
           type="primary"
         />
       </View>

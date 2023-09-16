@@ -56,7 +56,7 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
         drawerActiveTintColor: ColorsGeneralDark.background,
       }}
       drawerContent={props => <DrawerContent {...props} />}
-      initialRouteName={'MemberCardStack'}>
+      initialRouteName={'BurnCoupon'}>
       <Drawer.Screen
         name="MemberCardStack"
         component={MemberCardStack}

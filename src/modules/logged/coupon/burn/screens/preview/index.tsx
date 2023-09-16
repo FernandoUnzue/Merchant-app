@@ -81,13 +81,9 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         <Text style={style.bold}>Title:</Text>
         <Text>{couponInfo?.tittle}</Text>
         <Text style={style.bold}>Validate from:</Text>
-        <Text>
-          {moment(couponInfo?.validateDateFrom).format('DD/MM/YYYY HH:MM:SS')}
-        </Text>
+        <Text>{moment(couponInfo?.validateDateFrom).format('DD/MM/YYYY')}</Text>
         <Text style={style.bold}>Validate to:</Text>
-        <Text>
-          {moment(couponInfo?.validateDateTo).format('DD/MM/YYYY HH:MM:SS')}
-        </Text>
+        <Text>{moment(couponInfo?.validateDateTo).format('DD/MM/YYYY')}</Text>
         <Text style={style.bold}>Condition:</Text>
         <Text>{couponInfo?.condition}</Text>
         <Text style={style.bold}>Prize:</Text>
@@ -107,7 +103,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
       {couponInfo?.burnedDate !== null ? (
         <Text style={style.disabledText}>
           Coupon already burned at{' '}
-          {moment(couponInfo?.burnedDate).format('DD/MM/YYYY HH:MM:SS')}
+          {moment(couponInfo?.burnedDate).format('DD/MM/YYYY')}
         </Text>
       ) : null}
     </ScrollView>
