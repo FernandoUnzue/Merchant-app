@@ -166,7 +166,7 @@ const styles = ({ theme }: ThemeContext) =>
       width: 50,
     },
     button_primary: {
-      backgroundColor: theme.colors.backgroundNegative,
+      backgroundColor: theme.colors.accent,
     },
 
     button_secondary: {

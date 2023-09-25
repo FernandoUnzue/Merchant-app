@@ -1,8 +1,19 @@
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MemberCardStackParamList, SpesaStackParamList } from '@modules/logged';
-import { ColorsGeneralDark, ThemeContext, useThemedStyles } from '@core/theme';
+import {
+  ColorsGeneralDark,
+  generalColorsNew,
+  ThemeContext,
+  useThemedStyles,
+} from '@core/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@core/redux/store';
 import BackNav from '@components/BackNav';
@@ -18,6 +29,8 @@ import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useNavigation } from '@react-navigation/native';
 import { extendedApiUser } from '@core/redux/Api/endpoints/User';
 import { FakeCurrencyInput } from 'react-native-currency-input';
+import UserIcon from '@core/theme/SVGS/Merchant/UserIcon';
+import WalletIcon from '@core/theme/SVGS/Merchant/WalletEMpty';
 
 /**
  * Types
@@ -41,6 +54,8 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
 
   const [number, setNumber] = useState<number>(0);
 
+  const { width, height } = useWindowDimensions();
+
   const amount = customer.amount ? customer.amount : 0;
   const dispatch = useDispatch<AppDispatch>();
 
@@ -50,26 +65,42 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
     <View style={style.main}>
       <Spacer height={20} />
       <View style={style.walletCont}>
-        <EuroIcon size={15} color={style.textWallet.color} />
+        <WalletIcon size={18} />
         <Text style={style.textWallet}>Saldo Wallet</Text>
-        <Text style={style.textWalletNumber}>{`${
+        <Text style={style.textWalletNumber}>{`€${
           customer.amount
             ? customer.amount?.toFixed(2).replace('.', ',')
             : '-----'
-        }€`}</Text>
+        }`}</Text>
       </View>
+      <Spacer height={10} />
       <Text style={style.title}>SPESA</Text>
-
+      <Spacer height={10} />
       <Text style={style.textBold}>Inserisci importo</Text>
-
+      <Spacer height={10} />
       <CurrencyFormInput
         icon={false}
         control={control}
         name="importo"
-        placeholder={Platform.OS === 'ios' ? '€0,00' : '€0,000'}
+        placeholder={Platform.OS === 'ios' ? '0,00' : '0,000'}
         keyboardType="numeric"
         styless={style.numberCont}
         style={style.number}
+        currency={false}
+        constStyles={{
+          alignSelf: 'center',
+          width: Math.floor(width / 2),
+        }}
+        valueAdded={
+          <Text
+            style={{
+              color: generalColorsNew.orange,
+              fontSize: style.number.fontSize,
+              fontFamily: style.number.fontFamily,
+            }}>
+            €
+          </Text>
+        }
         errorMessagesStyles={style.errorMessage}
         rules={{
           required: true,
@@ -80,27 +111,25 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
       />
       <Spacer height={30} />
       <View style={style.squareContent}>
+        <UserIcon size={50} />
         <View style={style.square}>
-          <Impostazioni size={20} />
           <Spacer height={35} />
           <Text style={style.text}>Cardholder name</Text>
-          <Text>
+          <Text
+            style={{ ...style.textBold, width: 100 }}
+            numberOfLines={1}
+            ellipsizeMode={'tail'}>
             {user?.first_name} {user?.last_name}
           </Text>
         </View>
-        <View
-          style={{
-            ...style.square,
-            backgroundColor: '#ddd',
-          }}>
-          <Impostazioni size={20} />
+        <View style={style.square}>
           <Spacer height={35} />
           <Text style={style.text}>Numero card</Text>
           <Text style={style.textBold}>{customer.card}</Text>
         </View>
       </View>
 
-      <Spacer height={180} />
+      <Spacer height={150} />
 
       <Button
         type="primary"
@@ -136,10 +165,12 @@ const styles = ({ theme }: ThemeContext) =>
     title: {
       fontSize: 12,
       color: theme.colors.textPrimary,
+      textAlign: 'center',
     },
     text: {
-      fontSize: 12,
+      fontSize: 10,
       color: theme.colors.textPrimary,
+      textAlign: 'center',
     },
     numberCont: {
       fontFamily: theme.fonts.bold,
@@ -150,50 +181,58 @@ const styles = ({ theme }: ThemeContext) =>
       width: 250,
     },
     number: {
-      fontSize: 50,
+      fontSize: 60,
       fontFamily: theme.fonts.bold,
-      color: theme.colors.backgroundNegative,
+      color: theme.colors.textPrimary,
+      textAlign: 'center',
     },
     textBold: {
       fontSize: 14,
       fontWeight: 'bold',
       color: theme.colors.textPrimary,
+      textAlign: 'center',
     },
     squareContent: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
+      justifyContent: 'space-evenly',
       alignItems: 'center',
+      backgroundColor: '#fff',
+      paddingHorizontal: 10,
+      borderRadius: 50,
     },
     square: {
-      borderWidth: 1,
+      //    borderWidth: 1,
       borderColor: '#ddd',
-      backgroundColor: '#fff',
+      //   backgroundColor: '#fff',
       padding: 10,
-      width: 150,
-      height: 120,
+      width: 120,
+      height: 110,
       borderRadius: 10,
+      textAlign: 'center',
     },
     walletCont: {
       borderWidth: 1,
-      borderColor: theme.colors.backgroundNegative,
-      width: 200,
+      borderColor: theme.colors.textPrimary,
+      width: 185,
       borderRadius: 30,
       paddingHorizontal: 20,
       paddingVertical: 5,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignSelf: 'flex-end',
+      alignSelf: 'center',
     },
     textWallet: {
+      marginTop: 2,
       fontSize: 12,
-      color: theme.colors.backgroundNegative,
+      color: theme.colors.textPrimary,
     },
     textWalletNumber: {
       fontSize: 13,
       fontFamily: theme.fonts.bold,
-      color: theme.colors.backgroundNegative,
+      color: theme.colors.textPrimary,
     },
     errorMessage: {
-      color: theme.colors.backgroundNegative,
+      fontSize: 10,
+      color: theme.colors.textPrimary,
     },
   });

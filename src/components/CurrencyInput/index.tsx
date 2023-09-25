@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { ReactNode, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -31,6 +31,9 @@ interface IFormInput<ContentType> extends TextInputProps {
   styless?: ViewStyle;
   errorMessagesStyles?: TextStyle;
   fake?: boolean;
+  valueAdded?: ReactNode;
+  currency?: boolean;
+  constStyles?: ViewStyle;
 }
 
 /**
@@ -46,6 +49,9 @@ export function CurrencyFormInput<ContentType>({
   disablePaste = false,
   errorMessagesStyles,
   fake = false,
+  valueAdded,
+  currency = true,
+  constStyles,
   styless,
   ...props
 }: IFormInput<ContentType>) {
@@ -62,70 +68,73 @@ export function CurrencyFormInput<ContentType>({
         field: { value, onChange, onBlur },
         fieldState: { isDirty, error },
       }) => (
-        <>
-          <View style={{ ...style.container, ...styless }}>
-            {!fake ? (
-              <CurrencyInput
-                value={value}
-                onChangeValue={onChange}
-                style={[
-                  style.input,
-                  disabled ? style.fixedInput : style.editableInput,
-                  { height: props.multiline ? 150 : 50 },
-                ]}
-                prefix="€"
-                delimiter="."
-                maxValue={20000}
-                separator=","
-                precision={2}
-                onBlur={onBlur}
-                onFocus={() => disablePaste && resetClipboard()}
-                onSelectionChange={() => disablePaste && resetClipboard()}
-                onSubmitEditing={Keyboard.dismiss}
-                editable={!disabled}
-                {...props}
-              />
-            ) : (
-              <FakeCurrencyInput
-                value={value}
-                onChangeValue={onChange}
-                style={[
-                  style.input,
-                  disabled ? style.fixedInput : style.editableInput,
-                  { height: props.multiline ? 150 : 50 },
-                ]}
-                prefix="€"
-                delimiter="."
-                maxValue={20000}
-                separator=","
-                precision={2}
-                onBlur={onBlur}
-                onFocus={() => disablePaste && resetClipboard()}
-                onSelectionChange={() => disablePaste && resetClipboard()}
-                onSubmitEditing={Keyboard.dismiss}
-                editable={!disabled}
-                {...props}
-              />
-            )}
-            <ShowIf condition={icon}>
-              <ShowIf condition={isDirty || disabled}>
-                <View style={style.icon}>
-                  {!error || disabled ? (
-                    <CheckIcon size={20} />
-                  ) : (
-                    <WarningIcon size={20} />
-                    // <SvgComponent />
-                  )}
-                </View>
+        <View style={{ ...constStyles }}>
+          <View style={{ flexDirection: 'row' }}>
+            {valueAdded ? valueAdded : null}
+            <View style={{ ...style.container, ...styless }}>
+              {!fake ? (
+                <CurrencyInput
+                  value={value}
+                  onChangeValue={onChange}
+                  style={[
+                    style.input,
+                    disabled ? style.fixedInput : style.editableInput,
+                    { height: props.multiline ? 150 : 50 },
+                  ]}
+                  prefix={currency ? '€' : undefined}
+                  delimiter="."
+                  maxValue={20000}
+                  separator=","
+                  precision={2}
+                  onBlur={onBlur}
+                  onFocus={() => disablePaste && resetClipboard()}
+                  onSelectionChange={() => disablePaste && resetClipboard()}
+                  onSubmitEditing={Keyboard.dismiss}
+                  editable={!disabled}
+                  {...props}
+                />
+              ) : (
+                <FakeCurrencyInput
+                  value={value}
+                  onChangeValue={onChange}
+                  style={[
+                    style.input,
+                    disabled ? style.fixedInput : style.editableInput,
+                    { height: props.multiline ? 150 : 50 },
+                  ]}
+                  prefix="€"
+                  delimiter="."
+                  maxValue={20000}
+                  separator=","
+                  precision={2}
+                  onBlur={onBlur}
+                  onFocus={() => disablePaste && resetClipboard()}
+                  onSelectionChange={() => disablePaste && resetClipboard()}
+                  onSubmitEditing={Keyboard.dismiss}
+                  editable={!disabled}
+                  {...props}
+                />
+              )}
+              <ShowIf condition={icon}>
+                <ShowIf condition={isDirty || disabled}>
+                  <View style={style.icon}>
+                    {!error || disabled ? (
+                      <CheckIcon size={20} />
+                    ) : (
+                      <WarningIcon size={20} />
+                      // <SvgComponent />
+                    )}
+                  </View>
+                </ShowIf>
               </ShowIf>
-            </ShowIf>
+            </View>
           </View>
           <ShowIf condition={!!error}>
             <Text style={{ ...style.errorMessage, ...errorMessagesStyles }}>
               {error?.message}
             </Text>
           </ShowIf>
-        </>
+        </View>
       )}
     />
   );

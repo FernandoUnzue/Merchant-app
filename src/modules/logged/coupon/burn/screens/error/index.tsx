@@ -23,10 +23,9 @@ const ErrorScreenCouponBurn: React.FC<ErrorCouponScreenProps> = ({
   route,
 }) => {
   const style = useThemedStyles(styles);
-  const { coupon } = route.params;
+  const { coupon, error } = route.params;
   return (
     <ScrollView contentContainerStyle={style.main}>
-      <BackNav navigation={navigation} />
       <Spacer height={30} />
       {coupon ? (
         <View style={style.squareCoupon}>
@@ -48,6 +47,9 @@ const ErrorScreenCouponBurn: React.FC<ErrorCouponScreenProps> = ({
         <Text style={style.title}>ERRORE</Text>
 
         <Text style={{ textAlign: 'center' }}>Coupon non approvato</Text>
+        {error?.status === 409 ? (
+          <Text style={{ textAlign: 'center' }}>{error?.data.message}</Text>
+        ) : null}
         <Spacer height={30} />
 
         <Image

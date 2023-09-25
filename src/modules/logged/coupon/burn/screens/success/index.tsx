@@ -25,7 +25,6 @@ const SuccessBurnCouponScreen: React.FC<SuccessBurnCouponScreenProps> = ({
   const { coupon } = route.params;
   return (
     <ScrollView contentContainerStyle={style.main}>
-      <BackNav navigation={navigation} />
       <Spacer height={30} />
       {coupon ? (
         <View style={style.squareCoupon}>

@@ -31,6 +31,11 @@ type CouponProp = {
   coupon?: CouponBuy;
 };
 
+type CouponPropError = {
+  coupon?: CouponBuy;
+  error?: { status: number; data: { message: string } };
+};
+
 type CamScnannerProps = {
   qrfound: string;
   setQr: (a: string) => void;
@@ -47,7 +52,7 @@ export type LoggedStackParamList = {
   TabNav: undefined;
   SuccessBurnCouponScreen: CouponProp;
   PasswordError: undefined;
-  ErrorScreenCouponBurn: CouponProp;
+  ErrorScreenCouponBurn: CouponPropError;
   PreviewScreenCouponBurn: PreviewProps;
   CameraScannerScreen: undefined;
   MemberDrawerStack: undefined;

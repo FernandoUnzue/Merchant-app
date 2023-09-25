@@ -1,5 +1,6 @@
 import { useColorScheme } from 'react-native';
 import { palette } from './palette';
+import { paletteNew } from './palette';
 
 export const ColorsLight = {
   black: palette.black,
@@ -34,9 +35,17 @@ export const ColorsLight = {
   backgroundDark: palette.white
 };
 
+export const generalColorsNew = {
+  accent: paletteNew.blackPrimary,
+  textBlack: paletteNew.blackPrimary,
+  textGrey: paletteNew.greyNew,
+  backgroundNew: paletteNew.lightGreyNew,
+  orange: paletteNew.orangeNew
+}
+
 
 export const ColorsGeneralLight = {
-  background: palette.clearPurple,
+  background: paletteNew.lightGreyNew,
   backgroundNegative: palette.blueBack,
   textPrimary: palette.black,
   textSecondary: palette.blackHowl,
@@ -48,12 +57,15 @@ export const ColorsGeneralLight = {
   btnDisabled: palette.snowBank,
   btnQuaternary: palette.rainWater,
   textSeptuary: palette.cobaltNight,
+  ...generalColorsNew
 }
+
+
 
 
 export const ColorsGeneralDark = {
   background: palette.blueBack,
-  backgroundNegative: palette.clearPurple,
+  backgroundNegative: paletteNew.lightGreyNew,
   textPrimary: palette.white,
   textSecondary: palette.ellieGrey,
   textNegative: palette.darkNight,
@@ -64,6 +76,7 @@ export const ColorsGeneralDark = {
   btnDisabled: palette.snowBank,
   btnQuaternary: palette.rainWater,
   textSeptuary: palette.cobaltNight,
+  ...generalColorsNew
 }
 
 export const Colors = {

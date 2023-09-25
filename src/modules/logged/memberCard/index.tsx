@@ -100,8 +100,11 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
     trigger('search');
   }, [qrfound]);
 
-  if (customer.registered) {
+  {
+    /*  if (customer.registered) {
     nav.navigate('Spesa' as never);
+  }
+*/
   }
 
   return (
@@ -139,7 +142,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
         ) : null}
       </View>
       <Image
-        source={require('../../../../assets/images/barras.png')}
+        source={require('../../../../assets/images/img-scanner.png')}
         style={style.image}
       />
       <Text style={{ ...style.title, fontSize: 16 }}>Scanner BarCode</Text>

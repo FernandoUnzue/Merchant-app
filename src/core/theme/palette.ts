@@ -1,3 +1,15 @@
+export const paletteNew = {
+  blackPrimary: '#173E46',
+  greyNew: '#9D9D9D',
+  orangeNew: '#F25C06',
+  lightGreyNew: '#F5F5F5',
+  lightBlueNew: '#C6E0FC',
+  success: '#3FE345',
+
+}
+
+
+
 export const palette = {
   // color names are based on https://colornamer.netlify.app/
   black: '#000000',
@@ -22,5 +34,8 @@ export const palette = {
   darkGrey: '#9B9B9B',
   hightLight: '#AFFFF8',
   blueBack: '#626AF1',
-  clearPurple: '#F4F6FB'
+  clearPurple: '#F4F6FB',
+  ...paletteNew
 }
+
+

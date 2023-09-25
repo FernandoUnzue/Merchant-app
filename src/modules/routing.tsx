@@ -226,10 +226,9 @@ export const RootNavigator: FC = () => {
           edges={['top']}
           style={{
             flex: 0,
-            backgroundColor:
-              colorScheme === 'dark' || isDarkTheme
-                ? ColorsGeneralDark.backgroundNegative
-                : ColorsGeneralLight.backgroundNegative,
+            backgroundColor: user.loggedIn
+              ? ColorsGeneralDark.backgroundNegative
+              : ColorsGeneralDark.background,
           }}
         />
         <SafeAreaView
@@ -254,11 +253,7 @@ export const RootNavigator: FC = () => {
                 ? ColorsGeneralDark.backgroundNegative
                 : ColorsGeneralLight.backgroundNegative
             }
-            barStyle={
-              colorScheme === 'dark' || isDarkTheme
-                ? 'dark-content'
-                : 'light-content'
-            }
+            barStyle={user.loggedIn ? 'dark-content' : 'light-content'}
           />
 
           <NavigationContainer

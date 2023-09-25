@@ -39,7 +39,7 @@ const BackNav: React.FC<Props> = ({
           <BackArrowIcon
             size={35}
             styles={{ marginRight: 5 }}
-            color={theme.theme.colors.backgroundNegative}
+            color={theme.theme.colors.textPrimary}
           />
           {text && (
             <Text

@@ -5,6 +5,7 @@ import {
   Colors,
   ColorsGeneralDark,
   Fonts,
+  generalColorsNew,
   ThemeContext,
   useThemedStyles,
 } from '@core/theme';
@@ -65,7 +66,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       icon: (
         <Impostazioni
           size={35}
-          color={state?.index === 0 ? ColorsGeneralDark.background : '#000'}
+          color={state?.index === 0 ? generalColorsNew.orange : '#000'}
         />
       ),
       onPress: () => {
@@ -79,7 +80,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       icon: (
         <Impostazioni
           size={35}
-          color={state?.index === 1 ? ColorsGeneralDark.background : '#000'}
+          color={state?.index === 1 ? generalColorsNew.orange : '#000'}
         />
       ),
       onPress: () => {
@@ -94,7 +95,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       icon: (
         <Impostazioni
           size={35}
-          color={state?.index === 2 ? ColorsGeneralDark.background : '#000'}
+          color={state?.index === 2 ? generalColorsNew.orange : '#000'}
         />
       ),
       onPress: () => {
@@ -138,7 +139,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                         alignSelf: 'center',
                         color:
                           state?.index === item.id
-                            ? ColorsGeneralDark.background
+                            ? generalColorsNew.orange
                             : Colors.black,
                       }}>
                       {item.name}
@@ -152,7 +153,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                       size={30}
                       color={
                         state?.index === item.id
-                          ? ColorsGeneralDark.background
+                          ? generalColorsNew.orange
                           : '#000'
                       }
                     />

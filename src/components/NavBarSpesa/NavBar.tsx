@@ -15,7 +15,6 @@ import { AppDispatch, RootState } from '@core/redux/store';
 import {
   Colors,
   Fonts,
-  generalColorsNew,
   ThemeContext,
   useTheme,
   useThemedStyles,
@@ -39,13 +38,15 @@ import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useColorScheme } from 'react-native';
+import BackNav from '@components/BackNav';
+import MenuBurguer from '@core/theme/SVGS/Merchant/MenuBurguer';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
 interface Props {
   navigation: any;
 }
-export const TabNav: React.FC<Props> = ({ navigation }) => {
+export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
   const auth = useSelector((state: RootState) => state.auth);
   const style = useThemedStyles(styles);
   const customer = useSelector((state: RootState) => state.customer);
@@ -74,25 +75,21 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={style.containerNav}>
       <View style={style.containerTabNav}>
-        <TouchableOpacity onPress={() => funcFinal()}>
-          <Impostazioni
-            size={40}
-            styles={{
-              marginTop: 10,
-            }}
-            color={generalColorsNew.accent}
-          />
-        </TouchableOpacity>
+        <BackNav navigation={navigation} text={false} />
       </View>
       <View>
         <LogoMia size={65} textColor={'#000'} miaColor={'#000'} />
       </View>
-      <View></View>
+      <View>
+        <TouchableOpacity onPress={() => funcFinal()}>
+          <MenuBurguer size={20} styles={{ marginTop: 20 }} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-export default TabNav;
+export default TabNavSpesa;
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({

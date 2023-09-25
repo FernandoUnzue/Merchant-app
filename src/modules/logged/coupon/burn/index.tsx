@@ -183,7 +183,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
         ) : null}
       </View>
       <Image
-        source={require('../../../../../assets/images/barras.png')}
+        source={require('../../../../../assets/images/img-scanner.png')}
         style={style.image}
       />
       <Text style={{ ...style.title, fontSize: 16 }}>Scanner BarCode</Text>
