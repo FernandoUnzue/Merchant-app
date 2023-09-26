@@ -73,6 +73,19 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
     }
     return nav.dispatch(DrawerActions.openDrawer);
   };
+  const state = nav.getState();
+  const route = useRoute();
+
+  const navig = state.routes[state.index];
+  const navState = navig.state;
+
+  const indexFinal = navState?.index ? navState.index : 0;
+  const routeName =
+    navState && navState.routeNames ? navState.routeNames[indexFinal] : '';
+
+  //  console.log(`state ${JSON.stringify(state)}`);
+
+  // console.log(`routeName ${routeName}`);
 
   const BackFunc = () => {
     if (customer.registered) {
@@ -86,7 +99,11 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
       <View style={style.containerTabNav}>
         <BackNav
           navigation={navigation}
-          OnPress={() => BackFunc()}
+          OnPress={
+            routeName !== 'HomeSpesa'
+              ? () => navigation.goBack()
+              : () => BackFunc()
+          }
           text={false}
         />
       </View>

@@ -17,6 +17,9 @@ import MemberCardHome from './memberCard';
 import HomeMemberCardPrivate from './memberCard/screens/spesa';
 import HomeSpesa from './memberCard/screens/spesa';
 import CameraScannerScreenCard from './memberCard/screens/cam-scanner-card';
+import ResumeSaleScreen from './memberCard/screens/spesa/screens/resume';
+import PaymentSaleScreen from './memberCard/screens/spesa/screens/payment';
+import SuccessSaleScreen from './memberCard/screens/spesa/screens/success';
 
 /**
  * Types
@@ -144,8 +147,23 @@ export const MemberCardStack: React.FC<MemberCardProps> = () => {
 
 // spesa stack
 
+type ResumeProps = {
+  amount: number;
+};
+
+type PaymentProps = {
+  amount: number;
+};
+
+type SuccessProps = {
+  amount: number;
+};
+
 export type SpesaStackParamList = {
   HomeSpesa: undefined;
+  ResumeSaleScreen: ResumeProps;
+  PaymentSaleScreen: PaymentProps;
+  SuccessSaleScreen: SuccessProps;
 };
 
 const SpesaStack = createStackNavigator<SpesaStackParamList>();
@@ -159,6 +177,15 @@ export const SpesaFlowStack: React.FC<SpesaProps> = () => {
         animationEnabled: false,
       }}>
       <SpesaStack.Screen name="HomeSpesa" component={HomeSpesa} />
+      <SpesaStack.Screen name="ResumeSaleScreen" component={ResumeSaleScreen} />
+      <SpesaStack.Screen
+        name="PaymentSaleScreen"
+        component={PaymentSaleScreen}
+      />
+      <SpesaStack.Screen
+        name="SuccessSaleScreen"
+        component={SuccessSaleScreen}
+      />
     </SpesaStack.Navigator>
   );
 };

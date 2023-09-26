@@ -22,7 +22,7 @@ import { Button } from '@components/Button';
 import { CustomerSlice } from '@core/redux/customerSlice';
 import { Alert } from 'react-native';
 
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { CurrencyFormInput } from '@components/CurrencyInput';
 import EuroIcon from '@core/theme/SVGS/NavBar/Euro';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
@@ -31,6 +31,9 @@ import { extendedApiUser } from '@core/redux/Api/endpoints/User';
 import { FakeCurrencyInput } from 'react-native-currency-input';
 import UserIcon from '@core/theme/SVGS/Merchant/UserIcon';
 import WalletIcon from '@core/theme/SVGS/Merchant/WalletEMpty';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import UserBar from '@components/UserBar';
+import Wallet from '@components/Wallet';
 
 /**
  * Types
@@ -45,6 +48,8 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
     handleSubmit,
     setValue,
     reset,
+    trigger,
+    watch,
     formState: { isDirty, isValid, errors },
   } = useForm({
     mode: 'onChange',
@@ -61,18 +66,14 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
 
   const nav = useNavigation();
 
+  useEffect(() => {
+    trigger('importo');
+  }, [true]);
+
   return (
     <View style={style.main}>
       <Spacer height={20} />
-      <View style={style.walletCont}>
-        <WalletIcon size={18} />
-        <Text style={style.textWallet}>Saldo Wallet</Text>
-        <Text style={style.textWalletNumber}>{`€${
-          customer.amount
-            ? customer.amount?.toFixed(2).replace('.', ',')
-            : '-----'
-        }`}</Text>
-      </View>
+      <Wallet />
       <Spacer height={10} />
       <Text style={style.title}>SPESA</Text>
       <Spacer height={10} />
@@ -91,6 +92,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           alignSelf: 'center',
           width: Math.floor(width / 2),
         }}
+        cursorColor={'#000'}
         valueAdded={
           <Text
             style={{
@@ -110,24 +112,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         }}
       />
       <Spacer height={30} />
-      <View style={style.squareContent}>
-        <UserIcon size={50} />
-        <View style={style.square}>
-          <Spacer height={35} />
-          <Text style={style.text}>Cardholder name</Text>
-          <Text
-            style={{ ...style.textBold, width: 100 }}
-            numberOfLines={1}
-            ellipsizeMode={'tail'}>
-            {user?.first_name} {user?.last_name}
-          </Text>
-        </View>
-        <View style={style.square}>
-          <Spacer height={35} />
-          <Text style={style.text}>Numero card</Text>
-          <Text style={style.textBold}>{customer.card}</Text>
-        </View>
-      </View>
+      <UserBar />
 
       <Spacer height={150} />
 
@@ -135,10 +120,14 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         type="primary"
         accessibilityLabel="CONFERMA"
         title="CONFERMA"
-        onPress={() => null}
+        onPress={() =>
+          navigation.navigate('ResumeSaleScreen', {
+            amount: Number(watch('importo')),
+          })
+        }
         disabled={!isDirty || !isValid}
       />
-      <Spacer height={10} />
+      {/* <Spacer height={10} />
       <Button
         type="secondary"
         accessibilityLabel="REMOVE CUSTOMER"
@@ -147,8 +136,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           dispatch(CustomerSlice.actions.removeCustomer());
           nav.navigate('MemberCardStack' as never);
         }}
-      />
-      <Spacer height={20} />
+      />*/}
     </View>
   );
 };
