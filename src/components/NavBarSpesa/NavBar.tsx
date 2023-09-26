@@ -40,6 +40,8 @@ import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useColorScheme } from 'react-native';
 import BackNav from '@components/BackNav';
 import MenuBurguer from '@core/theme/SVGS/Merchant/MenuBurguer';
+import LogoSkey from '@core/theme/Merchant/LogoSkey';
+import { CustomerSlice } from '@core/redux/customerSlice';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -72,13 +74,24 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
     return nav.dispatch(DrawerActions.openDrawer);
   };
 
+  const BackFunc = () => {
+    if (customer.registered) {
+      dispatch(CustomerSlice.actions.removeCustomer());
+      nav.navigate('MemberCardStack' as never);
+    }
+  };
+
   return (
     <View style={style.containerNav}>
       <View style={style.containerTabNav}>
-        <BackNav navigation={navigation} text={false} />
+        <BackNav
+          navigation={navigation}
+          OnPress={() => BackFunc()}
+          text={false}
+        />
       </View>
       <View>
-        <LogoMia size={65} textColor={'#000'} miaColor={'#000'} />
+        <LogoSkey size={100} styles={{ marginTop: 13 }} />
       </View>
       <View>
         <TouchableOpacity onPress={() => funcFinal()}>

@@ -39,6 +39,7 @@ import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useColorScheme } from 'react-native';
+import LogoSkey from '@core/theme/Merchant/LogoSkey';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -85,9 +86,9 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View>
-        <LogoMia size={65} textColor={'#000'} miaColor={'#000'} />
+        <LogoSkey size={100} styles={{ marginTop: 18 }} />
       </View>
-      <View></View>
+      <View style={{ width: 40 }}></View>
     </View>
   );
 };

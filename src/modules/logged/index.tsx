@@ -33,7 +33,7 @@ type CouponProp = {
 
 type CouponPropError = {
   coupon?: CouponBuy;
-  error?: { status: number; data: { message: string } };
+  error?: { status: number; data: string };
 };
 
 type CamScnannerProps = {

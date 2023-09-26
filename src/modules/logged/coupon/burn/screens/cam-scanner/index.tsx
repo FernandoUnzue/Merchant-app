@@ -9,6 +9,7 @@ import { RootState } from '@core/redux/store';
 import {
   ColorsGeneralDark,
   ColorsGeneralLight,
+  generalColorsNew,
   themeContent,
   ThemeContext,
   useThemedStyles,
@@ -126,11 +127,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
               textStyles={{
                 color: isDarkTheme || colorScheme === 'dark' ? '#000' : 'white',
               }}
-              color={
-                isDarkTheme || colorScheme === 'dark'
-                  ? ColorsGeneralLight.background
-                  : ColorsGeneralDark.background
-              }
+              color={generalColorsNew.accent}
               onPress={() =>
                 navigation.push('HomeBurnCoupon', { qrfound: qrvalue })
               }

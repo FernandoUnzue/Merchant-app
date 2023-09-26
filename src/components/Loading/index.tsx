@@ -1,5 +1,11 @@
 import { RootState } from '@core/redux/store';
-import { Colors, ColorsGeneralDark, ColorsGeneralLight } from '@core/theme';
+import {
+  Colors,
+  ColorsGeneralDark,
+  ColorsGeneralLight,
+  generalColorsNew,
+} from '@core/theme';
+import LogoSkey from '@core/theme/Merchant/LogoSkey';
 import LogoMia from '@core/theme/SVGS/Logo';
 import React from 'react';
 import {
@@ -24,10 +30,7 @@ const Loading: React.FC<LoadingProps> = ({ logo = true, error }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor:
-          colorScheme === 'dark' || isDarkMode
-            ? ColorsGeneralDark.backgroundNegative
-            : ColorsGeneralLight.backgroundNegative,
+        backgroundColor: generalColorsNew.accent,
         height: 100,
       }}>
       <View
@@ -40,13 +43,7 @@ const Loading: React.FC<LoadingProps> = ({ logo = true, error }) => {
           size="large"
           color={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
         />
-        {logo && (
-          <LogoMia
-            size={100}
-            textColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
-            miaColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
-          />
-        )}
+        {logo && <LogoSkey size={100} />}
       </View>
       <Text style={{ color: 'red', textAlign: 'center' }}>{error}</Text>
     </View>

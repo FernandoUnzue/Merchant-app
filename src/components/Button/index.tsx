@@ -170,7 +170,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
 
     button_secondary: {
-      backgroundColor: theme.colors.btnSecondary,
+      backgroundColor: theme.colors.orange,
     },
     button_tertiary: {
       backgroundColor: theme.colors.btnPrimary,

@@ -15,7 +15,13 @@ import { FormInput } from '@components/FormInput';
 import { LoginFooter } from '@components/LoginFooter';
 import { Spacer } from '@components/Spacer';
 import { WhiskeredButton } from '@components/WhiskeredButton';
-import { Colors, ThemeContext, useTheme, useThemedStyles } from '@core/theme';
+import {
+  Colors,
+  generalColorsNew,
+  ThemeContext,
+  useTheme,
+  useThemedStyles,
+} from '@core/theme';
 import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
 import { PASSWORD_REGEX } from '@core/constants';
@@ -130,7 +136,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
   return (
     <KeyboardAwareScrollView contentContainerStyle={style.main}>
       {error.isError && (
-        <Text style={{ color: 'orange', textAlign: 'center' }}>
+        <Text style={{ color: generalColorsNew.orange, textAlign: 'center' }}>
           {error.message}
         </Text>
       )}
@@ -147,12 +153,8 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           //   validate: validatePhoneNumber,
         }}
         //  keyboardType="phone-pad"
-        negativeColor={isDarkTheme || colorScheme === 'dark' ? false : true}
-        styless={
-          isDarkTheme || colorScheme === 'dark'
-            ? style.back
-            : style.backNegative
-        }
+        negativeColor={true}
+        styless={style.backNegative}
       />
       <Spacer height={16} />
       <FormInput
@@ -166,7 +168,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           required: true,
           pattern: PASSWORD_REGEX,
         }}
-        negativeColor={isDarkTheme || colorScheme === 'dark' ? false : true}
+        negativeColor={true}
         styless={style.backNegative}
         // onPasswordMessagePressed={() => navigate('PasswordError')}
       />
@@ -224,11 +226,11 @@ const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     main: {
       flex: 1,
-      backgroundColor: theme.colors.backgroundNegative,
+      backgroundColor: theme.colors.accent,
       paddingHorizontal: 30,
     },
     backNegative: {
-      backgroundColor: theme.colors.backgroundNegative,
+      backgroundColor: theme.colors.accent,
       color: theme.colors.textPrimary,
     },
     back: {

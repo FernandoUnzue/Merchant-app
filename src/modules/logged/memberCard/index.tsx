@@ -10,7 +10,7 @@ import React, { FC, useEffect, useState } from 'react';
 import BackNav from '@components/BackNav';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DrawerStackParamList } from '../drawer';
-import { ThemeContext, useThemedStyles } from '@core/theme';
+import { generalColorsNew, ThemeContext, useThemedStyles } from '@core/theme';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@core/redux/store';
@@ -117,6 +117,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
           placeholder="MEMBER CARD"
           styless={{
             backgroundColor: 'transparent',
+            borderBottomColor: generalColorsNew.orange,
           }}
           keyboardType={'numeric'}
           negativeColor={false}

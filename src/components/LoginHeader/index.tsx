@@ -16,6 +16,7 @@ import LogoMia from '@core/theme/SVGS/Logo';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
 import HandIcon from '@core/theme/Merchant/HandIcon';
+import { Separator } from '@components/Separator';
 
 /**
  * LoginHeader
@@ -32,13 +33,9 @@ export const LoginHeader: FC = () => {
 
   return (
     <View style={[style.container]}>
-      <LogoMia
-        size={80}
-        textColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
-        miaColor={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
-      />
+      <Separator height={80} />
       <View style={{ flexDirection: 'row' }}>
-        <HandIcon size={100} />
+        <HandIcon size={70} styles={{ marginTop: 15 }} />
         <Text style={style.title}>CIAO!</Text>
       </View>
     </View>
@@ -52,7 +49,7 @@ export const LoginHeader: FC = () => {
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.backgroundNegative,
+      backgroundColor: theme.colors.accent,
       alignItems: 'center',
     },
     title: {

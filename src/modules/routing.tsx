@@ -21,6 +21,7 @@ import {
   ColorsGeneralDark,
   ColorsGeneralLight,
   ColorsLight,
+  generalColorsNew,
   themeContent,
   themeContentDark,
   ThemeProvider,
@@ -227,8 +228,8 @@ export const RootNavigator: FC = () => {
           style={{
             flex: 0,
             backgroundColor: user.loggedIn
-              ? ColorsGeneralDark.backgroundNegative
-              : ColorsGeneralDark.background,
+              ? generalColorsNew.backgroundNew
+              : generalColorsNew.accent,
           }}
         />
         <SafeAreaView
@@ -236,16 +237,8 @@ export const RootNavigator: FC = () => {
           style={{
             flex: 1,
             backgroundColor: user.loggedIn
-              ? `${
-                  isDarkTheme || colorScheme === 'dark'
-                    ? ColorsGeneralLight.backgroundNegative
-                    : ColorsGeneralDark.backgroundNegative
-                }`
-              : `${
-                  isDarkTheme || colorScheme === 'dark'
-                    ? ColorsGeneralDark.backgroundNegative
-                    : ColorsGeneralLight.backgroundNegative
-                }`,
+              ? generalColorsNew.backgroundNew
+              : generalColorsNew.accent,
           }}>
           <StatusBar
             backgroundColor={

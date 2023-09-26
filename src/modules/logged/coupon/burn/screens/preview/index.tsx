@@ -55,6 +55,7 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
         console.log(error);
         navigation.navigate('ErrorScreenCouponBurn', {
           coupon: couponInfo,
+          error,
         });
         setError({
           isError: true,

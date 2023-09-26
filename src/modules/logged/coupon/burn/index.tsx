@@ -10,7 +10,12 @@ import {
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList } from '../..';
-import { ColorsGeneralDark, ThemeContext, useThemedStyles } from '@core/theme';
+import {
+  ColorsGeneralDark,
+  generalColorsNew,
+  ThemeContext,
+  useThemedStyles,
+} from '@core/theme';
 import { useForm } from 'react-hook-form';
 import { FormInput } from '@components/FormInput';
 import { Button } from '@components/Button';
@@ -159,6 +164,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           placeholder="EXCHANGE CODE"
           styless={{
             backgroundColor: 'transparent',
+            borderBottomColor: generalColorsNew.orange,
           }}
           negativeColor={false}
           showIcons={false}
