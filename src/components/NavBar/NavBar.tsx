@@ -86,7 +86,7 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View>
-        <LogoSkey size={100} styles={{ marginTop: 18 }} />
+        <LogoSkey size={100} styles={{ marginTop: 25 }} />
       </View>
       <View style={{ width: 40 }}></View>
     </View>

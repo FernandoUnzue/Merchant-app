@@ -43,7 +43,9 @@ const Loading: React.FC<LoadingProps> = ({ logo = true, error }) => {
           size="large"
           color={colorScheme === 'dark' || isDarkMode ? '#000' : '#fff'}
         />
-        {logo && <LogoSkey size={100} />}
+        {logo && (
+          <LogoSkey size={100} color={'#fff'} styles={{ marginTop: 10 }} />
+        )}
       </View>
       <Text style={{ color: 'red', textAlign: 'center' }}>{error}</Text>
     </View>

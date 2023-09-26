@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ViewStyle } from 'react-native';
 import Svg, { SvgProps, Defs, ClipPath, Path, G } from 'react-native-svg';
 const LogoSkey = ({
-  color = '#626af1',
+  color = '#173e46',
   size = 25,
   styles,
 }: {
@@ -13,7 +13,7 @@ const LogoSkey = ({
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
-    height={size / 3}
+    height={size / 4}
     viewBox="0 0 146.165 42.059"
     style={{
       ...styles,
@@ -175,7 +175,7 @@ const LogoSkey = ({
         />
       </G>
     </G>
-    <G fill="#173e46">
+    <G fill={color}>
       <Path
         data-name="Tracciato 152"
         d="m55.061 39.572-.545-9.781h.45c2.652 5.92 5.968 9.283 10.775 9.283 3.813 0 6.015-2.108 6.015-5.636s-2.273-5.423-5.968-7.957l-5.139-3.529c-3.979-2.7-5.471-5.636-5.471-9.236 0-6.086 4.594-10.657 11.651-10.657a26.6 26.6 0 0 1 9.331 1.824l.545 8.952h-.426c-2.439-5.21-5.423-7.815-9.118-7.815a4.664 4.664 0 0 0-5.021 5.021c0 2.984 2.037 5.021 5.021 7.01l4.263 2.818c3.2 2.155 7.46 5.636 7.46 11.154 0 6.915-5.257 10.988-12.812 10.988a27.1 27.1 0 0 1-11.012-2.439Z"
