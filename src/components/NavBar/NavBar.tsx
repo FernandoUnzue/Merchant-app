@@ -40,6 +40,8 @@ import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useColorScheme } from 'react-native';
 import LogoSkey from '@core/theme/Merchant/LogoSkey';
+import BackNav from '@components/BackNav';
+import { Alert } from 'react-native';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -60,6 +62,14 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   const colorScheme = useColorScheme();
 
   const nav = useNavigation();
+  const state = nav.getState();
+
+  const navig = state.routes[state.index];
+  const navState = navig.state;
+
+  const indexFinal = navState?.index ? navState.index : 0;
+  const routeName =
+    navState && navState.routeNames ? navState.routeNames[indexFinal] : '';
 
   const funcFinal = () => {
     if (!customer.registered) {
@@ -71,19 +81,29 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
     }
     return nav.dispatch(DrawerActions.openDrawer);
   };
-
   return (
     <View style={style.containerNav}>
       <View style={style.containerTabNav}>
-        <TouchableOpacity onPress={() => funcFinal()}>
-          <Impostazioni
-            size={40}
-            styles={{
-              marginTop: 10,
-            }}
-            color={generalColorsNew.accent}
-          />
-        </TouchableOpacity>
+        {indexFinal === 0 ? (
+          <TouchableOpacity
+            onPress={() => dispatch(AuthSlice.actions.toggleModal())}>
+            <Impostazioni
+              size={40}
+              styles={{
+                marginTop: 10,
+              }}
+              color={generalColorsNew.accent}
+            />
+          </TouchableOpacity>
+        ) : (
+          <View style={{ marginTop: 15 }}>
+            <BackNav
+              navigation={navigation}
+              text={false}
+              OnPress={() => navigation.goBack()}
+            />
+          </View>
+        )}
       </View>
       <View>
         <LogoSkey size={100} styles={{ marginTop: 25 }} />
@@ -135,7 +155,7 @@ const styles = ({ theme }: ThemeContext) =>
       shadowOffset: { width: 1, height: 1 },
       //  shadowOpacity: 0.4,
       shadowRadius: 3,
-      elevation: 5,
+      //   elevation: 5,
     },
     containerTabNav: {
       backgroundColor: 'transparent',

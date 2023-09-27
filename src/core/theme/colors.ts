@@ -40,7 +40,10 @@ export const generalColorsNew = {
   textBlack: paletteNew.blackPrimary,
   textGrey: paletteNew.greyNew,
   backgroundNew: paletteNew.lightGreyNew,
-  orange: paletteNew.orangeNew
+  orange: paletteNew.orangeNew,
+  greenLight: paletteNew.lightGreen,
+  greenDark: paletteNew.darkGreen,
+  darkPurple: paletteNew.darkPurple
 }
 
 

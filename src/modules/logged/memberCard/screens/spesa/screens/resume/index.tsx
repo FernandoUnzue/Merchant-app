@@ -66,8 +66,8 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
               paddingLeft: 40,
               width: (width - 20) / 2,
             }}>
-            <Text style={{ fontSize: 18 }}>Riepilogo </Text>
-            <Text style={{ fontSize: 18 }}>pagamento</Text>
+            <Text style={{ fontSize: 16 }}>Riepilogo </Text>
+            <Text style={{ fontSize: 16 }}>pagamento</Text>
           </View>
           <View
             style={{
@@ -85,7 +85,7 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
           style={{
             borderWidth: 0.5,
             borderStyle: 'dashed',
-            borderColor: 'blue',
+            borderColor: generalColorsNew.darkPurple,
             width: width - 20,
             height: 0.25,
             borderRadius: 1,

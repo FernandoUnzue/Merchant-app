@@ -105,7 +105,6 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
   return (
     <SafeAreaView style={style.safeAreaStyle}>
       <View style={style.subcontainer}>
-        <BackNav navigation={navigation} text={false} />
         <View style={style.square}>
           <Text style={style.textStyle}>
             {qrvalue ? 'Scanned Result: ' + qrvalue : ''}
@@ -181,7 +180,6 @@ const styles = ({ theme }: ThemeContext) =>
       alignItems: 'center',
     },
     square: {
-      flexDirection: 'row',
       justifyContent: 'center',
       backgroundColor: theme.colors.background,
     },

@@ -83,15 +83,13 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
   const routeName =
     navState && navState.routeNames ? navState.routeNames[indexFinal] : '';
 
-  //  console.log(`state ${JSON.stringify(state)}`);
+  console.log(`state ${JSON.stringify(route)}`);
 
-  // console.log(`routeName ${routeName}`);
+  console.log(`routeName ${indexFinal}`);
 
   const BackFunc = () => {
-    if (customer.registered) {
-      dispatch(CustomerSlice.actions.removeCustomer());
-      nav.navigate('MemberCardStack' as never);
-    }
+    dispatch(CustomerSlice.actions.removeCustomer());
+    nav.navigate('MemberCardStack' as never);
   };
 
   return (
@@ -100,9 +98,7 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
         <BackNav
           navigation={navigation}
           OnPress={
-            routeName !== 'HomeSpesa'
-              ? () => navigation.goBack()
-              : () => BackFunc()
+            indexFinal !== 0 ? () => navigation.goBack() : () => BackFunc()
           }
           text={false}
         />
@@ -161,7 +157,7 @@ const styles = ({ theme }: ThemeContext) =>
       shadowOffset: { width: 1, height: 1 },
       //  shadowOpacity: 0.4,
       shadowRadius: 3,
-      elevation: 5,
+      //   elevation: 5,
     },
     containerTabNav: {
       backgroundColor: 'transparent',

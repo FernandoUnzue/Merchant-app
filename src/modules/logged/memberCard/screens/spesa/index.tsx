@@ -68,6 +68,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
 
   useEffect(() => {
     trigger('importo');
+    setValue('importo', 0);
   }, [true]);
 
   return (
@@ -83,7 +84,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         icon={false}
         control={control}
         name="importo"
-        placeholder={Platform.OS === 'ios' ? '0,00' : '0,000'}
+        placeholder={'0,00'}
         keyboardType="numeric"
         styless={style.numberCont}
         style={style.number}
@@ -92,6 +93,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           alignSelf: 'center',
           width: Math.floor(width / 2),
         }}
+        defaultValue={Platform.OS === 'android' ? '0' : ''}
         cursorColor={'#000'}
         valueAdded={
           <Text
@@ -99,6 +101,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
               color: generalColorsNew.orange,
               fontSize: style.number.fontSize,
               fontFamily: style.number.fontFamily,
+              marginTop: 8,
             }}>
             €
           </Text>
@@ -164,7 +167,6 @@ const styles = ({ theme }: ThemeContext) =>
       fontFamily: theme.fonts.bold,
       color: '#ddd',
       borderBottomWidth: 0,
-
       verticalAlign: 'center',
       width: 250,
     },

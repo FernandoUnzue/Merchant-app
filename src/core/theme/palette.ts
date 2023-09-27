@@ -5,6 +5,9 @@ export const paletteNew = {
   lightGreyNew: '#F5F5F5',
   lightBlueNew: '#C6E0FC',
   success: '#3FE345',
+  lightGreen: '#F7F8F2',
+  darkGreen: '#173E4680',
+  darkPurple: '#4C4188'
 
 }
 

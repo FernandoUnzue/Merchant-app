@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ColorsGeneralLight, ThemeContext, useThemedStyles } from '@core/theme';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -74,25 +80,29 @@ const PreviewScreenCouponBurn: React.FC<PreviewScreenCouponBurnProps> = ({
 
   return (
     <ScrollView contentContainerStyle={style.main}>
-      <BackNav navigation={navigation} />
-      <Text style={style.title}>Preview Screen Coupon Burn</Text>
-      <Spacer height={50} />
-      <View style={style.square}>
-        <Text style={style.title1}>Coupon</Text>
-        <Text style={style.bold}>Title:</Text>
-        <Text>{couponInfo?.tittle}</Text>
-        <Text style={style.bold}>Validate from:</Text>
-        <Text>{moment(couponInfo?.validateDateFrom).format('DD/MM/YYYY')}</Text>
-        <Text style={style.bold}>Validate to:</Text>
-        <Text>{moment(couponInfo?.validateDateTo).format('DD/MM/YYYY')}</Text>
-        <Text style={style.bold}>Condition:</Text>
-        <Text>{couponInfo?.condition}</Text>
-        <Text style={style.bold}>Prize:</Text>
-        <Text style={style.number}>{`${couponInfo?.promoPrize
-          .toFixed(2)
-          .replace('.', ',')}€`}</Text>
-      </View>
-      <Spacer height={50} />
+      <ImageBackground
+        source={require('../../../../../../../assets/images/Coupon.png')}
+        style={{ height: 500 }}>
+        <View style={style.square}>
+          <Text style={style.title1}>Coupon</Text>
+          <Text style={style.bold}>Title:</Text>
+          <Text>{couponInfo?.tittle}</Text>
+          <Text style={style.bold}>Validate from:</Text>
+          <Text>
+            {moment(couponInfo?.validateDateFrom).format('DD/MM/YYYY')}
+          </Text>
+          <Text style={style.bold}>Validate to:</Text>
+          <Text>{moment(couponInfo?.validateDateTo).format('DD/MM/YYYY')}</Text>
+          <Text style={style.bold}>Condition:</Text>
+          <Text>{couponInfo?.condition}</Text>
+          <Text style={style.bold}>Prize:</Text>
+          <Text style={style.number}>{`${couponInfo?.promoPrize
+            .toFixed(2)
+            .replace('.', ',')}€`}</Text>
+        </View>
+      </ImageBackground>
+
+      <Spacer height={10} />
       <Button
         accessibilityLabel="conferma"
         title="CONFERMA"
@@ -116,17 +126,18 @@ export default PreviewScreenCouponBurn;
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     main: {
-      flex: 1,
+      maxHeight: 900,
       padding: 20,
       backgroundColor: theme.colors.background,
     },
     square: {
       alignItems: 'center',
-      backgroundColor: '#fff',
-      padding: 10,
-      borderWidth: 1,
-      borderColor: '#ddd',
-      borderRadius: 20,
+      //  backgroundColor: '#fff',
+      paddingHorizontal: 10,
+      paddingTop: 40,
+      //  borderWidth: 1,
+      //    borderColor: '#ddd',
+      //  borderRadius: 20,
     },
     title: {
       fontSize: 22,
@@ -134,8 +145,8 @@ const styles = ({ theme }: ThemeContext) =>
       color: theme.colors.textPrimary,
     },
     title1: {
-      fontSize: 18,
-      fontFamily: theme.fonts.bold,
+      fontSize: 14,
+      color: theme.colors.textGrey,
       textAlign: 'center',
       paddingBottom: 20,
     },

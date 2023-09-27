@@ -20,6 +20,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { Alert } from 'react-native';
 import {
   Animated,
   ScrollView,
@@ -41,9 +42,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
 
   const showMenu = useSelector((state: RootState) => state.auth.showModal);
 
-  const customerRegistered = useSelector(
-    (state: RootState) => state.customer.registered,
-  );
+  const customer = useSelector((state: RootState) => state.customer);
 
   const dispatch = useDispatch<AppDispatch>();
   const logoutIntern = () => {
@@ -111,7 +110,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     },
   ];
 
-  if (showMenu && !customerRegistered) {
+  if (showMenu) {
     return (
       <View style={style.menuContainer}>
         <ScrollView style={style.contToggle}>
@@ -135,7 +134,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                       style={{
                         textAlign: 'center',
                         fontSize: 20,
-                        fontFamily: Fonts.bold,
+                        fontFamily: Fonts.instBold,
                         alignSelf: 'center',
                         color:
                           state?.index === item.id
@@ -207,7 +206,7 @@ const styles = ({ theme }: ThemeContext) =>
     badgeText: {
       color: theme.colors.textPrimary,
       fontSize: 14,
-      fontFamily: theme.fonts.bold,
+      fontFamily: theme.fonts.instBold,
       textAlign: 'center',
     },
     bullet: {

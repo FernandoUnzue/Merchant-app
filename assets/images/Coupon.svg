@@ -1,0 +1,8 @@
+<svg id="Componente_29_1" data-name="Componente 29 – 1" xmlns="http://www.w3.org/2000/svg" width="383.999" height="589" viewBox="0 0 383.999 589">
+  <path id="Sottrazione_3" data-name="Sottrazione 3" d="M-1886,589h-312a35.776,35.776,0,0,1-14.013-2.829,35.877,35.877,0,0,1-11.443-7.715,35.879,35.879,0,0,1-7.715-11.443A35.778,35.778,0,0,1-2234,553V449.888L-2194.5,427l-39.5-22.888V36a35.777,35.777,0,0,1,2.829-14.013,35.883,35.883,0,0,1,7.715-11.443,35.878,35.878,0,0,1,11.443-7.715A35.775,35.775,0,0,1-2198,0h312a35.775,35.775,0,0,1,14.013,2.829,35.878,35.878,0,0,1,11.443,7.715,35.878,35.878,0,0,1,7.715,11.443A35.774,35.774,0,0,1-1850,36V404.112L-1889.5,427l39.5,22.888V553a35.776,35.776,0,0,1-2.829,14.013,35.879,35.879,0,0,1-7.715,11.443,35.878,35.878,0,0,1-11.443,7.715A35.777,35.777,0,0,1-1886,589Z" transform="translate(2234 0)" fill="#c6e0fc" opacity="0.2"/>
+  <g id="Rettangolo_2263" data-name="Rettangolo 2263" transform="translate(29 36)" fill="none" stroke="#c6e0fc" stroke-width="1">
+    <rect width="326" height="338" rx="23" stroke="none"/>
+    <rect x="0.5" y="0.5" width="325" height="337" rx="22.5" fill="none"/>
+  </g>
+  <line id="Linea_14" data-name="Linea 14" x2="289" transform="translate(47.5 426.5)" fill="none" stroke="#173e46" stroke-width="1" stroke-dasharray="2"/>
+</svg>

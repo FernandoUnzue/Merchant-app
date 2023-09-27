@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { useSelector } from 'react-redux';
@@ -13,10 +13,17 @@ const UserBar: React.FC<Props> = () => {
   const style = useThemedStyles(styles);
   return (
     <View style={style.squareContent}>
-      <UserIcon size={50} />
+      {customer.userInfo?.avatar_photo ? (
+        <Image
+          source={{ uri: customer.userInfo.avatar_photo }}
+          style={{ width: 50, height: 50, borderRadius: 100 }}
+        />
+      ) : (
+        <UserIcon size={50} />
+      )}
       <View style={style.square}>
         <Spacer height={35} />
-        <Text style={style.text}>Cardholder name</Text>
+        <Text style={style.text}>Nome e cognome</Text>
         <Text
           style={{ ...style.textBold, width: 100 }}
           numberOfLines={1}

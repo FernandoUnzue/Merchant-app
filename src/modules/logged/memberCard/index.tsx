@@ -182,7 +182,7 @@ const styles = ({ theme }: ThemeContext) =>
       color: theme.colors.textPrimary,
     },
     title: {
-      fontFamily: theme.fonts.bold,
+      fontFamily: theme.fonts.instBold,
       fontSize: 22,
       textAlign: 'center',
       paddingBottom: 20,

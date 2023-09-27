@@ -45,8 +45,8 @@ export const AuthSlice = createSlice({
     closeModal: state => {
       state.showModal = false;
     },
-    ToggleTheme: state => {
-      state.darkMode = !state.darkMode;
+    toggleModal: state => {
+      state.showModal = !state.showModal;
     },
   },
   extraReducers: builder => {

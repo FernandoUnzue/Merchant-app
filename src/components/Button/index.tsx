@@ -200,7 +200,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     textBase: {
       textTransform: 'uppercase',
-      fontFamily: theme.fonts.bold,
+      fontFamily: theme.fonts.instBold,
       fontSize: 20,
     },
     text_primary: {
