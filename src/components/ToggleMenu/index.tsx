@@ -12,8 +12,10 @@ import {
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import ArrowRightIcon from '@core/theme/SVGS/ArrowRight';
 import BellIcon from '@core/theme/SVGS/Bell';
+import GiftCardIcon from '@core/theme/SVGS/GiftCardIcon';
 import LogoutIcon from '@core/theme/SVGS/Movements/Logout';
 import UserDataIcon from '@core/theme/SVGS/Movements/UserData';
+import PercentIcon from '@core/theme/SVGS/TabNav/Percent';
 import {
   NavigationProp,
   useNavigation,
@@ -63,7 +65,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       id: 0,
       name: 'Member Card',
       icon: (
-        <Impostazioni
+        <UserDataIcon
           size={35}
           color={state?.index === 0 ? generalColorsNew.orange : '#000'}
         />
@@ -92,7 +94,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       id: 2,
       name: 'Burn Coupon',
       icon: (
-        <Impostazioni
+        <PercentIcon
           size={35}
           color={state?.index === 2 ? generalColorsNew.orange : '#000'}
         />

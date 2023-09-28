@@ -43,7 +43,8 @@ export const generalColorsNew = {
   orange: paletteNew.orangeNew,
   greenLight: paletteNew.lightGreen,
   greenDark: paletteNew.darkGreen,
-  darkPurple: paletteNew.darkPurple
+  darkPurple: paletteNew.darkPurple,
+  success: paletteNew.success
 }
 
 

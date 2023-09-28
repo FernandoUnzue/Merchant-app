@@ -44,7 +44,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     textWalletNumber: {
       fontSize: 13,
-      fontFamily: theme.fonts.bold,
+      fontFamily: theme.fonts.instBold,
       color: theme.colors.textPrimary,
     },
   });

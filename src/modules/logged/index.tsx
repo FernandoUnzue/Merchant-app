@@ -20,6 +20,9 @@ import CameraScannerScreenCard from './memberCard/screens/cam-scanner-card';
 import ResumeSaleScreen from './memberCard/screens/spesa/screens/resume';
 import PaymentSaleScreen from './memberCard/screens/spesa/screens/payment';
 import SuccessSaleScreen from './memberCard/screens/spesa/screens/success';
+import InfoClientHomeScreen from './infoClient';
+import LastMovementHome from './lastMov';
+import DeleteLastMovementHome from './lastMov/delete';
 
 /**
  * Types
@@ -190,7 +193,7 @@ export const SpesaFlowStack: React.FC<SpesaProps> = () => {
   );
 };
 
-// info client stack
+// info operator stack
 
 export type InfoOperatorParamList = {
   ChangePasswordDraft: undefined;
@@ -216,5 +219,55 @@ export const InfoOperatorStack: React.FC<InfoOperatorStackProps> = () => {
         component={ChangePasswordSuccess}
       />
     </StackInfoOpeator.Navigator>
+  );
+};
+
+// info client stack
+
+export type InfoClientParamList = {
+  HomeScreen: undefined;
+};
+
+const StackInfoCliente = createStackNavigator<InfoClientParamList>();
+
+interface InfoClienteStackProps {}
+export const InfoClientStack: React.FC<InfoClienteStackProps> = () => {
+  return (
+    <StackInfoCliente.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
+      <StackInfoCliente.Screen
+        name="HomeScreen"
+        component={InfoClientHomeScreen}
+      />
+    </StackInfoCliente.Navigator>
+  );
+};
+
+// ultimo movimiento
+
+export type UltimoMovParamList = {
+  HomeScreen: undefined;
+  DeleteScreen: undefined;
+};
+
+const StackUltimoMov = createStackNavigator<UltimoMovParamList>();
+
+interface UltimoMovStackProps {}
+export const UltimoMovStack: React.FC<UltimoMovStackProps> = () => {
+  return (
+    <StackUltimoMov.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
+      <StackUltimoMov.Screen name="HomeScreen" component={LastMovementHome} />
+      <StackUltimoMov.Screen
+        name="DeleteScreen"
+        component={DeleteLastMovementHome}
+      />
+    </StackUltimoMov.Navigator>
   );
 };

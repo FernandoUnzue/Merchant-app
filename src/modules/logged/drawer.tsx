@@ -5,11 +5,14 @@ import TabNav from '@components/NavBar/NavBar';
 import TabNavSpesa from '@components/NavBarSpesa/NavBar';
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { AppDispatch, RootState } from '@core/redux/store';
-import { ColorsGeneralDark, generalColorsNew } from '@core/theme';
+import { ColorsGeneralDark, FontsNew, generalColorsNew } from '@core/theme';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import ArrowCircleIcon from '@core/theme/Merchant/Menu/ArrowCircle';
 import BagIcon from '@core/theme/Merchant/Menu/BagIcon';
+import ClientIcon from '@core/theme/Merchant/Menu/ClientIcon';
 import TicketIcon from '@core/theme/Merchant/Menu/TicketIcon';
+import TrashIcon from '@core/theme/Merchant/Menu/TrashIcon';
+import ArrowLeftBack from '@core/theme/SVGS/ArrowLeftBack';
 import LogoutIcon from '@core/theme/SVGS/Movements/Logout';
 import UserDataIcon from '@core/theme/SVGS/Movements/UserData';
 import RiscattoIcon from '@core/theme/SVGS/RiscattoIcon';
@@ -19,15 +22,19 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { FC, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   BurnCouponStack,
+  InfoClientStack,
   InfoOperatorStack,
   MemberCardStack,
   SpesaFlowStack,
+  UltimoMovStack,
 } from '.';
+import DeleteLastMovementHome from './lastMov/delete';
 import MemberCardHome from './memberCard';
 
 interface HomeLoggedProps {
@@ -39,6 +46,9 @@ export type DrawerStackParamList = {
   MemberCardStack: HomeLoggedProps;
   ModificaPassword: undefined;
   Spesa: undefined;
+  InfoCliente: undefined;
+  UltimoMovimiento: undefined;
+  EliminaUltimoMov: undefined;
 };
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -58,6 +68,7 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
         drawerPosition: 'right',
         drawerStyle: {
           backgroundColor: ColorsGeneralDark.backgroundNegative,
+          width: '80%',
         },
         drawerActiveTintColor: ColorsGeneralDark.accent,
       }}
@@ -82,6 +93,7 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
         name="ModificaPassword"
         component={InfoOperatorStack}
         options={{
+          drawerItemStyle: { display: 'none' },
           drawerLabel: 'Modifica Password',
           header: () => <TabNav navigation={RootNavigation} />,
           drawerIcon: resp => (
@@ -96,6 +108,7 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
         name="BurnCoupon"
         component={BurnCouponStack as never}
         options={{
+          drawerItemStyle: { display: 'none' },
           drawerLabel: 'Burn Coupon',
           header: () => <TabNav navigation={RootNavigation} />,
           drawerIcon: resp => (
@@ -106,20 +119,40 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
           ),
         }}
       />
-
+      <Drawer.Screen
+        name="InfoCliente"
+        component={InfoClientStack}
+        options={{
+          header: () => <TabNavSpesa navigation={RootNavigation} />,
+          drawerLabel: 'Info Cliente',
+          drawerIcon: resp => <ClientIcon size={20} />,
+        }}
+      />
       <Drawer.Screen
         name="Spesa"
         component={SpesaFlowStack}
         options={{
-          drawerItemStyle: customer.registered ? null : { display: 'none' },
           header: () => <TabNavSpesa navigation={RootNavigation} />,
           drawerLabel: 'Spesa',
-          drawerIcon: resp => (
-            <BagIcon
-              size={30}
-              // color={resp.focused ? ColorsGeneralDark.background : '#000'}
-            />
-          ),
+          drawerIcon: resp => <BagIcon size={20} />,
+        }}
+      />
+      <Drawer.Screen
+        name="UltimoMovimiento"
+        component={UltimoMovStack}
+        options={{
+          header: () => <TabNavSpesa navigation={RootNavigation} />,
+          drawerLabel: 'Ultimo Movimiento',
+          drawerIcon: resp => <TicketIcon size={20} />,
+        }}
+      />
+      <Drawer.Screen
+        name="EliminaUltimoMov"
+        component={DeleteLastMovementHome as never}
+        options={{
+          header: () => <TabNavSpesa navigation={RootNavigation} />,
+          drawerLabel: 'Elimina ultimo movimiento',
+          drawerIcon: resp => <TrashIcon size={20} />,
         }}
       />
     </Drawer.Navigator>
@@ -164,35 +197,98 @@ const CustomDrawerContent = (props: any) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const logoutIntern = () => dispatch(LogOutAsync());
+  const nav = useNavigation();
 
   return (
-    <DrawerContentScrollView {...props}>
+    <React.Fragment>
+      <View style={{ padding: 20, borderBottomWidth: 1 }}>
+        <TouchableOpacity
+          onPress={() => nav.dispatch(DrawerActions.toggleDrawer())}>
+          <ArrowLeftBack size={20} />
+        </TouchableOpacity>
+      </View>
+      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+        <Text style={{ fontFamily: FontsNew.instBold, fontSize: 18 }}>
+          Funzioni
+        </Text>
+      </View>
+
       <DrawerItemListCustom {...props} />
-      <DrawerItemCustom
-        label="Log Out"
-        onPress={() => setShowModalLogOut(true)}
-        icon={resp => (
-          <LogoutIcon
-            size={30}
-            color={resp.focused ? ColorsGeneralDark.background : '#000'}
-          />
-        )}
-        icon1={resp => (
-          <ArrowCircleIcon
-            size={15}
-            color={resp.focused ? generalColorsNew.accent : '#000'}
-          />
-        )}
-      />
-      <ModalAsk
-        show={showModalLogOut}
-        closeModal={() => setShowModalLogOut(false)}
-        onPressConfirm={() => logoutIntern()}
-        width={350}
-        height={230}
-        message={'¿Sei sicuro di voler uscire?'}
-        loading={false}
-      />
-    </DrawerContentScrollView>
+
+      {/*  <ScrollView>
+        <DrawerItemCustom
+          {...props}
+          activeBackgroundColor={generalColorsNew.accent}
+          label="Info Cliente"
+          onPress={() => null}
+          icon={resp => (
+            <ClientIcon
+              size={20}
+              //  color={resp.focused ? ColorsGeneralDark.background : '#000'}
+            />
+          )}
+          icon1={resp => (
+            <ArrowCircleIcon
+              size={15}
+              //  color={resp.focused ? generalColorsNew.accent : '#000'}
+            />
+          )}
+        />
+        <DrawerItemCustom
+          {...props}
+          activeBackgroundColor={generalColorsNew.accent}
+          label="Spesa"
+          onPress={() => nav.navigate('Spesa' as never)}
+          icon={resp => (
+            <BagIcon
+              size={20}
+              //   color={resp.focused ? ColorsGeneralDark.background : '#000'}
+            />
+          )}
+          icon1={resp => (
+            <ArrowCircleIcon
+              size={15}
+              //   color={resp.focused ? generalColorsNew.accent : '#000'}
+            />
+          )}
+        />
+        <DrawerItemCustom
+          {...props}
+          activeBackgroundColor={generalColorsNew.accent}
+          label="Ultimo movimiento"
+          onPress={() => null}
+          icon={resp => (
+            <TicketIcon
+              size={20}
+              //      color={resp.focused ? ColorsGeneralDark.background : '#000'}
+            />
+          )}
+          icon1={resp => (
+            <ArrowCircleIcon
+              size={15}
+              //   color={resp.focused ? generalColorsNew.accent : '#000'}
+            />
+          )}
+        />
+        <DrawerItemCustom
+          {...props}
+          activeBackgroundColor={generalColorsNew.accent}
+          label="Elimina ultimo movimiento"
+          onPress={() => null}
+          icon={resp => (
+            <TrashIcon
+              size={20}
+              //  color={resp.focused ? ColorsGeneralDark.background : '#000'}
+            />
+          )}
+          icon1={resp => (
+            <ArrowCircleIcon
+              size={15}
+              color={resp.focused ? generalColorsNew.accent : '#000'}
+            />
+          )}
+        />
+          </ScrollView>*/}
+    </React.Fragment>
   );
 };

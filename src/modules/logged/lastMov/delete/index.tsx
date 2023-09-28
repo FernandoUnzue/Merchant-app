@@ -1,43 +1,39 @@
 import {
-  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { SpesaStackParamList } from '@modules/logged';
-import {
-  FontsNew,
-  generalColorsNew,
-  ThemeContext,
-  useThemedStyles,
-} from '@core/theme';
+
+import { FontsNew, ThemeContext, useThemedStyles } from '@core/theme';
+import { UltimoMovParamList } from '@modules/logged';
+import { useNavigation } from '@react-navigation/native';
 import Wallet from '@components/Wallet';
 import { Spacer } from '@components/Spacer';
 import BackgroundImageContainer from '@components/BackgroundImage';
-import { Button } from '@components/Button';
-import { useWindowDimensions } from 'react-native';
 import CheckIcon from '@core/theme/SVGS/Merchant/CheckIcon';
+import { Button } from '@components/Button';
 
 /**
  * Types
  */
 
-type SuccessScreenProps = StackScreenProps<
-  SpesaStackParamList,
-  'SuccessSaleScreen'
+type HomeScreenDeleteUltimoMovProps = StackScreenProps<
+  UltimoMovParamList,
+  'DeleteScreen'
 >;
-const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
+
+const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
   navigation,
   route,
 }) => {
-  const { amount } = route.params;
-
   const style = useThemedStyles(styles);
-
   const { width } = useWindowDimensions();
+
+  const nav = useNavigation();
   return (
     <ScrollView style={style.main}>
       <Wallet />
@@ -108,16 +104,16 @@ const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
       <Spacer height={20} />
       <Button
         type="primary"
-        title="TORNA ALLA HOME"
-        accessibilityLabel="torna alla home"
-        onPress={() => navigation.navigate('HomeSpesa')}
+        title="elimina movemento"
+        accessibilityLabel="elimina movemento"
+        onPress={() => nav.navigate('Spesa' as never)}
       />
       <Spacer height={20} />
     </ScrollView>
   );
 };
 
-export default SuccessSaleScreen;
+export default DeleteLastMovementHome;
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
@@ -145,7 +141,7 @@ const styles = ({ theme }: ThemeContext) =>
     dashedLine: {
       borderWidth: 0.5,
       borderStyle: 'dashed',
-      borderColor: generalColorsNew.darkPurple,
+      borderColor: theme.colors.darkPurple,
       height: 0.25,
       borderRadius: 1,
     },
