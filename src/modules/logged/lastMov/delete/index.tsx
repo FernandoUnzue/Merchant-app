@@ -56,7 +56,7 @@ const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
             <Spacer height={10} />
             <Text>
               Barcode card
-              <Text style={style.fontBold}>1234567891011</Text>
+              <Text style={style.fontBold}> 1234567891011</Text>
             </Text>
           </View>
           <View style={{ width: '30%' }}>

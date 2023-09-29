@@ -3,6 +3,7 @@ import DrawerItemListCustom from '@components/DrawerItemListCustom';
 import ModalAsk from '@components/ModalAsk';
 import TabNav from '@components/NavBar/NavBar';
 import TabNavSpesa from '@components/NavBarSpesa/NavBar';
+import { Spacer } from '@components/Spacer';
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 import { AppDispatch, RootState } from '@core/redux/store';
 import { ColorsGeneralDark, FontsNew, generalColorsNew } from '@core/theme';
@@ -207,12 +208,13 @@ const CustomDrawerContent = (props: any) => {
           <ArrowLeftBack size={20} />
         </TouchableOpacity>
       </View>
-      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+      <Spacer height={50} />
+      <View style={{ paddingHorizontal: 20 }}>
         <Text style={{ fontFamily: FontsNew.instBold, fontSize: 18 }}>
           Funzioni
         </Text>
       </View>
-
+      <Spacer height={30} />
       <DrawerItemListCustom {...props} />
 
       {/*  <ScrollView>

@@ -945,3 +945,9 @@ export interface PaginatedResponseGiftList {
   numberOfElements: number;
   empty: boolean;
 }
+
+export interface BodyPostSale {
+  card: number;
+  type: string;
+  amount: number;
+}

@@ -68,7 +68,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
 
   useEffect(() => {
     trigger('importo');
-    setValue('importo', 0);
+    if (Platform.OS === 'android') setValue('importo', 0);
   }, [true]);
 
   return (

@@ -15,6 +15,7 @@ export const ApiRedux = createApi({
     'Favorites',
     'Presents',
     'CashbackRedemption',
+    'Merchant',
   ],
   reducerPath: 'Querys',
   refetchOnMountOrArgChange: true,
