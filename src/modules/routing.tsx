@@ -217,12 +217,7 @@ export const RootNavigator: FC = () => {
 
   return (
     <>
-      <ThemeProvider
-        theme={
-          colorScheme === 'dark' || isDarkTheme
-            ? themeContentDark
-            : themeContent
-        }>
+      <ThemeProvider theme={themeContent}>
         <SafeAreaView
           edges={['top']}
           style={{

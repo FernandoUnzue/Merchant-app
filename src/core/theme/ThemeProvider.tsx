@@ -40,9 +40,7 @@ export const themeContentDark: ThemeContext = {
   },
 };
 
-export const ThemeContext = createContext(
-  isDarkTheme() ? themeContentDark : themeContent,
-);
+export const ThemeContext = createContext(themeContent);
 
 export const ThemeContextDark = createContext(themeContentDark);
 
