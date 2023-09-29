@@ -1,5 +1,6 @@
 import {
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -72,7 +73,9 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
   }, [true]);
 
   return (
-    <View style={style.main}>
+    <ScrollView
+      contentContainerStyle={style.main}
+      keyboardShouldPersistTaps="never">
       <Spacer height={20} />
       <Wallet />
       <Spacer height={10} />
@@ -140,7 +143,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           nav.navigate('MemberCardStack' as never);
         }}
       />*/}
-    </View>
+    </ScrollView>
   );
 };
 

@@ -236,7 +236,7 @@ export const RootNavigator: FC = () => {
               : generalColorsNew.accent,
           }}>
           <StatusBar
-            backgroundColor={generalColorsNew.backgroundNew}
+            backgroundColor={generalColorsNew.accent}
             barStyle={user.loggedIn ? 'dark-content' : 'light-content'}
           />
 
