@@ -28,7 +28,10 @@ import { CurrencyFormInput } from '@components/CurrencyInput';
 import EuroIcon from '@core/theme/SVGS/NavBar/Euro';
 import Impostazioni from '@core/theme/Merchant/Impostazioni';
 import { useNavigation } from '@react-navigation/native';
-import { extendedApiUser } from '@core/redux/Api/endpoints/User';
+import {
+  extendedApiUser,
+  useGetUserProfileQuery,
+} from '@core/redux/Api/endpoints/User';
 import { FakeCurrencyInput } from 'react-native-currency-input';
 import UserIcon from '@core/theme/SVGS/Merchant/UserIcon';
 import WalletIcon from '@core/theme/SVGS/Merchant/WalletEMpty';
@@ -112,9 +115,6 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         errorMessagesStyles={style.errorMessage}
         rules={{
           required: true,
-          validate: (value: any) =>
-            Number(value) <= amount ||
-            `Saldi insifficienti ${amount.toFixed(2)}€ disponibili`,
         }}
       />
       <Spacer height={30} />

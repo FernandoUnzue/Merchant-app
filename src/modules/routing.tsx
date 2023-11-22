@@ -7,7 +7,7 @@ import { navigationRef } from '@core/helpers/RootNavigation';
 import * as RootNavigation from '@core/helpers/RootNavigation';
 import { ModalToken } from '@components/TokenExpiredModal/';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LogOutAsync } from '@core/redux/authSlice/authSlice';
+import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
 import Loading from '@components/Loading';
 import {
   biometricAuth,
@@ -27,10 +27,11 @@ import {
   ThemeProvider,
   useTheme,
 } from '@core/theme';
-import { Platform, StatusBar, useColorScheme, View } from 'react-native';
+import { Alert, Platform, StatusBar, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ToggleMenu from '@components/ToggleMenu';
 import DrawerStack from './logged/drawer';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 /**
  * Deep Linking
@@ -255,6 +256,7 @@ export const RootNavigator: FC = () => {
           </NavigationContainer>
         </SafeAreaView>
       </ThemeProvider>
+
       <View
         style={{
           position: 'absolute',

@@ -30,7 +30,7 @@ const BackgroundImageContainer: React.FC<Props> = ({
       <View
         style={{
           width: width - 20,
-          height,
+          minHeight: height,
           borderRadius: 1,
           backgroundColor: '#DDEAF8',
         }}>

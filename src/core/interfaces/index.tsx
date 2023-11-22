@@ -945,9 +945,83 @@ export interface PaginatedResponseGiftList {
   numberOfElements: number;
   empty: boolean;
 }
-
 export interface BodyPostSale {
-  card: number;
-  type: string;
-  amount: number;
+  cardMember: string;
+  paymentMethod: string;
+  totalMoney: number;
+  voucherId?: number | null;
+}
+
+export interface ResponsePostSale {
+  answerCode: number;
+  customerId: number;
+  card: string;
+  campaignId: number;
+  campaignName: string;
+  movement: MovementSales;
+}
+
+export interface MovementSales {
+  movementId: number;
+  campaignId: number;
+  terminalId: number;
+  netId: number;
+  shopId: number;
+  shopName: string;
+  chargedPoints: number;
+  totalMoney: number;
+  notes: string;
+  dateTime: string;
+  localTime: string;
+  discount: number;
+  pointsBenefits: number;
+  discountBenefits: number;
+}
+
+export interface LastMovementResponse {
+  answerCode: number;
+  movement: MovementSales;
+}
+
+export interface Vouchers {
+  id: number;
+  voucherCode: number;
+  kind: number;
+  value: number;
+  urlImageWS: string;
+  title: string;
+  description: string | null;
+  ignoreInPromotion: number;
+  isByProduct: boolean;
+  applyInProducts: number;
+  netInUseId: number;
+  expirationDate: string | null;
+}
+export interface ResponseListVouchers {
+  answerCode: number;
+  vouchers: Array<Vouchers>;
+}
+
+export interface PonderazioneBody {
+  operatorId: number;
+  weightChargePointPoints: number;
+  weightChargePointMoney: number;
+}
+
+export interface GetOpInfoResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  birthDate: string;
+  email: string;
+  username: string;
+  password: string;
+  shopId: number;
+  fnetOperatorId: number;
+  enabled: any | null;
+  mobile: string;
+  status: boolean;
+  lastConnection: any | null;
+  createdAt: string;
 }

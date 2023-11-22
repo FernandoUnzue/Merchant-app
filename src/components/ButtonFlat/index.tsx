@@ -54,11 +54,11 @@ const ButtonFlat: React.FC<Props> = ({
                 ...styless,
               }
             : {
-                ...styless,
                 ...style.container,
                 width: widthButton ? widthButton : '100%',
                 backgroundColor: Colors.btnDisabled,
                 height: heightButton ? heightButton : 60,
+                ...styless,
               },
         ]}>
         {iconLeft && <View style={style.startCont}>{iconLeft}</View>}
@@ -98,7 +98,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     textCont: {},
     btnDisabled: {
-      backgroundColor: theme.colors.btnDisabled,
+      backgroundColor: '#C6C6C6',
     },
     textDisabled: {
       color: theme.colors.textDisabled,

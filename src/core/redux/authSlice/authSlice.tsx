@@ -1,10 +1,11 @@
-import { ProfileResponse } from '@core/interfaces';
+import { GetOpInfoResponse, ProfileResponse } from '@core/interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ApiRedux } from '../Api/api';
 import { extendedApiAuth } from '../Api/endpoints/Auth';
 import { extendedApiUser } from '../Api/endpoints/User';
 import { store } from '../store';
+import { extendedApiWebpos } from '../Api/endpoints/Webpos';
 
 export const LogOut = createAction('auth/logOut');
 
@@ -19,6 +20,7 @@ export const LogOutAsync = createAsyncThunk('auth/logoutasyc', async () => {
 export const LogOutExternal = () => {};
 
 interface AuthProps {
+  operatorInfo: GetOpInfoResponse | null;
   user: string | null;
   userData: ProfileResponse | null;
   checking: boolean;
@@ -28,6 +30,7 @@ interface AuthProps {
 }
 
 const initialState = {
+  operatorInfo: null,
   user: null,
   loggedIn: false,
   checking: true,
@@ -153,6 +156,25 @@ export const AuthSlice = createSlice({
         state.user = null;
         state.checking = false;
         state.loggedIn = false;
+      },
+    );
+    builder.addMatcher(
+      extendedApiWebpos.endpoints.getOperatorInfo.matchFulfilled,
+      (state, { payload }) => {
+        state.operatorInfo = payload;
+        state.checking = false;
+      },
+    );
+    builder.addMatcher(
+      extendedApiWebpos.endpoints.getOperatorInfo.matchPending,
+      state => {
+        state.checking = true;
+      },
+    );
+    builder.addMatcher(
+      extendedApiWebpos.endpoints.getOperatorInfo.matchRejected,
+      state => {
+        state.checking = false;
       },
     );
   },

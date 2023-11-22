@@ -7,7 +7,7 @@ import {
   Text,
   Keyboard,
 } from 'react-native';
-import { Control, Controller, Path } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import Clipboard from '@react-native-community/clipboard';
 
 import { ThemeContext, useThemedStyles } from '@core/theme';
@@ -21,7 +21,7 @@ import { TextStyle } from 'react-native';
  * Types
  */
 
-interface IFormInput<ContentType> extends TextInputProps {
+interface IFormInput<ContentType extends FieldValues> extends TextInputProps {
   control: Control<ContentType, object>;
   name: Path<ContentType>;
   rules?: {};
@@ -40,7 +40,7 @@ interface IFormInput<ContentType> extends TextInputProps {
  * FormInput
  */
 
-export function CurrencyFormInput<ContentType>({
+export function CurrencyFormInput<ContentType extends FieldValues>({
   control,
   name,
   icon = true,

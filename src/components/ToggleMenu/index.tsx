@@ -31,6 +31,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
@@ -41,7 +42,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
   const style = useThemedStyles(styles);
 
   const [showModalLogOut, setShowModalLogOut] = useState<boolean>(false);
-
+  const auth = useSelector((state: RootState) => state.auth);
   const showMenu = useSelector((state: RootState) => state.auth.showModal);
 
   const customer = useSelector((state: RootState) => state.customer);
@@ -112,58 +113,66 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     },
   ];
 
+  useEffect(() => {
+    if (!customer.registered || !auth.loggedIn)
+      dispatch(AuthSlice.actions.closeModal());
+  }, [customer, auth.loggedIn]);
+
   if (showMenu) {
     return (
-      <View style={style.menuContainer}>
-        <ScrollView style={style.contToggle}>
-          {items.map(item => {
-            return (
-              <TouchableOpacity onPress={item.onPress} key={item.id}>
-                <View style={style.bullet}>
-                  <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                    }}>
+      <>
+        <View style={style.menuContainer}>
+          <ScrollView style={style.contToggle}>
+            {items.map(item => {
+              return (
+                <TouchableOpacity onPress={item.onPress} key={item.id}>
+                  <View style={style.bullet}>
                     <View
                       style={{
-                        marginRight: 10,
+                        display: 'flex',
+                        flexDirection: 'row',
                       }}>
-                      {item.icon}
-                    </View>
+                      <View
+                        style={{
+                          marginRight: 10,
+                        }}>
+                        {item.icon}
+                      </View>
 
-                    <Text
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          fontSize: 20,
+                          fontFamily: Fonts.instRegular,
+                          fontWeight: 'bold',
+                          alignSelf: 'center',
+                          color:
+                            state?.index === item.id
+                              ? generalColorsNew.orange
+                              : Colors.black,
+                        }}>
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View
                       style={{
-                        textAlign: 'center',
-                        fontSize: 20,
-                        fontFamily: Fonts.instBold,
-                        alignSelf: 'center',
-                        color:
+                        marginTop: 10,
+                      }}>
+                      <ArrowRightIcon
+                        size={30}
+                        color={
                           state?.index === item.id
                             ? generalColorsNew.orange
-                            : Colors.black,
-                      }}>
-                      {item.name}
-                    </Text>
+                            : '#000'
+                        }
+                      />
+                    </View>
                   </View>
-                  <View
-                    style={{
-                      marginTop: 10,
-                    }}>
-                    <ArrowRightIcon
-                      size={30}
-                      color={
-                        state?.index === item.id
-                          ? generalColorsNew.orange
-                          : '#000'
-                      }
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
         <ModalAsk
           show={showModalLogOut}
           closeModal={() => {
@@ -176,7 +185,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
           message={'¿Sei sicuro di voler uscire?'}
           loading={false}
         />
-      </View>
+      </>
     );
   } else {
     return null;
@@ -196,6 +205,15 @@ const styles = ({ theme }: ThemeContext) =>
     contToggle: {
       height: 250,
     },
+    modalOverlay: {
+      position: 'relative',
+      height: 500,
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
     badge: {
       borderRadius: 100,
       width: 25,
@@ -210,6 +228,7 @@ const styles = ({ theme }: ThemeContext) =>
       fontSize: 14,
       fontFamily: theme.fonts.instBold,
       textAlign: 'center',
+      fontWeight: 'bold',
     },
     bullet: {
       display: 'flex',

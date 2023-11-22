@@ -20,6 +20,8 @@ import BackgroundImageContainer from '@components/BackgroundImage';
 import { Button } from '@components/Button';
 import { useWindowDimensions } from 'react-native';
 import CheckIcon from '@core/theme/SVGS/Merchant/CheckIcon';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
 
 /**
  * Types
@@ -33,11 +35,41 @@ const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
   navigation,
   route,
 }) => {
-  const { amount } = route.params;
+  const {
+    customerId,
+    card,
+    campaignId,
+    campaignName,
+    movementId,
+    chargedPoints,
+    shopName,
+    discount,
+    dataTime,
+    localTime,
+    amount,
+    spesa,
+    discountAmount,
+  } = route.params;
+  const movement = {
+    customerId,
+    card,
+    campaignId,
+    campaignName,
+    movementId,
+    chargedPoints,
+    shopName,
+    dataTime,
+    localTime,
+    discount,
+    amount,
+    discountAmount,
+    spesa,
+  };
 
   const style = useThemedStyles(styles);
 
   const { width } = useWindowDimensions();
+  const customer = useSelector((state: RootState) => state.customer);
   return (
     <ScrollView style={style.main}>
       <Wallet />
@@ -48,19 +80,20 @@ const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
           <View style={{ width: '70%' }}>
             <Text style={{ fontSize: 10 }}>Negozio</Text>
 
-            <Text style={style.fontBold}>Happy Talent</Text>
+            <Text style={style.fontBold}>{movement.shopName}</Text>
             <Spacer height={15} />
             <Text>
-              Nr card <Text style={style.fontBold}>4</Text>
+              Nr card <Text style={style.fontBold}>{movement.card}</Text>
             </Text>
             <Spacer height={10} />
             <Text>
-              ID Movimiento <Text style={style.fontBold}>123456789</Text>
+              ID Movimiento{' '}
+              <Text style={style.fontBold}>{movement.movementId}</Text>
             </Text>
             <Spacer height={10} />
             <Text>
               Barcode card
-              <Text style={style.fontBold}> 1234567891011</Text>
+              <Text style={style.fontBold}> {movement.movementId}</Text>
             </Text>
           </View>
           <View style={{ width: '30%' }}>
@@ -73,11 +106,14 @@ const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
         <View style={style.columnInter}>
           <View>
             <Text>Cliente</Text>
-            <Text style={style.fontBold}>Mario Rossi</Text>
+            <Text style={style.fontBold}>
+              {' '}
+              {customer.userInfo?.first_name} {customer.userInfo?.last_name}
+            </Text>
           </View>
           <View>
             <Text>Data</Text>
-            <Text style={style.fontBold}>29/09/2023 - 22:30hs</Text>
+            <Text style={style.fontBold}>{localTime}</Text>
           </View>
         </View>
         <Spacer height={10} />
@@ -85,23 +121,27 @@ const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
         {/* importo row */}
         <View style={{ ...style.columnInter, paddingTop: 20 }}>
           <Text>Importo acquisto</Text>
-          <Text style={style.fontBold}>€50,00</Text>
+          <Text style={style.fontBold}>€{movement.amount.toFixed(2)}</Text>
         </View>
         <View style={style.column}>
           <Text>Sconto coupon</Text>
-          <Text style={style.fontBold}>-</Text>
+          <Text style={style.fontBold}>
+            €{movement.discountAmount.toFixed(2)}
+          </Text>
         </View>
         <View style={style.columnInter}>
           <Text style={{ fontSize: 30 }}>Totale</Text>
           <Text style={{ fontFamily: FontsNew.instBold, fontSize: 30 }}>
-            €50,00
+            €{movement.spesa.toFixed(2)}
           </Text>
         </View>
         <Spacer height={10} />
         <View style={{ ...style.dashedLine, width: width - 20 }} />
         <View style={{ padding: 20 }}>
           <Text>Cashback caricato</Text>
-          <Text style={style.fontBold}>€2,00</Text>
+          <Text style={style.fontBold}>
+            €{movement.chargedPoints.toFixed(2)}
+          </Text>
         </View>
       </BackgroundImageContainer>
 

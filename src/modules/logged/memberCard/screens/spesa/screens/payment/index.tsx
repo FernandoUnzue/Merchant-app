@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SpesaStackParamList } from '@modules/logged';
@@ -11,6 +11,8 @@ import { Checkbox } from '@components/Checkbox';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
+import { useError } from '@core/hooks/useError';
+import { usePostSaleMutation } from '@core/redux/Api/endpoints/Webpos';
 
 /**
  * Types
@@ -24,7 +26,7 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
   navigation,
   route,
 }) => {
-  const { amount } = route.params;
+  const { amount, voucherId, discount, spesa } = route.params;
 
   const style = useThemedStyles(styles);
   const {
@@ -55,6 +57,46 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
     }
   };
 
+  const { error, setError, resetError } = useError();
+
+  const [postSale, { isLoading }] = usePostSaleMutation();
+
+  const funcSale = async (amount: number) => {
+    await postSale({
+      totalMoney: amount,
+      cardMember: customer.card ? customer.card.toString() : '0',
+      paymentMethod: 'MIA-BALANCE',
+      voucherId: voucherId ? Number(voucherId) : null,
+    })
+      .unwrap()
+      .then(r => {
+        console.log(`sale registered successfully ${JSON.stringify(r)}`);
+        navigation.navigate('SuccessSaleScreen', {
+          customerId: r.customerId,
+          card: r.card,
+          campaignId: r.campaignId,
+          campaignName: r.campaignName,
+          movementId: r.movement.movementId,
+          chargedPoints: r.movement.chargedPoints,
+          shopName: r.movement.shopName,
+          discount: r.movement.discount,
+          dataTime: r.movement.dateTime,
+          localTime: r.movement.localTime,
+          amount,
+          discountAmount: discount,
+          spesa,
+        });
+      })
+      .catch(error => {
+        console.log(`saleerror ${JSON.stringify(error)}`);
+        setError({
+          isError: true,
+          message: error.data.message,
+        });
+        resetError();
+      });
+  };
+
   useEffect(() => {
     setValue('payment', true);
     trigger('payment');
@@ -64,11 +106,20 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
       <Wallet />
       <Spacer height={20} />
       <View style={style.squareCoupon}>
+        <View>
+          {error.isError && (
+            <Text
+              //className="text-xl text-center text-[red] font-semibold"
+              style={{ color: 'red', textAlign: 'center', fontSize: 16 }}>
+              {error.message}
+            </Text>
+          )}
+        </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={style.text} numberOfLines={1} ellipsizeMode={'tail'}>
             Totale a pagare
           </Text>
-          <Text style={style.number}>{`€${amount
+          <Text style={style.number}>{`€${spesa
             .toFixed(2)
             .replace('.', ',')}`}</Text>
         </View>
@@ -77,7 +128,7 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
       <View style={style.square}>
         <Text style={style.textRegular}>Select payment method:</Text>
         <Spacer height={30} />
-        <View style={style.checkboxWrapper}>
+        {/* <View style={style.checkboxWrapper}>
           <Checkbox
             name="payment"
             control={control}
@@ -118,7 +169,13 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
               height: 45,
             }}
           />
-        </View>
+          </View>*/}
+
+        <ActivityIndicator
+          size={'large'}
+          color={'#FF6E46'}
+          style={{ alignSelf: 'center', marginTop: 30 }}
+        />
       </View>
       <Spacer height={20} />
       <UserBar />
@@ -127,7 +184,8 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
         type="primary"
         title="conferma pagamento"
         accessibilityLabel="conferma pagamento"
-        onPress={() => navigation.navigate('SuccessSaleScreen', { amount })}
+        onPress={() => funcSale(amount)}
+        loading={isLoading}
       />
     </View>
   );
@@ -149,6 +207,7 @@ const styles = ({ theme }: ThemeContext) =>
     number: {
       fontSize: 25,
       fontFamily: theme.fonts.instBold,
+      fontWeight: 'bold',
     },
     textRegular: {
       fontSize: 12,

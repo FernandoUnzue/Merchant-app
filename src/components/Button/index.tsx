@@ -8,6 +8,7 @@ import {
   TextStyle,
   useColorScheme,
   View,
+  ViewStyle,
 } from 'react-native';
 
 import { ThemeContext, useThemedStyles } from '@core/theme';
@@ -47,6 +48,7 @@ export interface ButtonProps extends PressableProps {
   icon?: React.ReactNode;
   iconRight?: React.ReactNode;
   stylesTitle?: TextStyle;
+  stylesCont?: ViewStyle;
 }
 
 /**
@@ -72,6 +74,7 @@ export const Button: FC<ButtonProps> = ({
   selected,
   iconRight,
   stylesTitle,
+  stylesCont,
   ...props
 }) => {
   const style = useThemedStyles(styles);
@@ -94,7 +97,9 @@ export const Button: FC<ButtonProps> = ({
             opacity: pressed ? 0.8 : 1,
           },
         ]}>
-        {icon && <View style={style.iconCont}>{icon}</View>}
+        {icon && (
+          <View style={{ ...style.iconCont, ...stylesCont }}>{icon}</View>
+        )}
         {loading ? (
           <ActivityIndicator color={style[`text_${type}.color`]} />
         ) : (
@@ -173,9 +178,9 @@ const styles = ({ theme }: ThemeContext) =>
       backgroundColor: theme.colors.orange,
     },
     button_tertiary: {
-      backgroundColor: theme.colors.btnPrimary,
-      borderWidth: 1,
-      borderColor: theme.colors.textPrimary,
+      backgroundColor: theme.colors.background,
+      borderWidth: 2,
+      borderColor: theme.colors.accent,
     },
     button_quaternarySec: {
       backgroundColor: theme.colors.btnPrimary,
@@ -200,20 +205,25 @@ const styles = ({ theme }: ThemeContext) =>
     },
     textBase: {
       textTransform: 'uppercase',
-      fontFamily: theme.fonts.instBold,
+      fontFamily: 'InstrumentSans-Bold',
+      fontWeight: 'bold',
       fontSize: 20,
     },
     text_primary: {
       color: theme.colors.textNegative,
+      fontFamily: theme.fonts.bold,
     },
     text_primaryNegative: {
       color: theme.colors.textNegative,
+      fontFamily: theme.fonts.instBold,
     },
     text_secondary: {
       color: '#fff',
     },
     text_tertiary: {
-      color: theme.colors.textPrimary,
+      color: theme.colors.accent,
+      fontWeight: 'bold',
+      fontFamily: 'InstrumentSans-Bold',
     },
     text_quaternary: {
       textTransform: 'capitalize',

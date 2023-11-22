@@ -156,10 +156,25 @@ type ResumeProps = {
 
 type PaymentProps = {
   amount: number;
+  spesa: number;
+  voucherId: number;
+  discount: number;
 };
 
 type SuccessProps = {
+  customerId: number;
+  card: string;
+  campaignId: number;
+  campaignName: string;
+  movementId: number;
+  chargedPoints: number;
+  shopName: string;
+  discount: number;
+  dataTime: string;
+  localTime: string;
   amount: number;
+  discountAmount: number;
+  spesa: number;
 };
 
 export type SpesaStackParamList = {

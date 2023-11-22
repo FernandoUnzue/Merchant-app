@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, ViewStyle } from 'react-native';
-import { Control, Controller, Path } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { ShowIf } from '@components/ShowIf';
@@ -9,7 +9,7 @@ import { ReactNode } from 'react';
  * Types
  */
 
-interface ICheckbox<ContentType> {
+interface ICheckbox<ContentType extends FieldValues> {
   control: Control<ContentType, object>;
   name: Path<ContentType>;
   rules?: {};
@@ -32,7 +32,7 @@ const CHECK_SYMBOL = '\u2713';
  * Checkbox
  */
 
-export function Checkbox<ContentType>({
+export function Checkbox<ContentType extends FieldValues>({
   control,
   name,
   styless,
@@ -87,7 +87,7 @@ const styles = ({ theme }: ThemeContext) =>
       height: 20,
       borderRadius: 4.2,
       borderWidth: 1,
-      borderColor: theme.colors.text,
+      borderColor: theme.colors.textPrimary,
       justifyContent: 'center',
       alignItems: 'center',
     },

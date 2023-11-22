@@ -146,7 +146,7 @@ const MemberCardHome: FC<HomeScreenMemberCardProps> = ({
         source={require('../../../../assets/images/img-scanner.png')}
         style={style.image}
       />
-      <Text style={{ ...style.title, fontSize: 16 }}>Scanner BarCode</Text>
+      <Text style={{ ...style.title, fontSize: 16 }}>Scanner Card Number</Text>
       <View
         style={{
           alignSelf: 'center',

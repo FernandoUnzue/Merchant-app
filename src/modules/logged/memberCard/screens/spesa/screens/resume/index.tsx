@@ -1,5 +1,13 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, { useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SpesaStackParamList } from '@modules/logged';
 import {
@@ -19,6 +27,10 @@ import Wallet from '@components/Wallet';
 import { Button } from '@components/Button';
 import { Spacer } from '@components/Spacer';
 import BackgroundImageContainer from '@components/BackgroundImage';
+import { useGetVochersQuery } from '@core/redux/Api/endpoints/Webpos';
+import DiscountIcon from '@core/theme/SVGS/DiscuontIcon';
+import DollarIcon from '@core/theme/SVGS/DollarIcon';
+import ButtonFlat from '@components/ButtonFlat';
 
 /**
  * Types
@@ -34,11 +46,47 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
 }) => {
   const { amount } = route.params;
   const customer = useSelector((state: RootState) => state.customer);
+
   const { width } = useWindowDimensions();
 
   const style = useThemedStyles(styles);
+
+  const { data, isLoading } = useGetVochersQuery({
+    customerId: customer.card ? customer?.card?.toString() : '0',
+  });
+
+  type ButtonPushedProps = {
+    kind: number;
+    id: number;
+  };
+
+  const [pushed, setPushed] = useState<ButtonPushedProps>({
+    kind: 0,
+    id: 0,
+  });
+
+  type DiscuointProp = {
+    sign: string;
+    amount: number;
+  };
+
+  const [discuount, setDiscount] = useState<DiscuointProp>({
+    sign: '€',
+    amount: 0,
+  });
+
+  const couponDiscount =
+    discuount.sign === '€'
+      ? `${discuount.amount === 0 ? 0 : Number(discuount.amount).toFixed(2)}`
+      : ((Number(amount) * discuount.amount) / 100).toFixed(2);
+
+  const totalAmount =
+    discuount.sign === '€'
+      ? (Number(amount) - discuount.amount).toFixed(2)
+      : (Number(amount) - Number(couponDiscount)).toFixed(2);
+
   return (
-    <View style={style.main}>
+    <ScrollView style={{ maxHeight: 1200 }} contentContainerStyle={style.main}>
       <Wallet />
       <Separator height={30} />
       <BackgroundImageContainer>
@@ -53,9 +101,11 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
               width: '50%',
             }}>
             <Text>Totale da pagare</Text>
-            <Text style={{ ...style.textBold, fontSize: 40 }}>{`€${amount
-              .toFixed(2)
-              .replace('.', ',')}`}</Text>
+            <Text
+              style={{
+                ...style.textBold,
+                fontSize: 40,
+              }}>{`€${totalAmount.replace('.', ',')}`}</Text>
           </View>
         </View>
         <View style={{ ...style.dashedLine, width: width - 20 }} />
@@ -72,9 +122,143 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
               style={{
                 ...style.textBold,
                 fontSize: 30,
-                textAlign: 'right',
-              }}>{`€ 0,00`}</Text>
+                textAlign: 'center',
+              }}>{`€${Number(couponDiscount).toFixed(2)}`}</Text>
           </View>
+        </View>
+        <View>
+          {isLoading ? (
+            <View style={{ paddingVertical: 50 }}>
+              <ActivityIndicator
+                size={'large'}
+                color="#FF6E46"
+                style={{ alignSelf: 'center' }}
+              />
+            </View>
+          ) : null}
+          {data?.vouchers.length === 0 ? (
+            <View style={{ paddingVertical: 50 }}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                  textAlign: 'center',
+                }}>
+                No Coupons available
+              </Text>
+            </View>
+          ) : null}
+          {data?.vouchers.map((c, i) => {
+            return (
+              <ImageBackground
+                source={require('../../../../../../../../assets/images/TicketBG.png')}
+                resizeMode="contain"
+                style={{ marginHorizontal: 10, marginVertical: 5 }}>
+                <View
+                  //  className={`flex flex-row justify-between ${styles.backImage} px-2 py-4`}
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                  }}
+                  key={`${c.kind}_${c.id}`}>
+                  <View
+                    // className="flex flex-row basis-1/2 justify-evenly"
+                    style={{
+                      justifyContent: 'space-evenly',
+                      flexDirection: 'row',
+                    }}>
+                    {c.kind === 1 ? (
+                      <DiscountIcon size={40} />
+                    ) : (
+                      <DollarIcon size={40} />
+                    )}
+                    <Text
+                      //  className="text-md sm:text-xl font-bold pt-2 pl-2"
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        paddingTop: 12,
+                        paddingLeft: 10,
+                      }}>
+                      Sconto {c.kind === 1 ? c.value * 100 : c.value.toFixed(0)}{' '}
+                      {c.kind === 1 ? '%' : '€'}
+                    </Text>
+                  </View>
+                  <View
+                    // className="basis-1/2 text-center"
+                    style={{ alignItems: 'center' }}>
+                    {pushed.kind === c.kind && pushed.id === c.id ? (
+                      <ButtonFlat
+                        widthButton={130}
+                        heightButton={48}
+                        fontSize={12}
+                        textStyles={{
+                          color: '#173E46',
+                        }}
+                        color="#fff"
+                        title="Deseleziona"
+                        styless={{
+                          borderRadius: 50,
+                          alignSelf: 'center',
+                          borderWidth: 2,
+                          borderColor: '#173E46',
+                        }}
+                        onPress={() => {
+                          setPushed({
+                            kind: c.kind,
+                            id: 0,
+                          });
+                          setDiscount({
+                            sign: c.kind === 1 ? '%' : '€',
+                            amount: 0,
+                          });
+                        }}
+                      />
+                    ) : (
+                      <ButtonFlat
+                        widthButton={120}
+                        heightButton={45}
+                        fontSize={12}
+                        textStyles={{
+                          color:
+                            pushed.kind === c.kind &&
+                            pushed.id !== c.id &&
+                            pushed.kind !== 0 &&
+                            pushed.id !== 0
+                              ? '#ddd'
+                              : '#fff',
+                        }}
+                        color="#FF6E46"
+                        title="Utilizza"
+                        onPress={() => {
+                          setPushed({
+                            kind: c.kind,
+                            id: c.id,
+                          });
+                          setDiscount({
+                            sign: c.kind === 1 ? '%' : '€',
+                            amount: c.kind === 1 ? c.value * 100 : c.value,
+                          });
+                        }}
+                        styless={{
+                          borderRadius: 50,
+                          alignSelf: 'center',
+                        }}
+                        disable={
+                          pushed.kind === c.kind &&
+                          pushed.id !== c.id &&
+                          pushed.kind !== 0 &&
+                          pushed.id !== 0
+                        }
+                      />
+                    )}
+                  </View>
+                </View>
+              </ImageBackground>
+            );
+          })}
         </View>
       </BackgroundImageContainer>
 
@@ -85,9 +269,16 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
         type="primary"
         title="pagamento"
         accessibilityLabel="pagamento"
-        onPress={() => navigation.navigate('PaymentSaleScreen', { amount })}
+        onPress={() =>
+          navigation.navigate('PaymentSaleScreen', {
+            spesa: Number(totalAmount),
+            amount,
+            discount: Number(couponDiscount),
+            voucherId: pushed.id,
+          })
+        }
       />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -96,13 +287,14 @@ export default ResumeSaleScreen;
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     main: {
-      flex: 1,
+      // flex: 1,
       alignItems: 'center',
       backgroundColor: theme.colors.background,
       padding: 10,
     },
     textBold: {
       fontFamily: theme.fonts.instBold,
+      fontWeight: 'bold',
     },
     column: {
       flexDirection: 'row',

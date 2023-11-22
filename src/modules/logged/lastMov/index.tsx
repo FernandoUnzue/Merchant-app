@@ -15,6 +15,11 @@ import BackgroundImageContainer from '@components/BackgroundImage';
 import CheckIcon from '@core/theme/SVGS/Merchant/CheckIcon';
 import { Button } from '@components/Button';
 import { useNavigation } from '@react-navigation/native';
+import { useGetLastMovementQuery } from '@core/redux/Api/endpoints/Webpos';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { ActivityIndicator } from 'react-native';
 
 /**
  * Types
@@ -34,71 +39,107 @@ const LastMovementHome: React.FC<HomeScreenUltimoMovProps> = ({
   const { width } = useWindowDimensions();
 
   const nav = useNavigation();
+
+  const customer = useSelector((state: RootState) => state.customer);
+
+  const { data, isLoading } = useGetLastMovementQuery({
+    customerId: customer.userInfo
+      ? customer.userInfo.fnet_customer_id.toString()
+      : '0',
+  });
   return (
     <ScrollView style={style.main}>
       <Wallet />
       <Spacer height={20} />
       <BackgroundImageContainer height={470}>
         {/* negozio row */}
-        <View style={style.column}>
-          <View style={{ width: '70%' }}>
-            <Text style={{ fontSize: 10 }}>Negozio</Text>
+        {isLoading ? (
+          <View>
+            <ActivityIndicator size={'large'} color={'#FF6E46'} />
+          </View>
+        ) : (
+          <>
+            <View style={style.column}>
+              <View style={{ width: '70%' }}>
+                <Text style={{ fontSize: 10 }}>Negozio</Text>
 
-            <Text style={style.fontBold}>Happy Talent</Text>
-            <Spacer height={15} />
-            <Text>
-              Nr card <Text style={style.fontBold}>4</Text>
-            </Text>
+                <Text style={style.fontBold}>{data?.movement.shopName}</Text>
+                <Spacer height={15} />
+                <Text>
+                  Nr card <Text style={style.fontBold}>{customer.card}</Text>
+                </Text>
+                <Spacer height={10} />
+                <Text>
+                  ID Movimiento{' '}
+                  <Text style={style.fontBold}>
+                    {data?.movement.movementId}
+                  </Text>
+                </Text>
+                <Spacer height={10} />
+                <Text>
+                  Barcode card
+                  <Text style={style.fontBold}>
+                    {' '}
+                    {data?.movement.movementId}
+                  </Text>
+                </Text>
+              </View>
+              <View style={{ width: '30%' }}>
+                <CheckIcon size={30} styles={{ alignSelf: 'flex-end' }} />
+              </View>
+            </View>
+            <View style={{ ...style.dashedLine, width: width - 20 }} />
             <Spacer height={10} />
-            <Text>
-              ID Movimiento <Text style={style.fontBold}>123456789</Text>
-            </Text>
+            {/* cliente row */}
+            <View style={style.columnInter}>
+              <View>
+                <Text>Cliente</Text>
+                <Text style={style.fontBold}>
+                  {' '}
+                  {customer.userInfo?.first_name} {customer.userInfo?.last_name}
+                </Text>
+              </View>
+              <View>
+                <Text>Data</Text>
+                <Text style={style.fontBold}>{data?.movement.localTime}</Text>
+              </View>
+            </View>
             <Spacer height={10} />
-            <Text>
-              Barcode card
-              <Text style={style.fontBold}> 1234567891011</Text>
-            </Text>
-          </View>
-          <View style={{ width: '30%' }}>
-            <CheckIcon size={30} styles={{ alignSelf: 'flex-end' }} />
-          </View>
-        </View>
-        <View style={{ ...style.dashedLine, width: width - 20 }} />
-        <Spacer height={10} />
-        {/* cliente row */}
-        <View style={style.columnInter}>
-          <View>
-            <Text>Cliente</Text>
-            <Text style={style.fontBold}>Mario Rossi</Text>
-          </View>
-          <View>
-            <Text>Data</Text>
-            <Text style={style.fontBold}>29/09/2023 - 22:30hs</Text>
-          </View>
-        </View>
-        <Spacer height={10} />
-        <View style={{ ...style.dashedLine, width: width - 20 }} />
-        {/* importo row */}
-        <View style={{ ...style.columnInter, paddingTop: 20 }}>
-          <Text>Importo acquisto</Text>
-          <Text style={style.fontBold}>€50,00</Text>
-        </View>
-        <View style={style.column}>
-          <Text>Sconto coupon</Text>
-          <Text style={style.fontBold}>-</Text>
-        </View>
-        <View style={style.columnInter}>
-          <Text style={{ fontSize: 30 }}>Totale</Text>
-          <Text style={{ fontFamily: FontsNew.instBold, fontSize: 30 }}>
-            €50,00
-          </Text>
-        </View>
-        <Spacer height={10} />
-        <View style={{ ...style.dashedLine, width: width - 20 }} />
-        <View style={{ padding: 20 }}>
-          <Text>Cashback caricato</Text>
-          <Text style={style.fontBold}>€2,00</Text>
-        </View>
+            <View style={{ ...style.dashedLine, width: width - 20 }} />
+            {/* importo row */}
+            <View style={{ ...style.columnInter, paddingTop: 20 }}>
+              <Text>Importo acquisto</Text>
+              <Text style={style.fontBold}>
+                €{data?.movement.totalMoney.toFixed(2)}
+              </Text>
+            </View>
+            <View style={style.column}>
+              <Text>Sconto coupon</Text>
+              <Text style={style.fontBold}>
+                €{data?.movement.discount.toFixed(2)}
+              </Text>
+            </View>
+            <View style={style.columnInter}>
+              <Text style={{ fontSize: 30 }}>Totale</Text>
+              <Text
+                style={{
+                  fontFamily: FontsNew.instBold,
+                  fontWeight: 'bold',
+                  fontSize: 30,
+                }}>
+                €{data?.movement.totalMoney.toFixed(2)}
+              </Text>
+            </View>
+            <Spacer height={10} />
+            <View style={{ ...style.dashedLine, width: width - 20 }} />
+            <View style={{ padding: 20 }}>
+              <Text>Cashback caricato</Text>
+              <Text style={style.fontBold}>
+                €{data?.movement.chargedPoints.toFixed(2)}
+              </Text>
+            </View>
+          </>
+        )}
       </BackgroundImageContainer>
 
       <Spacer height={20} />
@@ -124,6 +165,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     fontBold: {
       fontFamily: theme.fonts.instBold,
+      fontWeight: 'bold',
     },
     column: {
       padding: 20,
