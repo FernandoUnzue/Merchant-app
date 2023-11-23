@@ -75,12 +75,17 @@ export const extendedApiWebpos = ApiRedux.injectEndpoints({
       }),
       providesTags: ['Operator'],
     }),
+    reloadSales: build.mutation<null, void>({
+      queryFn: () => ({ data: null }),
+      invalidatesTags: ['User', 'Sales', 'Operator', 'Ponderation'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
 export const {
+  useReloadSalesMutation,
   usePostSaleMutation,
   useGetLastMovementQuery,
   useGetOperatorInfoQuery,

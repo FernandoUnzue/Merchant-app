@@ -29,6 +29,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   BurnCouponStack,
+  DeleteUltimoMovStack,
   InfoClientStack,
   InfoOperatorStack,
   MemberCardStack,
@@ -149,7 +150,7 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
       />
       <Drawer.Screen
         name="EliminaUltimoMov"
-        component={DeleteLastMovementHome as never}
+        component={DeleteUltimoMovStack}
         options={{
           header: () => <TabNavSpesa navigation={RootNavigation} />,
           drawerLabel: 'Elimina ultimo movimiento',

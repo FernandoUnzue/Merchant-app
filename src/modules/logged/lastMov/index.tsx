@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { UltimoMovParamList } from '..';
 import { FontsNew, ThemeContext, useThemedStyles } from '@core/theme';
@@ -15,7 +15,10 @@ import BackgroundImageContainer from '@components/BackgroundImage';
 import CheckIcon from '@core/theme/SVGS/Merchant/CheckIcon';
 import { Button } from '@components/Button';
 import { useNavigation } from '@react-navigation/native';
-import { useGetLastMovementQuery } from '@core/redux/Api/endpoints/Webpos';
+import {
+  useGetLastMovementQuery,
+  useReloadSalesMutation,
+} from '@core/redux/Api/endpoints/Webpos';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
@@ -40,6 +43,8 @@ const LastMovementHome: React.FC<HomeScreenUltimoMovProps> = ({
 
   const nav = useNavigation();
 
+  const [reloadSales] = useReloadSalesMutation();
+
   const customer = useSelector((state: RootState) => state.customer);
 
   const { data, isLoading } = useGetLastMovementQuery({
@@ -47,6 +52,10 @@ const LastMovementHome: React.FC<HomeScreenUltimoMovProps> = ({
       ? customer.userInfo.fnet_customer_id.toString()
       : '0',
   });
+
+  useEffect(() => {
+    reloadSales();
+  }, []);
   return (
     <ScrollView style={style.main}>
       <Wallet />
@@ -54,8 +63,8 @@ const LastMovementHome: React.FC<HomeScreenUltimoMovProps> = ({
       <BackgroundImageContainer height={470}>
         {/* negozio row */}
         {isLoading ? (
-          <View>
-            <ActivityIndicator size={'large'} color={'#FF6E46'} />
+          <View style={{ paddingVertical: 150 }}>
+            <ActivityIndicator size={'large'} color={'#173E46'} />
           </View>
         ) : (
           <>

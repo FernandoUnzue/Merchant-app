@@ -1,0 +1,95 @@
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import { DeleteUltimoMovParamList } from '@modules/logged';
+import { ThemeContext, useThemedStyles } from '@core/theme';
+import { Spacer } from '@components/Spacer';
+import WarningIcon from '@core/theme/SVGS/WarningIcon';
+import { Button } from '@components/Button';
+
+/**
+ * Types
+ */
+
+type ErrorScreenDeleteUltimoMovProps = StackScreenProps<
+  DeleteUltimoMovParamList,
+  'DeleteMovError'
+>;
+
+const ErrorDeleteMovScreen: React.FC<ErrorScreenDeleteUltimoMovProps> = ({
+  route,
+  navigation,
+}) => {
+  const { errorMessage } = route.params;
+  const style = useThemedStyles(styles);
+  return (
+    <ScrollView style={style.main}>
+      <Text style={style.title}>Elimina movimento</Text>
+      <Spacer height={50} />
+      <View style={style.container}>
+        <WarningIcon size={30} />
+        <Spacer height={10} />
+        <Text style={style.subtitle}>ERRORE</Text>
+        <Spacer height={10} />
+        <Text style={style.text}>
+          Non è stato possibile eliminare il movimento
+        </Text>
+        <Text style={style.text}>{errorMessage}</Text>
+        <Text style={style.text}></Text>
+        <Spacer height={20} />
+
+        <Image
+          source={require('../../../../../../../assets/images/KO.png')}
+          style={style.img}
+        />
+        <Spacer height={10} />
+        <Button
+          accessibilityLabel="chiudi"
+          type="primary"
+          title="Chiudi"
+          onPress={() => navigation.navigate('DeleteScreen')}
+        />
+      </View>
+    </ScrollView>
+  );
+};
+
+export default ErrorDeleteMovScreen;
+
+const styles = ({ theme }: ThemeContext) =>
+  StyleSheet.create({
+    main: {
+      maxHeight: 1200,
+      paddingHorizontal: 20,
+      backgroundColor: theme.colors.background,
+    },
+    img: {
+      width: 200,
+      height: 200,
+    },
+    title: {
+      fontSize: 20,
+      fontFamily: theme.fonts.instBold,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    subtitle: {
+      fontSize: 16,
+      fontFamily: theme.fonts.instBold,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    text: {
+      color: '#4E4E4E',
+    },
+    container: {
+      borderWidth: 1,
+      borderColor: '#ddd',
+      width: '100%',
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      paddingHorizontal: 15,
+      paddingVertical: 30,
+      alignItems: 'center',
+    },
+  });

@@ -23,6 +23,9 @@ import SuccessSaleScreen from './memberCard/screens/spesa/screens/success';
 import InfoClientHomeScreen from './infoClient';
 import LastMovementHome from './lastMov';
 import DeleteLastMovementHome from './lastMov/delete';
+import ConfirmDeleteMovScreen from './lastMov/delete/screens/confirm';
+import ErrorDeleteMovScreen from './lastMov/delete/screens/error';
+import SuccessDeleteMovScreen from './lastMov/delete/screens/success';
 
 /**
  * Types
@@ -265,7 +268,6 @@ export const InfoClientStack: React.FC<InfoClienteStackProps> = () => {
 
 export type UltimoMovParamList = {
   HomeScreen: undefined;
-  DeleteScreen: undefined;
 };
 
 const StackUltimoMov = createStackNavigator<UltimoMovParamList>();
@@ -279,10 +281,49 @@ export const UltimoMovStack: React.FC<UltimoMovStackProps> = () => {
         animationEnabled: false,
       }}>
       <StackUltimoMov.Screen name="HomeScreen" component={LastMovementHome} />
-      <StackUltimoMov.Screen
+    </StackUltimoMov.Navigator>
+  );
+};
+
+// elimina ultimo movimiento
+
+type DeleteErrorProps = {
+  errorMessage: string;
+};
+
+export type DeleteUltimoMovParamList = {
+  DeleteScreen: undefined;
+  DeleteConfirmScreen: undefined;
+  DeleteMovError: DeleteErrorProps;
+  DeleteMovSuccess: undefined;
+};
+
+const StackDeleteUltimoMov = createStackNavigator<DeleteUltimoMovParamList>();
+
+interface DeleteUltimoMovStackProps {}
+export const DeleteUltimoMovStack: React.FC<DeleteUltimoMovStackProps> = () => {
+  return (
+    <StackDeleteUltimoMov.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
+      <StackDeleteUltimoMov.Screen
         name="DeleteScreen"
         component={DeleteLastMovementHome}
       />
-    </StackUltimoMov.Navigator>
+      <StackDeleteUltimoMov.Screen
+        name="DeleteConfirmScreen"
+        component={ConfirmDeleteMovScreen}
+      />
+      <StackDeleteUltimoMov.Screen
+        name="DeleteMovError"
+        component={ErrorDeleteMovScreen}
+      />
+      <StackDeleteUltimoMov.Screen
+        name="DeleteMovSuccess"
+        component={SuccessDeleteMovScreen}
+      />
+    </StackDeleteUltimoMov.Navigator>
   );
 };
