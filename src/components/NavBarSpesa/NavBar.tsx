@@ -83,9 +83,9 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
   const routeName =
     navState && navState.routeNames ? navState.routeNames[indexFinal] : '';
 
-  console.log(`state ${JSON.stringify(route)}`);
+  // console.log(`state ${JSON.stringify(navState)}`);
 
-  console.log(`routeName ${indexFinal}`);
+  // console.log(`routeName ${routeName}`);
 
   const BackFunc = () => {
     dispatch(CustomerSlice.actions.removeCustomer());
@@ -95,13 +95,17 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={style.containerNav}>
       <View style={style.containerTabNav}>
-        <BackNav
-          navigation={navigation}
-          OnPress={
-            indexFinal !== 0 ? () => navigation.goBack() : () => BackFunc()
-          }
-          text={false}
-        />
+        {/*  hide backbutton in success and error screens */}
+        {routeName.toLowerCase().includes('error') ||
+        routeName.toLowerCase().includes('success') ? null : (
+          <BackNav
+            navigation={navigation}
+            OnPress={
+              indexFinal !== 0 ? () => navigation.goBack() : () => BackFunc()
+            }
+            text={false}
+          />
+        )}
       </View>
       <View>
         <LogoSkey size={100} styles={{ marginTop: 13 }} />

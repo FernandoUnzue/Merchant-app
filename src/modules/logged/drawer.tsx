@@ -34,10 +34,13 @@ import {
   InfoOperatorStack,
   MemberCardStack,
   SpesaFlowStack,
+  SustitutionCardStack,
   UltimoMovStack,
 } from '.';
 import DeleteLastMovementHome from './lastMov/delete';
 import MemberCardHome from './memberCard';
+import CarIcon from '@core/theme/SVGS/Movements/Car';
+import CardIcon from '@core/theme/Merchant/Menu/CardIcon';
 
 interface HomeLoggedProps {
   RootNavigation: any;
@@ -51,6 +54,7 @@ export type DrawerStackParamList = {
   InfoCliente: undefined;
   UltimoMovimiento: undefined;
   EliminaUltimoMov: undefined;
+  SustitutionCard: undefined;
 };
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -155,6 +159,16 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
           header: () => <TabNavSpesa navigation={RootNavigation} />,
           drawerLabel: 'Elimina ultimo movimiento',
           drawerIcon: resp => <TrashIcon size={20} />,
+        }}
+      />
+
+      <Drawer.Screen
+        name="SustitutionCard"
+        component={SustitutionCardStack}
+        options={{
+          header: () => <TabNavSpesa navigation={RootNavigation} />,
+          drawerLabel: 'Sostituisci card',
+          drawerIcon: resp => <CardIcon size={20} />,
         }}
       />
     </Drawer.Navigator>

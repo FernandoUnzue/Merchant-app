@@ -26,6 +26,11 @@ import DeleteLastMovementHome from './lastMov/delete';
 import ConfirmDeleteMovScreen from './lastMov/delete/screens/confirm';
 import ErrorDeleteMovScreen from './lastMov/delete/screens/error';
 import SuccessDeleteMovScreen from './lastMov/delete/screens/success';
+import SustitutionCardHomeScreen from './sustitutionCard';
+import CameraScannerScreenSustitutionCard from './sustitutionCard/screens/cam-scanner-card';
+import ErrorSustitutionCardScreen from './sustitutionCard/screens/error';
+import ConfirmSustitutionCardScreen from './sustitutionCard/screens/confirm';
+import SuccessSustitutionCardScreen from './sustitutionCard/screens/success';
 
 /**
  * Types
@@ -325,5 +330,63 @@ export const DeleteUltimoMovStack: React.FC<DeleteUltimoMovStackProps> = () => {
         component={SuccessDeleteMovScreen}
       />
     </StackDeleteUltimoMov.Navigator>
+  );
+};
+
+// sustitucion de card
+type HomeSustitutionCardProps = {
+  qrfound?: string;
+};
+
+type ErrorSustitutionCard = {
+  message: string;
+};
+
+type SuccessSustitutionCard = {
+  message: string;
+};
+
+export type SustitutionCardParamList = {
+  SustitutionCardHomeScreen: HomeSustitutionCardProps;
+  CameraScannerScreen: undefined;
+  ConfirmSustitutionCardScreen: undefined;
+  ErrorSustitutionCardScreen: ErrorSustitutionCard;
+  SuccessSustitutionCardScreen: SuccessSustitutionCard;
+};
+
+const StackSustitutionCard = createStackNavigator<SustitutionCardParamList>();
+
+interface SustitutionCardStackProps {}
+export const SustitutionCardStack: React.FC<SustitutionCardStackProps> = () => {
+  return (
+    <StackSustitutionCard.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
+      <StackSustitutionCard.Screen
+        name="SustitutionCardHomeScreen"
+        component={SustitutionCardHomeScreen}
+        initialParams={{
+          qrfound: '',
+        }}
+      />
+      <StackSustitutionCard.Screen
+        name="ErrorSustitutionCardScreen"
+        component={ErrorSustitutionCardScreen}
+      />
+      <StackSustitutionCard.Screen
+        name="CameraScannerScreen"
+        component={CameraScannerScreenSustitutionCard}
+      />
+      <StackSustitutionCard.Screen
+        name="ConfirmSustitutionCardScreen"
+        component={ConfirmSustitutionCardScreen}
+      />
+      <StackSustitutionCard.Screen
+        name="SuccessSustitutionCardScreen"
+        component={SuccessSustitutionCardScreen}
+      />
+    </StackSustitutionCard.Navigator>
   );
 };

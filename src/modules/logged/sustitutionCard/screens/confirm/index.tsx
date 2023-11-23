@@ -1,7 +1,11 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { DeleteUltimoMovParamList, UltimoMovParamList } from '@modules/logged';
+import {
+  DeleteUltimoMovParamList,
+  SustitutionCardParamList,
+  UltimoMovParamList,
+} from '@modules/logged';
 import { ThemeContext, useThemedStyles } from '@core/theme';
 import { Spacer } from '@components/Spacer';
 import DeleteXIcon from '@core/theme/SVGS/DeleteX';
@@ -11,20 +15,20 @@ import { Button } from '@components/Button';
 import { useCancelLastMovementMutation } from '@core/redux/Api/endpoints/Webpos';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
+import SustitutionIcon from '@core/theme/SVGS/SustitutionIcon';
 
 /**
  * Types
  */
 
-type ConfirmScreenDeleteUltimoMovProps = StackScreenProps<
-  DeleteUltimoMovParamList,
-  'DeleteConfirmScreen'
+type ConfirmScreenSustitutionCardProps = StackScreenProps<
+  SustitutionCardParamList,
+  'ConfirmSustitutionCardScreen'
 >;
 
-const ConfirmDeleteMovScreen: React.FC<ConfirmScreenDeleteUltimoMovProps> = ({
-  route,
-  navigation,
-}) => {
+const ConfirmSustitutionCardScreen: React.FC<
+  ConfirmScreenSustitutionCardProps
+> = ({ route, navigation }) => {
   const style = useThemedStyles(styles);
   const {
     control,
@@ -48,27 +52,22 @@ const ConfirmDeleteMovScreen: React.FC<ConfirmScreenDeleteUltimoMovProps> = ({
       notes: notesValue,
     })
       .unwrap()
-      .then(() => {
-        navigation.navigate('DeleteMovSuccess');
-      })
+      .then(() => {})
       .catch(error => {
         console.log(JSON.stringify(error));
-        navigation.navigate('DeleteMovError', {
-          errorMessage: error.data.message,
-        });
       });
   };
 
   return (
     <ScrollView style={style.main}>
-      <Text style={style.title}>Elimina movimento</Text>
+      <Text style={style.title}>Sostituisci card</Text>
       <Spacer height={50} />
       <View style={style.container}>
-        <DeleteXIcon size={50} styles={{ alignSelf: 'center' }} />
+        <SustitutionIcon size={50} styles={{ alignSelf: 'center' }} />
         <Spacer height={30} />
-        <Text style={style.subtitle}>ELIMINA</Text>
+        <Text style={style.subtitle}>SOSTITUISCI</Text>
         <Spacer height={10} />
-        <Text style={style.text}>Confermi l’eliminazione del movimento?</Text>
+        <Text style={style.text}>Confermi la sostituzione della card</Text>
         <Spacer height={30} />
         <Text>Aggiungi nota (consigliata)</Text>
         <Spacer height={10} />
@@ -91,7 +90,11 @@ const ConfirmDeleteMovScreen: React.FC<ConfirmScreenDeleteUltimoMovProps> = ({
         />
         <Button
           title="CONFERMA"
-          onPress={() => funcCancel()}
+          onPress={() =>
+            navigation.navigate('SuccessSustitutionCardScreen', {
+              message: 'Error 423423',
+            })
+          }
           accessibilityLabel="conferma"
           type="primary"
           disabled={!isDirty || !isValid}
@@ -109,7 +112,7 @@ const ConfirmDeleteMovScreen: React.FC<ConfirmScreenDeleteUltimoMovProps> = ({
   );
 };
 
-export default ConfirmDeleteMovScreen;
+export default ConfirmSustitutionCardScreen;
 
 const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
