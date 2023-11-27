@@ -35,6 +35,7 @@ import { RootState, store } from '@core/redux/store';
 import { AuthSlice } from '@core/redux/authSlice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Types
@@ -83,6 +84,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { isDirty, isValid },
   } = useForm<LoginData>({ mode: 'onChange', defaultValues: DEFAULT_VALUES });
 
@@ -109,8 +111,9 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       grant_type: 'password',
     })
       .unwrap()
-      .then(resp => {
+      .then(async resp => {
         console.log('Login successfully ' + resp);
+        await AsyncStorage.setItem('username', watch('username'));
       })
       .catch(err => {
         if (err.status === 400) {

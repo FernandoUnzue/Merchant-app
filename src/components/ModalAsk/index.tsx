@@ -95,7 +95,7 @@ const ModalAsk: React.FC<Props> = ({
           <Button
             accessibilityLabel="Cancella"
             title="Cancella"
-            type="secondary"
+            type="tertiary"
             onPress={() => closeModal()}
             disabled={loading ? loading : false}
           />

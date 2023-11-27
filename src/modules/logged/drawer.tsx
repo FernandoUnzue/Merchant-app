@@ -33,6 +33,7 @@ import {
   InfoClientStack,
   InfoOperatorStack,
   MemberCardStack,
+  PonderazioneStack,
   SpesaFlowStack,
   SustitutionCardStack,
   UltimoMovStack,
@@ -55,6 +56,7 @@ export type DrawerStackParamList = {
   UltimoMovimiento: undefined;
   EliminaUltimoMov: undefined;
   SustitutionCard: undefined;
+  Ponderazione: undefined;
 };
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -116,6 +118,21 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
         options={{
           drawerItemStyle: { display: 'none' },
           drawerLabel: 'Burn Coupon',
+          header: () => <TabNav navigation={RootNavigation} />,
+          drawerIcon: resp => (
+            <Impostazioni
+              size={30}
+              color={resp.focused ? ColorsGeneralDark.accent : '#000'}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Ponderazione"
+        component={PonderazioneStack}
+        options={{
+          drawerItemStyle: { display: 'none' },
+          drawerLabel: 'Gestione ponderazione',
           header: () => <TabNav navigation={RootNavigation} />,
           drawerIcon: resp => (
             <Impostazioni

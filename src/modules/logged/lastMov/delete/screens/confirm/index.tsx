@@ -99,7 +99,7 @@ const ConfirmDeleteMovScreen: React.FC<ConfirmScreenDeleteUltimoMovProps> = ({
         />
         <Spacer height={10} />
         <Button
-          title="ANULLA"
+          title="ANNULLA"
           onPress={() => navigation.goBack()}
           accessibilityLabel="anulla"
           type="tertiary"

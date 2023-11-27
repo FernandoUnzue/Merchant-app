@@ -13,6 +13,7 @@ export const LogOutAsync = createAsyncThunk('auth/logoutasyc', async () => {
   // await AsyncStorage.removeItem('@user');
   await AsyncStorage.removeItem('token');
   await AsyncStorage.removeItem('refresh_token');
+  await AsyncStorage.removeItem('username');
   store.dispatch(ApiRedux.util.resetApiState());
   console.log('log out');
 });

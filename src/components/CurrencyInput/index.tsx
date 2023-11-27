@@ -6,6 +6,7 @@ import {
   ViewStyle,
   Text,
   Keyboard,
+  TextInput,
 } from 'react-native';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import Clipboard from '@react-native-community/clipboard';
@@ -34,6 +35,8 @@ interface IFormInput<ContentType extends FieldValues> extends TextInputProps {
   valueAdded?: ReactNode;
   currency?: boolean;
   constStyles?: ViewStyle;
+  suffix?: string;
+  textStyles?: TextStyle;
 }
 
 /**
@@ -52,6 +55,8 @@ export function CurrencyFormInput<ContentType extends FieldValues>({
   valueAdded,
   currency = true,
   constStyles,
+  suffix,
+  textStyles,
   styless,
   ...props
 }: IFormInput<ContentType>) {
@@ -76,10 +81,11 @@ export function CurrencyFormInput<ContentType extends FieldValues>({
                 <CurrencyInput
                   value={value}
                   onChangeValue={onChange}
+                  suffix={suffix ? suffix : undefined}
                   style={[
                     style.input,
                     disabled ? style.fixedInput : style.editableInput,
-                    { height: props.multiline ? 150 : 50 },
+                    { height: props.multiline ? 150 : 50, ...textStyles },
                   ]}
                   prefix={currency ? '€' : undefined}
                   delimiter="."

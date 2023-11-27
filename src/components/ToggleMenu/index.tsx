@@ -93,7 +93,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
 
     {
       id: 2,
-      name: 'Burn Coupon',
+      name: 'Offerta coupon',
       icon: (
         <PercentIcon
           size={35}
@@ -107,6 +107,20 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     },
     {
       id: 3,
+      name: 'Gestione ponderazione',
+      icon: (
+        <PercentIcon
+          size={35}
+          color={state?.index === 2 ? generalColorsNew.orange : '#000'}
+        />
+      ),
+      onPress: () => {
+        navigation.navigate('Ponderazione');
+        dispatch(AuthSlice.actions.closeModal());
+      },
+    },
+    {
+      id: 4,
       name: 'LogOut',
       icon: <LogoutIcon size={35} color="#000" />,
       onPress: () => setShowModalLogOut(true),
@@ -132,13 +146,6 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
                         display: 'flex',
                         flexDirection: 'row',
                       }}>
-                      <View
-                        style={{
-                          marginRight: 10,
-                        }}>
-                        {item.icon}
-                      </View>
-
                       <Text
                         style={{
                           textAlign: 'center',

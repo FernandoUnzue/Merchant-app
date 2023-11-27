@@ -31,6 +31,7 @@ import CameraScannerScreenSustitutionCard from './sustitutionCard/screens/cam-sc
 import ErrorSustitutionCardScreen from './sustitutionCard/screens/error';
 import ConfirmSustitutionCardScreen from './sustitutionCard/screens/confirm';
 import SuccessSustitutionCardScreen from './sustitutionCard/screens/success';
+import PonderazioneHomeScreen from './ponderazione';
 
 /**
  * Types
@@ -388,5 +389,31 @@ export const SustitutionCardStack: React.FC<SustitutionCardStackProps> = () => {
         component={SuccessSustitutionCardScreen}
       />
     </StackSustitutionCard.Navigator>
+  );
+};
+
+// ponderazione stack
+
+export type PonderazioneParamList = {
+  PonderazioneHomeScreen: undefined;
+  PonderazioneError: undefined;
+  PonderazioneSuccess: undefined;
+};
+
+const StackPonderazione = createStackNavigator<PonderazioneParamList>();
+
+interface PonderazioneStackProps {}
+export const PonderazioneStack: React.FC<PonderazioneStackProps> = () => {
+  return (
+    <StackPonderazione.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
+      <StackPonderazione.Screen
+        name="PonderazioneHomeScreen"
+        component={PonderazioneHomeScreen}
+      />
+    </StackPonderazione.Navigator>
   );
 };
