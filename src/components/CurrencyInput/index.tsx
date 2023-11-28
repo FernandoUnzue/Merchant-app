@@ -36,6 +36,7 @@ interface IFormInput<ContentType extends FieldValues> extends TextInputProps {
   currency?: boolean;
   constStyles?: ViewStyle;
   suffix?: string;
+  decimals?: number;
   textStyles?: TextStyle;
 }
 
@@ -56,6 +57,7 @@ export function CurrencyFormInput<ContentType extends FieldValues>({
   currency = true,
   constStyles,
   suffix,
+  decimals = 2,
   textStyles,
   styless,
   ...props
@@ -91,7 +93,7 @@ export function CurrencyFormInput<ContentType extends FieldValues>({
                   delimiter="."
                   maxValue={20000}
                   separator=","
-                  precision={2}
+                  precision={decimals}
                   onBlur={onBlur}
                   onFocus={() => disablePaste && resetClipboard()}
                   onSelectionChange={() => disablePaste && resetClipboard()}
@@ -112,7 +114,7 @@ export function CurrencyFormInput<ContentType extends FieldValues>({
                   delimiter="."
                   maxValue={20000}
                   separator=","
-                  precision={2}
+                  precision={decimals}
                   onBlur={onBlur}
                   onFocus={() => disablePaste && resetClipboard()}
                   onSelectionChange={() => disablePaste && resetClipboard()}

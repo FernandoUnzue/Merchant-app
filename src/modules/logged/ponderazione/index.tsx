@@ -52,6 +52,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
     trigger,
     setValue,
     setFocus,
+    reset,
     formState: { isDirty, isValid, errors },
   } = useForm({
     mode: 'onChange',
@@ -81,14 +82,13 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
       .then(r => {
         console.log('ponderation setted successfully');
         //  Router.push('/success-ponderazione');
+        navigation.navigate('PonderazioneSuccess', { message: '' });
+        setFixed(true);
+        reset();
       })
       .catch(e => {
         console.log('ponderation setted successfully');
-        setError({
-          isError: true,
-          message: e.message || 'Error setting ponderation',
-        });
-        resetError();
+        navigation.navigate('PonderazioneError', { message: e.data.message });
       });
   };
 
@@ -217,18 +217,19 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
             <CurrencyFormInput
               control={control}
               name="priceLeft"
-              placeholder="0,050€"
+              placeholder="0,100€"
               textStyles={style.numberSecondary}
               suffix="€"
               styless={{
                 borderBottomWidth: 0,
               }}
+              decimals={3}
               autoFocus={false}
               disabled={true}
               icon={false}
               currency={false}
             />
-            <Text style={style.ogniText}>ogni</Text>
+            <Text style={{ ...style.ogniText, paddingTop: 10 }}>ogni</Text>
             <CurrencyFormInput
               control={control}
               name="priceRight"
@@ -238,6 +239,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
               styless={{
                 borderBottomWidth: 0,
               }}
+              decimals={3}
               icon={false}
               disabled={true}
               currency={false}

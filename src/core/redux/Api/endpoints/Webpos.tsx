@@ -8,6 +8,8 @@ import {
   PonderazioneBody,
   ProfileResponse,
   Provinces,
+  ReplaceCardBody,
+  ReplaceCardResponse,
   ResponseListVouchers,
   ResponsePostSale,
 } from '@core/interfaces';
@@ -79,12 +81,21 @@ export const extendedApiWebpos = ApiRedux.injectEndpoints({
       queryFn: () => ({ data: null }),
       invalidatesTags: ['User', 'Sales', 'Operator', 'Ponderation'],
     }),
+    replaceCard: build.mutation<ReplaceCardResponse, ReplaceCardBody>({
+      query: body => ({
+        url: `/merchant/webpos/replaceCard`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Sales', 'User', 'Ponderation', 'Operator'],
+    }),
   }),
 
   overrideExisting: false,
 });
 
 export const {
+  useReplaceCardMutation,
   useReloadSalesMutation,
   usePostSaleMutation,
   useGetLastMovementQuery,

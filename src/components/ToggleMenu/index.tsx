@@ -58,19 +58,13 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
   interface ItemsMenu {
     id: number;
     name: string;
-    icon: ReactNode;
+    //   icon: ReactNode;
     onPress: () => void;
   }
   const items: Array<ItemsMenu> = [
     {
       id: 0,
       name: 'Member Card',
-      icon: (
-        <UserDataIcon
-          size={35}
-          color={state?.index === 0 ? generalColorsNew.orange : '#000'}
-        />
-      ),
       onPress: () => {
         navigation.navigate('MemberCardStack');
         dispatch(AuthSlice.actions.closeModal());
@@ -79,12 +73,6 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     {
       id: 1,
       name: 'Modifica password',
-      icon: (
-        <Impostazioni
-          size={35}
-          color={state?.index === 1 ? generalColorsNew.orange : '#000'}
-        />
-      ),
       onPress: () => {
         navigation.navigate('ModificaPassword');
         dispatch(AuthSlice.actions.closeModal());
@@ -94,12 +82,6 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     {
       id: 2,
       name: 'Offerta coupon',
-      icon: (
-        <PercentIcon
-          size={35}
-          color={state?.index === 2 ? generalColorsNew.orange : '#000'}
-        />
-      ),
       onPress: () => {
         navigation.navigate('BurnCoupon');
         dispatch(AuthSlice.actions.closeModal());
@@ -108,12 +90,6 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     {
       id: 3,
       name: 'Gestione ponderazione',
-      icon: (
-        <PercentIcon
-          size={35}
-          color={state?.index === 2 ? generalColorsNew.orange : '#000'}
-        />
-      ),
       onPress: () => {
         navigation.navigate('Ponderazione');
         dispatch(AuthSlice.actions.closeModal());
@@ -121,8 +97,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     },
     {
       id: 4,
-      name: 'LogOut',
-      icon: <LogoutIcon size={35} color="#000" />,
+      name: 'Log out',
       onPress: () => setShowModalLogOut(true),
     },
   ];
@@ -241,7 +216,8 @@ const styles = ({ theme }: ThemeContext) =>
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      padding: 10,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
       //   borderBottomWidth: 1,
       //   borderBottomColor: '#000',
     },

@@ -1025,3 +1025,15 @@ export interface GetOpInfoResponse {
   lastConnection: any | null;
   createdAt: string;
 }
+
+export interface ReplaceCardBody {
+  operatorId: number;
+  card: string;
+  newCard: string;
+  notes: string;
+}
+
+export interface ReplaceCardResponse {
+  answerCode: number;
+  detail: string;
+}

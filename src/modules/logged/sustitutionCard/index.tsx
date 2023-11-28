@@ -10,6 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@core/redux/store';
 import { extendedApiUser } from '@core/redux/Api/endpoints/User';
 import { useNavigation } from '@react-navigation/native';
+import {
+  useGetOperatorInfoQuery,
+  useReplaceCardMutation,
+} from '@core/redux/Api/endpoints/Webpos';
+import { useError } from '@core/hooks/useError';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Types
@@ -41,54 +47,55 @@ const SustitutionCardHomeScreen: React.FC<HomeScreenSustitutionCardProps> = ({
     //   resolver: yupResolver(userSchema),
   });
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [replaceCard, { isLoading, isError, error }] = useReplaceCardMutation();
 
-  const [error, setError] = useState<{ isError: boolean; message: string }>({
-    isError: false,
-    message: '',
-  });
+  const [username, setUsername] = useState<string>('');
 
-  const resetError = () => {
-    setTimeout(() => {
-      setError({
-        isError: false,
-        message: '',
-      });
-    }, 3000);
-  };
-  const dispatch = useDispatch<AppDispatch>();
-
-  const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
+  const operatorId = useSelector(
+    (state: RootState) => state.auth.operatorInfo?.id,
+  );
   const customer = useSelector((state: RootState) => state.customer);
 
-  const [getMemberByCard, { isLoading, isFetching }, lastArgs] =
-    extendedApiUser.endpoints.getMemberByCard.useLazyQuery();
+  console.log(username);
+  const { data } = useGetOperatorInfoQuery({
+    username,
+  });
 
-  const funcGetMemberByCard = async (id: string) => {
-    setLoading(true);
-    await getMemberByCard({ card: id })
+  const actualCard = customer.card;
+
+  const operator = useSelector((state: RootState) => state.auth.operatorInfo);
+
+  const replaceCardFunc = async () => {
+    await replaceCard({
+      operatorId: operatorId ? operatorId : 0,
+      card: customer?.card ? customer.card?.toString() : '0',
+      newCard: watch('search'),
+      notes: 'notes',
+    })
       .unwrap()
-      .then(r => {
-        setLoading(false);
-        nav.navigate('Spesa' as never);
+      .then(() => {
+        navigation.navigate('SuccessSustitutionCardScreen', {
+          message: `Card ${actualCard} is changed to ${watch('search')}`,
+        });
       })
       .catch(e => {
-        setError({
-          isError: true,
-          message: 'Error with request please check card number',
+        navigation.navigate('ErrorSustitutionCardScreen', {
+          message: `Error: ${e.data.message}`,
         });
-        console.log(e.data);
-        resetError();
-        setLoading(false);
       });
   };
-
-  const nav = useNavigation();
 
   useEffect(() => {
     setValue('search', qrfound);
     trigger('search');
   }, [qrfound]);
+  useEffect(() => {
+    const getUsername = async () => {
+      const username = await AsyncStorage.getItem('username');
+      if (username) setUsername(username);
+    };
+    getUsername();
+  }, [operatorId]);
   return (
     <ScrollView contentContainerStyle={style.main}>
       <Text style={style.title}>Sostituisci card</Text>
@@ -113,16 +120,16 @@ const SustitutionCardHomeScreen: React.FC<HomeScreenSustitutionCardProps> = ({
           accessibilityLabel="SOSTITUISCI CARD"
           title="SOSTITUISCI CARD"
           type="primary"
-          onPress={() => navigation.navigate('ConfirmSustitutionCardScreen')}
-          loading={loading}
+          onPress={() => replaceCardFunc()}
+          loading={isLoading}
           disabled={watch('sarch') !== '' && watch('search') ? false : true}
         />
-        {error.isError ? (
+        {/*isError ? (
           <Text
             style={{ color: 'red', textAlign: 'center', paddingVertical: 5 }}>
-            {error.message}
+            {error?.data.message}
           </Text>
-        ) : null}
+        ) : null*/}
       </View>
       <Image
         source={require('../../../../assets/images/img-scanner.png')}

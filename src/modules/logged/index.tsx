@@ -32,6 +32,8 @@ import ErrorSustitutionCardScreen from './sustitutionCard/screens/error';
 import ConfirmSustitutionCardScreen from './sustitutionCard/screens/confirm';
 import SuccessSustitutionCardScreen from './sustitutionCard/screens/success';
 import PonderazioneHomeScreen from './ponderazione';
+import ErrorPonderazioneScreen from './ponderazione/screens/error';
+import SuccessPonderazioneScreen from './ponderazione/screens/success';
 
 /**
  * Types
@@ -394,10 +396,17 @@ export const SustitutionCardStack: React.FC<SustitutionCardStackProps> = () => {
 
 // ponderazione stack
 
+type SuccessPonderazioneProps = {
+  message: string;
+};
+type ErrorPonderazioneProps = {
+  message: string;
+};
+
 export type PonderazioneParamList = {
   PonderazioneHomeScreen: undefined;
-  PonderazioneError: undefined;
-  PonderazioneSuccess: undefined;
+  PonderazioneError: ErrorPonderazioneProps;
+  PonderazioneSuccess: SuccessPonderazioneProps;
 };
 
 const StackPonderazione = createStackNavigator<PonderazioneParamList>();
@@ -413,6 +422,14 @@ export const PonderazioneStack: React.FC<PonderazioneStackProps> = () => {
       <StackPonderazione.Screen
         name="PonderazioneHomeScreen"
         component={PonderazioneHomeScreen}
+      />
+      <StackPonderazione.Screen
+        name="PonderazioneError"
+        component={ErrorPonderazioneScreen}
+      />
+      <StackPonderazione.Screen
+        name="PonderazioneSuccess"
+        component={SuccessPonderazioneScreen}
       />
     </StackPonderazione.Navigator>
   );
