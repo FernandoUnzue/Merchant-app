@@ -1,8 +1,8 @@
 export const paletteNew = {
   blackPrimary: '#173E46',
   greyNew: '#9D9D9D',
-  orangeNew: '#F25C06',
-  lightGreyNew: '#F5F5F5',
+  orangeNew: '#FF6E46',
+  lightGreyNew: '#F8F7F1',
   lightBlueNew: '#C6E0FC',
   success: '#3FE345',
   lightGreen: '#F7F8F2',

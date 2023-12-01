@@ -1,19 +1,15 @@
 import {
   ActivityIndicator,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PonderazioneParamList } from '..';
-import {
-  ColorsGeneralDark,
-  ColorsLight,
-  ThemeContext,
-  useThemedStyles,
-} from '@core/theme';
+import { ColorsGeneralDark, ThemeContext, useThemedStyles } from '@core/theme';
 import { Spacer } from '@components/Spacer';
 import { useError } from '@core/hooks/useError';
 import { useForm } from 'react-hook-form';
@@ -26,9 +22,7 @@ import {
 } from '@core/redux/Api/endpoints/Webpos';
 import { Button } from '@components/Button';
 import { CurrencyFormInput } from '@components/CurrencyInput';
-import AsyncStorage, {
-  useAsyncStorage,
-} from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Types
@@ -163,7 +157,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
                     color: ColorsGeneralDark.orange,
                     paddingVertical: 5,
                   }}>
-                  {ponderazione.minWeight * 100}%
+                  {Number(ponderazione.minWeight * 100).toFixed(1)}%
                 </Text>
               </View>
               <Spacer height={30} />
@@ -192,26 +186,29 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
         </View>
       ) : (
         <View style={{ padding: 20 }}>
-          <View style={{ height: 100 }}>
-            <CurrencyFormInput
-              control={control}
-              name="cashback"
-              //  maxLength={3}
-              placeholder="10%"
-              textStyles={style.numberMain}
-              styless={{
-                borderBottomWidth: 0,
-              }}
-              suffix="%"
-              rules={{
-                required: true,
-                validate: (value: any) =>
-                  Number(value) < 99 ||
-                  `Error with percent no more of 100% is possible`,
-              }}
-              currency={false}
-            />
-          </View>
+          <CurrencyFormInput
+            control={control}
+            name="cashback"
+            //  maxLength={3}
+            placeholder="10%"
+            textStyles={style.numberMain}
+            styless={{
+              borderBottomWidth: 0,
+            }}
+            // constStyles={{ height: 100 }}
+            suffix="%"
+            rules={{
+              required: true,
+              validate: (value: any) =>
+                Number(value) < 99 ||
+                `Error with percent no more of 100% is possible`,
+            }}
+            keyboardType="numeric"
+            cursorColor={'#000'}
+            placeholderTextColor={'#ddd'}
+            currency={false}
+          />
+
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
             <CurrencyFormInput
@@ -228,6 +225,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
               disabled={true}
               icon={false}
               currency={false}
+              autoCorrect={false}
             />
             <Text style={{ ...style.ogniText, paddingTop: 10 }}>ogni</Text>
             <CurrencyFormInput
@@ -278,12 +276,15 @@ const styles = ({ theme }: ThemeContext) =>
     },
     numberMain: {
       fontSize: 70,
+      height: 100,
       textAlign: 'center',
+      alignSelf: 'center',
       fontWeight: 'bold',
       fontFamily: theme.fonts.instBold,
     },
     numberSecondary: {
       fontSize: 30,
+      height: 60,
       textAlign: 'center',
       fontFamily: theme.fonts.instMedium,
     },
@@ -308,7 +309,7 @@ const styles = ({ theme }: ThemeContext) =>
     },
     container: {
       width: '100%',
-      maxHeight: 350,
+      // maxHeight: 350,
       //  backgroundColor: '#ddd',
       padding: 20,
       alignSelf: 'center',
