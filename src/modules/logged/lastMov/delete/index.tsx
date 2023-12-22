@@ -56,7 +56,7 @@ const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
   }, []);
   return (
     <ScrollView style={style.main}>
-      <Wallet />
+      <Text style={style.mainTitle}>Elimina movimento</Text>
       <Spacer height={20} />
       <BackgroundImageContainer height={470}>
         {/* negozio row */}
@@ -107,7 +107,7 @@ const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
                 </Text>
               </View>
               <View>
-                <Text>Data</Text>
+                <Text style={{ textAlign: 'right' }}>Data</Text>
                 <Text style={style.fontBold}>{data?.movement.localTime}</Text>
               </View>
             </View>
@@ -172,6 +172,11 @@ const styles = ({ theme }: ThemeContext) =>
       maxHeight: 1500,
       backgroundColor: theme.colors.background,
       padding: 10,
+    },
+    mainTitle: {
+      fontSize: 18,
+      fontFamily: theme.fonts.instBold,
+      textAlign: 'center',
     },
     fontBold: {
       fontFamily: theme.fonts.instBold,

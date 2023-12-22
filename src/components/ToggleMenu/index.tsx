@@ -54,7 +54,7 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
   };
   const state = navigation.getState();
 
-  console.log(`state ${JSON.stringify(state)}`);
+  //  console.log(`state ${JSON.stringify(state)}`);
   interface ItemsMenu {
     id: number;
     name: string;
@@ -62,14 +62,6 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     onPress: () => void;
   }
   const items: Array<ItemsMenu> = [
-    {
-      id: 0,
-      name: 'Member Card',
-      onPress: () => {
-        navigation.navigate('MemberCardStack');
-        dispatch(AuthSlice.actions.closeModal());
-      },
-    },
     {
       id: 1,
       name: 'Modifica password',
@@ -79,14 +71,6 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       },
     },
 
-    {
-      id: 2,
-      name: 'Offerta coupon',
-      onPress: () => {
-        navigation.navigate('BurnCoupon');
-        dispatch(AuthSlice.actions.closeModal());
-      },
-    },
     {
       id: 3,
       name: 'Gestione ponderazione',
@@ -185,7 +169,7 @@ const styles = ({ theme }: ThemeContext) =>
       height: 550,
     },
     contToggle: {
-      height: 250,
+      height: 200,
     },
     modalOverlay: {
       position: 'relative',

@@ -13,8 +13,16 @@ const Wallet: React.FC<Props> = () => {
   return (
     <View style={style.walletCont}>
       <WalletIcon size={18} />
-      <Text style={style.textWallet}>Saldo Wallet</Text>
-      <Text style={style.textWalletNumber}>{`€${
+      <Text
+        style={{ ...style.textWallet }}
+        numberOfLines={1}
+        ellipsizeMode="tail">
+        Saldo Wallet
+      </Text>
+      <Text
+        style={{ ...style.textWalletNumber }}
+        numberOfLines={1}
+        ellipsizeMode="tail">{`€${
         customer.amount !== null
           ? customer.amount?.toFixed(2).replace('.', ',')
           : '-----'
@@ -29,7 +37,7 @@ const styles = ({ theme }: ThemeContext) =>
     walletCont: {
       borderWidth: 1,
       borderColor: theme.colors.textPrimary,
-      width: 185,
+      width: 200,
       borderRadius: 30,
       paddingHorizontal: 20,
       paddingVertical: 5,

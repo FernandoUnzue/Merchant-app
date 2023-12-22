@@ -83,6 +83,21 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
       drawerContent={props => <CustomDrawerContent {...props} />}
       initialRouteName={'BurnCoupon'}>
       <Drawer.Screen
+        name="BurnCoupon"
+        component={BurnCouponStack as never}
+        options={{
+          drawerItemStyle: { display: 'none' },
+          drawerLabel: 'Burn Coupon',
+          header: () => <TabNav navigation={RootNavigation} />,
+          drawerIcon: resp => (
+            <Impostazioni
+              size={30}
+              color={resp.focused ? ColorsGeneralDark.accent : '#000'}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
         name="MemberCardStack"
         component={MemberCardStack}
         options={{
@@ -112,21 +127,7 @@ const DrawerStack: FC<Props> = ({ RootNavigation }) => {
           ),
         }}
       />
-      <Drawer.Screen
-        name="BurnCoupon"
-        component={BurnCouponStack as never}
-        options={{
-          drawerItemStyle: { display: 'none' },
-          drawerLabel: 'Burn Coupon',
-          header: () => <TabNav navigation={RootNavigation} />,
-          drawerIcon: resp => (
-            <Impostazioni
-              size={30}
-              color={resp.focused ? ColorsGeneralDark.accent : '#000'}
-            />
-          ),
-        }}
-      />
+
       <Drawer.Screen
         name="Ponderazione"
         component={PonderazioneStack}

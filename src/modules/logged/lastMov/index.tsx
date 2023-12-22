@@ -109,7 +109,7 @@ const LastMovementHome: React.FC<HomeScreenUltimoMovProps> = ({
                 </Text>
               </View>
               <View>
-                <Text>Data</Text>
+                <Text style={{ textAlign: 'right' }}>Data</Text>
                 <Text style={style.fontBold}>{data?.movement.localTime}</Text>
               </View>
             </View>

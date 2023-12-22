@@ -40,12 +40,8 @@ const ModalAsk: React.FC<Props> = ({
         borderRadius: 20,
         padding: 20,
       }}
-      backColor={
-        isDarkTheme || colorScheme === 'dark'
-          ? ColorsGeneralDark.background
-          : ColorsGeneralDark.backgroundNegative
-      }
-      closeColor={isDarkTheme || colorScheme === 'dark' ? '#fff' : '#000'}
+      backColor={ColorsGeneralDark.backgroundNegative}
+      closeColor={'#000'}
       width={width}
       height={height}>
       <View
@@ -62,10 +58,7 @@ const ModalAsk: React.FC<Props> = ({
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor:
-              isDarkTheme || colorScheme === 'dark'
-                ? ColorsGeneralDark.background
-                : ColorsGeneralDark.backgroundNegative,
+            backgroundColor: ColorsGeneralDark.backgroundNegative,
           }}>
           <Text
             style={{
@@ -73,10 +66,7 @@ const ModalAsk: React.FC<Props> = ({
               fontFamily: Fonts.bold,
               textAlign: 'center',
               fontSize: 16,
-              color:
-                isDarkTheme || colorScheme === 'dark'
-                  ? Colors.white
-                  : Colors.black,
+              color: Colors.black,
               paddingBottom: 12,
             }}>
             {message}

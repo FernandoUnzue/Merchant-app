@@ -28,6 +28,9 @@ import { RootState } from '@core/redux/store';
 import { ApiRedux } from '@core/redux/Api/api';
 import { extendedApiCoupon } from '@core/redux/Api/endpoints/Coupon';
 import { Alert } from 'react-native';
+import { extendedApiUser } from '@core/redux/Api/endpoints/User';
+import { useNavigation } from '@react-navigation/native';
+import { useError } from '@core/hooks/useError';
 
 /**
  * Types
@@ -58,20 +61,45 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
     //   resolver: yupResolver(userSchema),
   });
 
+  const { error, setError, resetError } = useError();
+
   const [loading, setLoading] = useState<boolean>(false);
+  const [
+    getMemberByCard,
+    { isLoading: loadingCard, isFetching: isFetchingCard },
+  ] = extendedApiUser.endpoints.getMemberByCard.useLazyQuery();
 
-  const [error, setError] = useState<{ isError: boolean; message: string }>({
-    isError: false,
-    message: '',
-  });
+  const str = watch('search');
 
-  const resetError = () => {
-    setTimeout(() => {
-      setError({
-        isError: false,
-        message: '',
+  const funcGetMemberByCard = async (id: string) => {
+    setLoading(true);
+    await getMemberByCard({ card: id })
+      .unwrap()
+      .then(r => {
+        setLoading(false);
+        nav.navigate('Spesa' as never);
+      })
+      .catch(e => {
+        setError({
+          isError: true,
+          message: 'Error with request please check card number',
+        });
+        console.log(e.data);
+        resetError();
+        setLoading(false);
       });
-    }, 3000);
+  };
+
+  const nav = useNavigation();
+
+  const isCoupon = (): boolean => {
+    if (str) {
+      if (str.length > 8) {
+        return true;
+      }
+      return false;
+    }
+    return false;
   };
 
   const [exchangeCode, setExchangeCode] = useState<number>();
@@ -156,12 +184,11 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
 
   return (
     <ScrollView contentContainerStyle={style.main}>
-      <Text style={style.title}>Burn Coupon</Text>
       <View style={style.container}>
         <FormInput
           control={control}
           name={'search'}
-          placeholder="EXCHANGE CODE"
+          placeholder="Inserisci il numero"
           styless={{
             backgroundColor: 'transparent',
             borderBottomColor: generalColorsNew.orange,
@@ -177,8 +204,14 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           accessibilityLabel="incerisi"
           title="INSERICI"
           type="primary"
-          onPress={() => funcGetCoupon(watch('search'))}
-          loading={isLoading || isFetching}
+          onPress={
+            isCoupon()
+              ? () => funcGetCoupon(str)
+              : () => funcGetMemberByCard(str)
+          }
+          loading={
+            isCoupon() ? isLoading || isFetching : loadingCard || isFetchingCard
+          }
           disabled={watch('sarch') !== '' && watch('search') ? false : true}
         />
         {error.isError ? (

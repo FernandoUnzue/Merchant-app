@@ -30,6 +30,7 @@ import { LoggedStackParamList } from '@modules/logged';
 
 import {
   DrawerActions,
+  Route,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
@@ -42,6 +43,7 @@ import BackNav from '@components/BackNav';
 import MenuBurguer from '@core/theme/SVGS/Merchant/MenuBurguer';
 import LogoSkey from '@core/theme/Merchant/LogoSkey';
 import { CustomerSlice } from '@core/redux/customerSlice';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 //types
 type TabNavScreenProps = StackScreenProps<LoggedStackParamList, 'TabNav'>;
@@ -74,14 +76,8 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
     return nav.dispatch(DrawerActions.openDrawer);
   };
   const state = nav.getState();
-  const route = useRoute();
 
-  const navig = state.routes[state.index];
-  const navState = navig.state;
-
-  const indexFinal = navState?.index ? navState.index : 0;
-  const routeName =
-    navState && navState.routeNames ? navState.routeNames[indexFinal] : '';
+  const routeName: string = state.routes[state.index].name;
 
   // console.log(`state ${JSON.stringify(navState)}`);
 
@@ -89,7 +85,7 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
 
   const BackFunc = () => {
     dispatch(CustomerSlice.actions.removeCustomer());
-    nav.navigate('MemberCardStack' as never);
+    nav.navigate('HomeBurnCoupon' as never);
   };
 
   return (
@@ -101,7 +97,7 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
           <BackNav
             navigation={navigation}
             OnPress={
-              indexFinal !== 0 ? () => navigation.goBack() : () => BackFunc()
+              state.index !== 0 ? () => navigation.goBack() : () => BackFunc()
             }
             text={false}
           />

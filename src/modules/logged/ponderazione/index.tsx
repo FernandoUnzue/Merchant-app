@@ -155,7 +155,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
                   style={{
                     ...style.numberMain,
                     color: ColorsGeneralDark.orange,
-                    paddingVertical: 5,
+                    paddingVertical: 0,
                   }}>
                   {Number(ponderazione.minWeight * 100).toFixed(1)}%
                 </Text>
@@ -164,7 +164,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
               <View
                 style={{
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  justifyContent: 'space-evenly',
                 }}>
                 <Text style={style.numberSecondary}>
                   {ponderazione.minWeight.toFixed(3)}€
@@ -190,7 +190,7 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
             control={control}
             name="cashback"
             //  maxLength={3}
-            placeholder="10%"
+            placeholder={`${Number(ponderazione.minWeight * 100).toFixed(1)}%`}
             textStyles={style.numberMain}
             styless={{
               borderBottomWidth: 0,
@@ -275,7 +275,7 @@ const styles = ({ theme }: ThemeContext) =>
       backgroundColor: theme.colors.background,
     },
     numberMain: {
-      fontSize: 70,
+      fontSize: 65,
       height: 100,
       textAlign: 'center',
       alignSelf: 'center',
@@ -283,14 +283,14 @@ const styles = ({ theme }: ThemeContext) =>
       fontFamily: theme.fonts.instBold,
     },
     numberSecondary: {
-      fontSize: 30,
+      fontSize: 25,
       height: 60,
       textAlign: 'center',
       fontFamily: theme.fonts.instMedium,
     },
     ogniText: {
       fontSize: 22,
-      paddingTop: 5,
+      paddingTop: 0,
     },
     image: {
       width: '100%',

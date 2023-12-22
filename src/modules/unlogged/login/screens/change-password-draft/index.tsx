@@ -32,6 +32,9 @@ import { Button } from '@components/Button';
 import BackNav from '@components/BackNav';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
+import { useError } from '@core/hooks/useError';
+import { useChangePassOperatorMutation } from '@core/redux/Api/endpoints/operator';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /**
  * Types
@@ -71,12 +74,13 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
   useDisableGoBack();
   const style = useThemedStyles(styles);
   const { container } = useLoginContainer();
-  const [loading, setLoading] = useState(false);
+
   const {
     control,
     handleSubmit,
     watch,
     trigger,
+    reset,
     formState: { isDirty, isValid },
   } = useForm<ChangePasswordData>({
     mode: 'onChange',
@@ -84,72 +88,53 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
   });
   const pwd = watch('password');
 
-  const [error, setError] = useState<{ isError: boolean; message: string }>({
-    isError: false,
-    message: '',
-  });
+  const { error, setError, resetError } = useError();
 
-  const resetError = () => {
-    setTimeout(() => {
-      setError({
-        isError: false,
-        message: '',
-      });
-    }, 5000);
-  };
+  const [changePassOperator, { isLoading }] = useChangePassOperatorMutation();
 
   const onChangePasswordPressed = async ({
     oldPassword,
     password,
     rPassword,
   }: ChangePasswordData) => {
-    setLoading(true);
-
-    try {
-      const response = await Api({
-        endpoint: '/backoffice/change-password',
-        method: 'PUT',
-        _data: {
-          oldPassword,
-          newPassword: password,
-          retryNewPassword: rPassword,
-        },
-        tokenUse: true,
-      });
-      setLoading(false);
-      if (response.status === 200) {
+    await changePassOperator({
+      oldPassword,
+      newPassword: password,
+      retryNewPassword: rPassword,
+    })
+      .unwrap()
+      .then(r => {
+        console.log(`successfully change password ${r}`);
         navigation.navigate('ChangePasswordSuccess');
-      }
-    } catch (e: any) {
-      setLoading(false);
-      // Alert.alert('Errore', 'Qualcosa è accaduto. Riprova');
-      /**
-       * si la contraseña vieja que pones no coincide con la del usuario te tira un 409 (conflict),
-       * si la password es igual a una de las ultimas 3 que ingresaste te tira un 406 (not acceptable),
-       * si la contraseña nueva que estas tratando de poner no pasa las validaciones tira un 406 (not acceptable)
-       * lo mismo con el caso de que si la pass nueva no coincide con el retry de la pass
-       */
-      console.log('error: ' + e.response.status);
-      if (e.response.status === 409) {
-        setError({
-          isError: true,
-          message: 'Vecchia password errata',
-        });
-      }
-      if (e.response.status === 406) {
-        setError({
-          isError: true,
-          message: 'Nuova password non accettabile',
-        });
-      }
-      if (e.response.status > 409) {
-        setError({
-          isError: true,
-          message: 'Errore imprevisto riprovare',
-        });
-      }
-      resetError();
-    }
+      })
+      .catch(e => {
+        /**
+         * si la contraseña vieja que pones no coincide con la del usuario te tira un 409 (conflict),
+         * si la password es igual a una de las ultimas 3 que ingresaste te tira un 406 (not acceptable),
+         * si la contraseña nueva que estas tratando de poner no pasa las validaciones tira un 406 (not acceptable)
+         * lo mismo con el caso de que si la pass nueva no coincide con el retry de la pass
+         */
+        //   console.log("error: " + JSON.stringify(e));
+        if (e.status === 409) {
+          setError({
+            isError: true,
+            message: 'Vecchia password errata',
+          });
+        }
+        if (e.status === 406) {
+          setError({
+            isError: true,
+            message: 'Nuova password non accettabile',
+          });
+        }
+        if (e.status > 409 || e.status < 405) {
+          setError({
+            isError: true,
+            message: 'Errore imprevisto riprovare',
+          });
+        }
+        resetError();
+      });
   };
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   const colorScheme = useColorScheme();
@@ -158,18 +143,44 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
     trigger('rPassword');
   }, [pwd]);
 
+  useEffect(() => {
+    reset();
+  }, []);
+
   const theme = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={style.main}>
-      <Pressable onPress={() => Keyboard.dismiss()} style={container}>
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
+      keyboardOpeningTime={0}
+      enableResetScrollToCoords={true}
+      contentInsetAdjustmentBehavior="automatic"
+      showsVerticalScrollIndicator={false}
+      alwaysBounceVertical={false}
+      bouncesZoom={false}
+      bounces={false}
+      enableAutomaticScroll={true}
+      contentContainerStyle={style.main}>
+      <View>
         <Spacer />
         {error.isError && (
           <Text style={{ color: 'orange', textAlign: 'center' }}>
             {error.message}
           </Text>
         )}
-
+        <Text style={style.title}>Cambia Password</Text>
+        <Spacer height={10} />
+        <Text style={style.subtitle}>Regole di creazione password</Text>
+        <Spacer height={10} />
+        <View>
+          <Text>* Lorem ipsum dolor sit amet</Text>
+          <Text>* Lorem ipsum dolor sit amet</Text>
+          <Text>* Lorem ipsum dolor sit amet</Text>
+          <Text>* Lorem ipsum dolor sit amet</Text>
+          <Text>* Lorem ipsum dolor sit amet</Text>
+        </View>
+        <Spacer height={40} />
         <View style={style.formWrapper}>
           <FormInput
             name="oldPassword"
@@ -177,7 +188,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             autoCapitalize="none"
             autoCorrect={false}
             control={control}
-            negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
+            //   negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
             rules={{
               required: true,
               pattern: PASSWORD_REGEX,
@@ -195,7 +206,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             autoCapitalize="none"
             autoCorrect={false}
             control={control}
-            negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
+            //   negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
             rules={{
               required: true,
               pattern: PASSWORD_REGEX,
@@ -204,7 +215,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
               backgroundColor: 'transparent',
             }}
             onPasswordMessagePressed={() =>
-              navigation.navigate('PasswordError' as never)
+              navigation.navigate('PasswordError')
             }
             blurOnSubmit={false}
           />
@@ -216,7 +227,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             autoCorrect={false}
             control={control}
             disablePaste
-            negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
+            //    negativeColor={isDarkTheme || colorScheme === 'dark' ? true : false}
             confirmPass={true}
             passValue={watch('password')}
             styless={{
@@ -229,15 +240,15 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             blurOnSubmit={false}
           />
         </View>
-      </Pressable>
-
+      </View>
+      <Spacer height={100} />
       <LoginFooter containerStyle={style.loginFooter}>
-        <View style={{ width: '80%', alignSelf: 'center' }}>
+        <View style={{ width: '100%', alignSelf: 'center' }}>
           <Button
             accessibilityLabel="conferma"
             title="conferma"
             type="primary"
-            loading={loading}
+            loading={isLoading}
             disabled={!isDirty || !isValid}
             onPress={handleSubmit(onChangePasswordPressed)}
           />
@@ -252,7 +263,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
           </Text>
           </Text>*/}
       </LoginFooter>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -268,15 +279,19 @@ const styles = ({ theme }: ThemeContext) =>
       backgroundColor: theme.colors.background,
     },
     formWrapper: {
-      flexGrow: 1,
-      paddingHorizontal: 80,
+      //  flexGrow: 1,
+      paddingHorizontal: 10,
       justifyContent: 'center',
     },
     title: {
       fontFamily: theme.fonts.bold,
-      fontSize: 22,
+      fontSize: 20,
       color: theme.colors.textPrimary,
-      textAlign: 'center',
+    },
+    subtitle: {
+      fontFamily: theme.fonts.bold,
+      fontSize: 14,
+      color: theme.colors.textPrimary,
     },
     loginFooter: {
       justifyContent: 'space-between',

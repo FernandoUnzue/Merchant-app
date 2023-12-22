@@ -63,13 +63,20 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
 
   const nav = useNavigation();
   const state = nav.getState();
+  const state2 = state.routes[state.index].state;
 
-  const navig = state.routes[state.index];
-  const navState = navig.state;
+  const routeName = state.routes[state.index].name;
 
-  const indexFinal = navState?.index ? navState.index : 0;
-  const routeName =
-    navState && navState.routeNames ? navState.routeNames[indexFinal] : '';
+  const routeNameStack =
+    state2?.routeNames && state2.index !== undefined
+      ? state2?.routes[state2?.index].name
+      : 'nada';
+
+  console.log(`route: ${routeName}`);
+
+  console.log(`routestack: ${routeNameStack}`);
+
+  console.log(`state ${JSON.stringify(state)}`);
 
   const funcFinal = () => {
     if (!customer.registered) {
@@ -84,7 +91,8 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={style.containerNav}>
       <View style={style.containerTabNav}>
-        {indexFinal === 0 ? (
+        {routeNameStack === 'BurnCoupon' ||
+        routeNameStack === 'HomeBurnCoupon' ? (
           <TouchableOpacity
             onPress={() => dispatch(AuthSlice.actions.toggleModal())}>
             <Impostazioni

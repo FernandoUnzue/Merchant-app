@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { ThemeContext, useThemedStyles } from '@core/theme';
+import { ColorsGeneralLight, ThemeContext, useThemedStyles } from '@core/theme';
 import { useDisableGoBack } from '@core/hooks';
 import { useLoginContainer } from '@modules/unlogged/hooks';
 import { UnloggedStackParamList } from '@modules/unlogged';
@@ -42,7 +42,7 @@ export const ChangePasswordSuccess: FC<ChangePasswordSuccessScreenProps> = ({
     <>
       <View style={[container, style.body]}>
         <View style={style.content}>
-          <OkIcon size={120} />
+          <OkIcon size={120} color={ColorsGeneralLight.success} />
           <Spacer />
           <Text style={style.title}>{'La tua password\nè aggiornata!'}</Text>
         </View>
@@ -50,15 +50,13 @@ export const ChangePasswordSuccess: FC<ChangePasswordSuccessScreenProps> = ({
       <LoginFooter containerStyle={style.loginFooter}>
         <View style={{ paddingHorizontal: 50 }}>
           <Button
-            accessibilityLabel="accedi"
-            title="accedi"
+            accessibilityLabel="torna alla home"
+            title="TORNA ALLA HOME"
             type="primary"
-            onPress={() =>
-              nav.navigate(
-                'BurnCoupon' as never,
-                { qrfound: undefined } as never,
-              )
-            }
+            onPress={() => {
+              goBack();
+              nav.navigate('BurnCoupon', { qrfound: undefined });
+            }}
           />
         </View>
 

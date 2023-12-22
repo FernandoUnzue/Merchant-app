@@ -224,6 +224,7 @@ export const SpesaFlowStack: React.FC<SpesaProps> = () => {
 export type InfoOperatorParamList = {
   ChangePasswordDraft: undefined;
   ChangePasswordSuccess: undefined;
+  PasswordError: undefined;
 };
 
 const StackInfoOpeator = createStackNavigator<InfoOperatorParamList>();
@@ -244,6 +245,7 @@ export const InfoOperatorStack: React.FC<InfoOperatorStackProps> = () => {
         name="ChangePasswordSuccess"
         component={ChangePasswordSuccess}
       />
+      <StackInfoOpeator.Screen name="PasswordError" component={PasswordError} />
     </StackInfoOpeator.Navigator>
   );
 };

@@ -10,6 +10,8 @@ import { Button } from '@components/Button';
 import { LoginFooter } from '@components/LoginFooter';
 import { Spacer } from '@components/Spacer';
 import { isSmallDevice } from '@core/helpers';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/redux/store';
 
 /**
  * Types
@@ -43,6 +45,8 @@ export const PasswordError: FC<PasswordErrorScreenProps> = ({
   const style = useThemedStyles(styles);
   const { container } = useLoginContainer();
 
+  const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
+
   return (
     <>
       <View style={[style.container, container]}>
@@ -67,15 +71,17 @@ export const PasswordError: FC<PasswordErrorScreenProps> = ({
 
       <LoginFooter>
         <View style={style.textWrapper}>
-          <Text style={style.registerWrapper}>
-            <Text style={style.notRegistered}>Sei già registrato? </Text>
-            <Text
-              style={style.register}
-              suppressHighlighting
-              onPress={() => navigate('Login')}>
-              Accedi
+          {!loggedIn ? (
+            <Text style={style.registerWrapper}>
+              <Text style={style.notRegistered}>Sei già registrato? </Text>
+              <Text
+                style={style.register}
+                suppressHighlighting
+                onPress={() => navigate('Login')}>
+                Accedi
+              </Text>
             </Text>
-          </Text>
+          ) : null}
         </View>
       </LoginFooter>
     </>

@@ -13,28 +13,45 @@ const UserBar: React.FC<Props> = () => {
   const style = useThemedStyles(styles);
   return (
     <View style={style.squareContent}>
-      {customer.userInfo?.avatar_photo ? (
-        <Image
-          source={{ uri: customer.userInfo.avatar_photo }}
-          style={{ width: 50, height: 50, borderRadius: 100 }}
-        />
-      ) : (
-        <UserIcon size={50} />
-      )}
+      <View>
+        {customer.userInfo?.avatar_photo ? (
+          <Image
+            source={{ uri: customer.userInfo.avatar_photo }}
+            style={{ width: 50, height: 50, borderRadius: 100 }}
+          />
+        ) : (
+          <UserIcon size={50} />
+        )}
+      </View>
       <View style={style.square}>
-        <Spacer height={35} />
-        <Text style={style.text}>Nome e cognome</Text>
+        <Spacer height={30} />
         <Text
-          style={{ ...style.textBold, width: 100 }}
+          style={{ ...style.text, width: '100%' }}
+          numberOfLines={1}
+          ellipsizeMode="tail">
+          Nome e cognome
+        </Text>
+        <Text
+          style={{ ...style.textBold, width: '100%' }}
           numberOfLines={1}
           ellipsizeMode={'tail'}>
           {customer.userInfo?.first_name} {customer.userInfo?.last_name}
         </Text>
       </View>
       <View style={style.square}>
-        <Spacer height={35} />
-        <Text style={style.text}>Numero card</Text>
-        <Text style={style.textBold}>{customer.card}</Text>
+        <Spacer height={30} />
+        <Text
+          style={{ ...style.text, width: '100%' }}
+          numberOfLines={1}
+          ellipsizeMode="tail">
+          Numero card
+        </Text>
+        <Text
+          style={{ ...style.textBold, width: '100%' }}
+          numberOfLines={1}
+          ellipsizeMode="tail">
+          {customer.card}
+        </Text>
       </View>
     </View>
   );
@@ -66,11 +83,11 @@ const styles = ({ theme }: ThemeContext) =>
     },
     square: {
       //    borderWidth: 1,
-      borderColor: '#ddd',
+      // borderColor: '#ddd',
       //   backgroundColor: '#fff',
-      padding: 10,
-      width: 120,
-      height: 110,
+      //  padding: 0,
+      width: '30%',
+      height: 90,
       borderRadius: 10,
       textAlign: 'center',
     },

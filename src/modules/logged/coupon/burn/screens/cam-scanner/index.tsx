@@ -142,7 +142,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
           // Color can be of your choice
           frameColor={'green'}
           // If frame is visible then frame color
-          //   colorForScannerFrame={'black'}
+          // colorForScannerFrame={'black'}
           // Scanner Frame color
           onReadCode={event => onBarcodeScan(event.nativeEvent.codeStringValue)}
           cameraRatioOverlay={undefined}
