@@ -38,7 +38,7 @@ const InfoClientHomeScreen: React.FC<HomeScreenInfoClientProps> = ({
           style={style.avatar}
         />
       ) : (
-        <UserIcon size={120} />
+        <UserIcon size={120} styles={{ alignSelf: 'center' }} />
       )}
       <Spacer height={10} />
       <View style={style.contMain}>
