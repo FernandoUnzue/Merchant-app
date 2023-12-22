@@ -150,18 +150,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
   const theme = useTheme();
 
   return (
-    <KeyboardAwareScrollView
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="on-drag"
-      keyboardOpeningTime={0}
-      enableResetScrollToCoords={true}
-      contentInsetAdjustmentBehavior="automatic"
-      showsVerticalScrollIndicator={false}
-      alwaysBounceVertical={false}
-      bouncesZoom={false}
-      bounces={false}
-      enableAutomaticScroll={true}
-      contentContainerStyle={style.main}>
+    <KeyboardAwareScrollView contentContainerStyle={style.main}>
       <View>
         <Spacer />
         {error.isError && (
