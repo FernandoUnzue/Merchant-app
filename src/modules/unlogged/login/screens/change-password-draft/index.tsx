@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import {
   Alert,
   Keyboard,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -150,8 +151,12 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
   const theme = useTheme();
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={style.main}>
-      <View>
+    <KeyboardAwareScrollView
+      enableOnAndroid={true}
+      contentContainerStyle={
+        Platform.OS === 'android' ? style.main : style.main2
+      }>
+      <ScrollView contentContainerStyle={style.backgroundColor}>
         <Spacer />
         {error.isError && (
           <Text style={{ color: 'orange', textAlign: 'center' }}>
@@ -229,9 +234,13 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             blurOnSubmit={false}
           />
         </View>
-      </View>
+      </ScrollView>
       <Spacer height={100} />
-      <LoginFooter containerStyle={style.loginFooter}>
+      <View
+        style={{
+          ...style.backgroundColor,
+          paddingBottom: Platform.OS === 'android' ? 100 : 20,
+        }}>
         <View style={{ width: '100%', alignSelf: 'center' }}>
           <Button
             accessibilityLabel="conferma"
@@ -251,7 +260,7 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
             Login
           </Text>
           </Text>*/}
-      </LoginFooter>
+      </View>
     </KeyboardAwareScrollView>
   );
 };
@@ -264,7 +273,14 @@ const styles = ({ theme }: ThemeContext) =>
   StyleSheet.create({
     main: {
       padding: 10,
+      backgroundColor: theme.colors.background,
+    },
+    main2: {
+      padding: 10,
       flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    backgroundColor: {
       backgroundColor: theme.colors.background,
     },
     formWrapper: {
