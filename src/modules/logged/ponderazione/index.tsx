@@ -275,7 +275,7 @@ const styles = ({ theme }: ThemeContext) =>
       backgroundColor: theme.colors.background,
     },
     numberMain: {
-      fontSize: 65,
+      fontSize: 55,
       height: 100,
       textAlign: 'center',
       alignSelf: 'center',

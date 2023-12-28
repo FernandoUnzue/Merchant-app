@@ -90,7 +90,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         icon={false}
         control={control}
         name="importo"
-        placeholder={'0,00'}
+        placeholder={Platform.OS === 'ios' ? '0,00' : undefined}
         keyboardType="numeric"
         styless={style.numberCont}
         style={style.number}
@@ -174,7 +174,7 @@ const styles = ({ theme }: ThemeContext) =>
       width: 250,
     },
     number: {
-      fontSize: 60,
+      fontSize: 50,
       fontFamily: theme.fonts.bold,
       color: theme.colors.textPrimary,
       textAlign: 'center',

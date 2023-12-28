@@ -170,12 +170,13 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
             }}
           />
           </View>*/}
-
-        <ActivityIndicator
-          size={'large'}
-          color={'#FF6E46'}
-          style={{ alignSelf: 'center', marginTop: 30 }}
-        />
+        {isLoading ? (
+          <ActivityIndicator
+            size={'large'}
+            color={'#FF6E46'}
+            style={{ alignSelf: 'center', marginTop: 30 }}
+          />
+        ) : null}
       </View>
       <Spacer height={20} />
       <UserBar />

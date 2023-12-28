@@ -75,13 +75,14 @@ const ConfirmDeleteMovScreen: React.FC<ConfirmScreenDeleteUltimoMovProps> = ({
         <FormInput
           control={control}
           name={'motivo'}
-          multiline
-          numberOfLines={2}
+          //  multiline
+          //  numberOfLines={2}
           styless={{
             borderWidth: 1,
+            borderColor: '#173E46',
             borderRadius: 10,
             backgroundColor: '#fff',
-            height: 70,
+            height: 150,
             padding: 5,
           }}
           rules={{

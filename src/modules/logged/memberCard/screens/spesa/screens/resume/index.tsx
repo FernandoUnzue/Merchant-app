@@ -117,7 +117,12 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
               .replace('.', ',')}`}</Text>
           </View>
           <View>
-            <Text style={style.textGrey}>Importo coupon utilizzati</Text>
+            <Text
+              style={{ ...style.textGrey, maxWidth: 180 }}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              Importo coupon utilizzati
+            </Text>
             <Text
               style={{
                 ...style.textBold,
@@ -220,7 +225,7 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
                       <ButtonFlat
                         widthButton={120}
                         heightButton={45}
-                        fontSize={12}
+                        fontSize={10}
                         textStyles={{
                           color:
                             pushed.kind === c.kind &&
@@ -247,10 +252,11 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
                           alignSelf: 'center',
                         }}
                         disable={
-                          pushed.kind === c.kind &&
-                          pushed.id !== c.id &&
-                          pushed.kind !== 0 &&
-                          pushed.id !== 0
+                          (pushed.kind === c.kind &&
+                            pushed.id !== c.id &&
+                            pushed.kind !== 0 &&
+                            pushed.id !== 0) ||
+                          amount < c.value
                         }
                       />
                     )}
@@ -307,6 +313,7 @@ const styles = ({ theme }: ThemeContext) =>
     textGrey: {
       color: theme.colors.textGrey,
       fontFamily: theme.fonts.instBold,
+      fontSize: 12,
     },
     walletCont: {
       borderWidth: 1,

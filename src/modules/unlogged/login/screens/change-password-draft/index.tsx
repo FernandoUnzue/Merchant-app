@@ -168,11 +168,15 @@ export const ChangePasswordDraft: FC<ChangePasswordScreenProps> = ({
         <Text style={style.subtitle}>Regole di creazione password</Text>
         <Spacer height={10} />
         <View>
-          <Text>* Lorem ipsum dolor sit amet</Text>
-          <Text>* Lorem ipsum dolor sit amet</Text>
-          <Text>* Lorem ipsum dolor sit amet</Text>
-          <Text>* Lorem ipsum dolor sit amet</Text>
-          <Text>* Lorem ipsum dolor sit amet</Text>
+          <Text>* Non inferiore a 8 caratteri</Text>
+          <Text>* Almeno 1 lettera maiuscola</Text>
+          <Text>* Almeno 1 lettera minuscola</Text>
+          <Text>* Almeno 1 numero</Text>
+          <Text>* Almeno 1 carattere speciale</Text>
+          <Text>
+            * Non deve essere mai uguale alle ultime 3 utilizzate
+            precedentemente
+          </Text>
         </View>
         <Spacer height={40} />
         <View style={style.formWrapper}>

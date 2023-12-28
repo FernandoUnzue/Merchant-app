@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import React from 'react';
 import WalletIcon from '@core/theme/SVGS/Merchant/WalletEMpty';
 import { useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ const Wallet: React.FC<Props> = () => {
   const style = useThemedStyles(styles);
   return (
     <View style={style.walletCont}>
-      <WalletIcon size={18} />
+      <WalletIcon size={15} />
       <Text
         style={{ ...style.textWallet }}
         numberOfLines={1}
@@ -39,19 +39,19 @@ const styles = ({ theme }: ThemeContext) =>
       borderColor: theme.colors.textPrimary,
       width: 200,
       borderRadius: 30,
-      paddingHorizontal: 20,
+      paddingHorizontal: 10,
       paddingVertical: 5,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignSelf: 'center',
     },
     textWallet: {
-      marginTop: 2,
+      // marginTop: Platform.OS === 'android' ? 2 : 0,
       fontSize: 12,
       color: theme.colors.textPrimary,
     },
     textWalletNumber: {
-      fontSize: 13,
+      fontSize: 12,
       fontFamily: theme.fonts.instBold,
       color: theme.colors.textPrimary,
     },
