@@ -76,7 +76,7 @@ export const CustomerSlice = createSlice({
         },
       }),
 
-    removeCustomer: state => (state = { ...initialState }),
+    removeCustomer: state => (state = initialState),
   },
   extraReducers: builder => {
     builder.addMatcher(

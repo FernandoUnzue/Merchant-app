@@ -42,7 +42,7 @@ import { useColorScheme } from 'react-native';
 import BackNav from '@components/BackNav';
 import MenuBurguer from '@core/theme/SVGS/Merchant/MenuBurguer';
 import LogoSkey from '@core/theme/Merchant/LogoSkey';
-import { CustomerSlice } from '@core/redux/customerSlice';
+import { CustomerSlice, removeCustomer } from '@core/redux/customerSlice';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 //types
@@ -63,8 +63,6 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
 
   const colorScheme = useColorScheme();
 
-  const nav = useNavigation();
-
   const funcFinal = () => {
     if (!customer.registered) {
       if (auth.showModal) {
@@ -75,16 +73,29 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
     }
     return nav.dispatch(DrawerActions.openDrawer);
   };
+
+  const nav = useNavigation();
   const state = nav.getState();
+  const state2 = state.routes[state.index].state;
 
   const routeName: string = state.routes[state.index].name;
+
+  const routeNameStack =
+    state2?.routeNames && state2.index !== undefined
+      ? state2?.routes[state2?.index].name
+      : 'nada';
 
   // console.log(`state ${JSON.stringify(navState)}`);
 
   // console.log(`routeName ${routeName}`);
+  console.log(`route: ${routeName}`);
+
+  console.log(`routestack: ${routeNameStack}`);
+
+  console.log(`state ${JSON.stringify(state)}`);
 
   const BackFunc = () => {
-    dispatch(CustomerSlice.actions.removeCustomer());
+    dispatch(removeCustomer());
     nav.navigate('HomeBurnCoupon' as never);
   };
 
@@ -97,7 +108,13 @@ export const TabNavSpesa: React.FC<Props> = ({ navigation }) => {
           <BackNav
             navigation={navigation}
             OnPress={
-              state.index !== 0 ? () => navigation.goBack() : () => BackFunc()
+              routeNameStack !== 'HomeSpesa' &&
+              routeName !== 'InfoCliente' &&
+              routeName !== 'UltimoMovimiento' &&
+              routeName !== 'SustitutionCard' &&
+              routeNameStack !== 'DeleteScreen'
+                ? () => navigation.goBack()
+                : () => BackFunc()
             }
             text={false}
           />

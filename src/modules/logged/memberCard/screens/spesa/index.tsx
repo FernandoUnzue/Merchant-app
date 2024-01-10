@@ -115,6 +115,8 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         errorMessagesStyles={style.errorMessage}
         rules={{
           required: true,
+          validate: (value: any) =>
+            Number(value) > 0 || `Il importo deve essere maggiore di 0,00€`,
         }}
       />
       <Spacer height={30} />

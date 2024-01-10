@@ -90,8 +90,9 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
     if (!customer.registered || !auth.loggedIn)
       dispatch(AuthSlice.actions.closeModal());
   }, [customer, auth.loggedIn]);
+  // console.log(customer);
 
-  if (showMenu) {
+  if (showMenu && !customer.registered) {
     return (
       <>
         <View style={style.menuContainer}>
