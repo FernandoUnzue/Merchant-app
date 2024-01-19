@@ -1,5 +1,7 @@
 import {
   ActivityIndicator,
+  Alert,
+  BackHandler,
   Image,
   ImageBackground,
   ScrollView,
@@ -7,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SpesaStackParamList } from '@modules/logged';
 import {
@@ -31,6 +33,7 @@ import { useGetVochersQuery } from '@core/redux/Api/endpoints/Webpos';
 import DiscountIcon from '@core/theme/SVGS/DiscuontIcon';
 import DollarIcon from '@core/theme/SVGS/DollarIcon';
 import ButtonFlat from '@components/ButtonFlat';
+import { formatNumber } from '@core/helpers';
 
 /**
  * Types
@@ -104,17 +107,19 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
             <Text
               style={{
                 ...style.textBold,
-                fontSize: 40,
-              }}>{`€${totalAmount.replace('.', ',')}`}</Text>
+                fontSize: 25,
+              }}>{`€${formatNumber(Number(totalAmount), 2)}`}</Text>
           </View>
         </View>
         <View style={{ ...style.dashedLine, width: width - 20 }} />
         <View style={style.column}>
           <View>
             <Text style={style.textGrey}>Importo spesa</Text>
-            <Text style={{ ...style.textBold, fontSize: 30 }}>{`€ ${amount
-              .toFixed(2)
-              .replace('.', ',')}`}</Text>
+            <Text
+              style={{ ...style.textBold, fontSize: 18 }}>{`€ ${formatNumber(
+              amount,
+              2,
+            )}`}</Text>
           </View>
           <View>
             <Text
@@ -126,9 +131,9 @@ const ResumeSaleScreen: React.FC<ResumeScreenProps> = ({
             <Text
               style={{
                 ...style.textBold,
-                fontSize: 30,
+                fontSize: 25,
                 textAlign: 'center',
-              }}>{`€${Number(couponDiscount).toFixed(2)}`}</Text>
+              }}>{`€${formatNumber(Number(couponDiscount), 2)}`}</Text>
           </View>
         </View>
         <View>

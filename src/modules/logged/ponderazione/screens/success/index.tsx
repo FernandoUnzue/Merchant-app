@@ -1,5 +1,12 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import {
+  BackHandler,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, { useEffect } from 'react';
 import { Spacer } from '@components/Spacer';
 import WarningIcon from '@core/theme/SVGS/WarningIcon';
 import { Button } from '@components/Button';
@@ -23,6 +30,20 @@ const SuccessPonderazioneScreen: React.FC<SuccessScreenPonderazioneProps> = ({
 }) => {
   const { message } = route.params;
   const style = useThemedStyles(styles);
+
+  useEffect(() => {
+    const backAction = () => {
+      //  openModal();
+      // Alert.alert('back');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  }, []);
   return (
     <ScrollView style={style.main}>
       <Text style={style.title}>Ponderazione cashback</Text>

@@ -255,8 +255,8 @@ const PonderazioneHomeScreen: React.FC<HomeScreenPonderazioneProps> = ({
           <Spacer height={10} />
           <Button
             type="tertiary"
-            title="Anulla"
-            accessibilityLabel="anulla"
+            title="Annulla"
+            accessibilityLabel="annulla"
             onPress={() => setFixed(true)}
           />
         </View>

@@ -1,5 +1,6 @@
 import ModalAsk from '@components/ModalAsk';
 import { AuthSlice, LogOutAsync } from '@core/redux/authSlice/authSlice';
+import { removeCustomer } from '@core/redux/customerSlice';
 import { AppDispatch, RootState } from '@core/redux/store';
 import {
   Colors,
@@ -91,7 +92,11 @@ const ToggleMenu: React.FC<Props> = ({ navigation }) => {
       dispatch(AuthSlice.actions.closeModal());
   }, [customer, auth.loggedIn]);
   // console.log(customer);
-
+  useEffect(() => {
+    if (customer.registered) {
+      dispatch(removeCustomer());
+    }
+  }, []);
   if (showMenu && !customer.registered) {
     return (
       <>

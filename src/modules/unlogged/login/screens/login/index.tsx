@@ -36,6 +36,7 @@ import { AuthSlice } from '@core/redux/authSlice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeCustomer } from '@core/redux/customerSlice';
 
 /**
  * Types
@@ -101,7 +102,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       });
     }, 5000);
   };
-
+  const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
 
   const onLoginPressed = async ({ username, password }: LoginData) => {
@@ -114,6 +115,7 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       .then(async resp => {
         console.log('Login successfully ' + resp);
         await AsyncStorage.setItem('username', watch('username'));
+        dispatch(removeCustomer());
       })
       .catch(err => {
         if (err.status === 400) {
@@ -131,7 +133,6 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       });
   };
   const theme = useTheme();
-  const dispatch = useDispatch();
   const style = useThemedStyles(styles);
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   const colorScheme = useColorScheme();

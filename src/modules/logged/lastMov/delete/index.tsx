@@ -23,6 +23,7 @@ import {
 } from '@core/redux/Api/endpoints/Webpos';
 import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
+import { formatNumber } from '@core/helpers';
 
 /**
  * Types
@@ -117,13 +118,13 @@ const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
             <View style={{ ...style.columnInter, paddingTop: 20 }}>
               <Text>Importo acquisto</Text>
               <Text style={style.fontBold}>
-                €{data?.movement.totalMoney.toFixed(2)}
+                €{formatNumber(Number(data?.movement.totalMoney), 2)}
               </Text>
             </View>
             <View style={style.column}>
               <Text>Sconto coupon</Text>
               <Text style={style.fontBold}>
-                €{data?.movement.discount.toFixed(2)}
+                €{formatNumber(Number(data?.movement.discount), 2)}
               </Text>
             </View>
             <View style={style.columnInter}>
@@ -134,7 +135,7 @@ const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
                   fontWeight: 'bold',
                   fontSize: 30,
                 }}>
-                €{data?.movement.totalMoney.toFixed(2)}
+                €{formatNumber(Number(data?.movement.totalMoney), 2)}
               </Text>
             </View>
             <Spacer height={10} />
@@ -142,7 +143,7 @@ const DeleteLastMovementHome: React.FC<HomeScreenDeleteUltimoMovProps> = ({
             <View style={{ padding: 20 }}>
               <Text>Cashback caricato</Text>
               <Text style={style.fontBold}>
-                €{data?.movement.chargedPoints.toFixed(2)}
+                €{formatNumber(Number(data?.movement.chargedPoints), 2)}
               </Text>
             </View>
           </>

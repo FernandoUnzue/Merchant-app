@@ -181,13 +181,15 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
     setValue('search', qrfound);
     trigger('search');
   }, [qrfound]);
-
+  console.log(`STR ${str}`);
+  console.log(str?.length);
   return (
     <ScrollView contentContainerStyle={style.main}>
       <View style={style.container}>
         <FormInput
           control={control}
           name={'search'}
+          keyboardType="numeric"
           placeholder="Inserisci il numero"
           styless={{
             backgroundColor: 'transparent',
@@ -195,8 +197,13 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           }}
           negativeColor={false}
           showIcons={false}
+          errorMessage={`${
+            str !== '' && str !== undefined ? 'Minimo 4 numeri' : ' '
+          }`}
           rules={{
+            validate: () => str !== '' && str !== undefined,
             minLength: 4,
+            //  required: true,
           }}
         />
 
@@ -212,7 +219,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           loading={
             isCoupon() ? isLoading || isFetching : loadingCard || isFetchingCard
           }
-          disabled={watch('sarch') !== '' && watch('search') ? false : true}
+          disabled={!isDirty || !isValid}
         />
         {error.isError ? (
           <Text

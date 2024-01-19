@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@core/redux/store';
 import { useError } from '@core/hooks/useError';
 import { usePostSaleMutation } from '@core/redux/Api/endpoints/Webpos';
+import { formatNumber } from '@core/helpers';
 
 /**
  * Types
@@ -119,9 +120,7 @@ const PaymentSaleScreen: React.FC<PaymentScreenProps> = ({
           <Text style={style.text} numberOfLines={1} ellipsizeMode={'tail'}>
             Totale a pagare
           </Text>
-          <Text style={style.number}>{`€${spesa
-            .toFixed(2)
-            .replace('.', ',')}`}</Text>
+          <Text style={style.number}>{`€${formatNumber(spesa, 2)}`}</Text>
         </View>
       </View>
       <Spacer height={20} />

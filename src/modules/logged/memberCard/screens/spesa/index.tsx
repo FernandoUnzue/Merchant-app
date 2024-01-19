@@ -178,7 +178,7 @@ const styles = ({ theme }: ThemeContext) =>
     number: {
       fontSize: 50,
       fontFamily: theme.fonts.bold,
-      color: theme.colors.textPrimary,
+      color: '#173E46',
       textAlign: 'center',
     },
     textBold: {

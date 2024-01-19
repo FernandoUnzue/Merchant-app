@@ -1,11 +1,12 @@
 import {
+  BackHandler,
   ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SpesaStackParamList } from '@modules/logged';
 import {
@@ -70,6 +71,20 @@ const SuccessSaleScreen: React.FC<SuccessScreenProps> = ({
 
   const { width } = useWindowDimensions();
   const customer = useSelector((state: RootState) => state.customer);
+
+  useEffect(() => {
+    const backAction = () => {
+      //  openModal();
+      // Alert.alert('back');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  }, []);
   return (
     <ScrollView style={style.main}>
       <Wallet />

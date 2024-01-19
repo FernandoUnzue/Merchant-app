@@ -225,7 +225,7 @@ export function FormInput<ContentType>({
                 {okMessage}
               </Text>
             </ShowIf>
-            <ShowIf condition={!isPassword && (!!error || !!errorMessage)}>
+            <ShowIf condition={!isPassword && !!error}>
               <Text
                 style={
                   style[
