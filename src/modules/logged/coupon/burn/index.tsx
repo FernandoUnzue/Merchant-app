@@ -208,8 +208,8 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
         />
 
         <Button
-          accessibilityLabel="incerisi"
-          title="INSERICI"
+          accessibilityLabel="inserisci"
+          title="INSERISCI"
           type="primary"
           onPress={
             isCoupon()
