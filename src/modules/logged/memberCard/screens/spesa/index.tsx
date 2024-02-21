@@ -1,4 +1,5 @@
 import {
+  Keyboard,
   Platform,
   ScrollView,
   StyleSheet,
@@ -38,6 +39,7 @@ import WalletIcon from '@core/theme/SVGS/Merchant/WalletEMpty';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import UserBar from '@components/UserBar';
 import Wallet from '@components/Wallet';
+import useKeyboard from '@core/hooks/isKeyboardOpen';
 
 /**
  * Types
@@ -70,15 +72,23 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
 
   const nav = useNavigation();
 
+  const isOpen = useKeyboard();
+
   useEffect(() => {
-    trigger('importo');
-    if (Platform.OS === 'android') setValue('importo', 0);
-  }, [true]);
+    //  trigger('importo');
+    if (Platform.OS === 'android') {
+      setValue('importo', 0);
+    } else {
+      setValue('importo', undefined);
+    }
+  }, [customer]);
 
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
+      enableOnAndroid
+      enableAutomaticScroll
       contentContainerStyle={style.main}
-      keyboardShouldPersistTaps="never">
+      keyboardShouldPersistTaps="always">
       <Spacer height={20} />
       <Wallet />
       <Spacer height={10} />
@@ -112,17 +122,17 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
             €
           </Text>
         }
-        errorMessagesStyles={style.errorMessage}
-        rules={{
-          required: true,
-          validate: (value: any) =>
-            Number(value) > 0 || `Il importo deve essere maggiore di 0,00€`,
-        }}
+        // errorMessagesStyles={style.errorMessage}
+        //    rules={{
+        //     required: true,
+        //     validate: (value: any) =>
+        //       Number(value) >= 0 || `Il importo deve essere maggiore di 0,00€`,
+        //   }}
       />
       <Spacer height={30} />
       <UserBar />
 
-      <Spacer height={150} />
+      <Spacer height={isOpen ? 40 : 150} />
 
       <Button
         type="primary"
@@ -133,7 +143,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
             amount: Number(watch('importo')),
           })
         }
-        disabled={!isDirty || !isValid}
+        disabled={watch('importo') && watch('importo') > 0 ? false : true}
       />
       {/* <Spacer height={10} />
       <Button
@@ -145,7 +155,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           nav.navigate('MemberCardStack' as never);
         }}
       />*/}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

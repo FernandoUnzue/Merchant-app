@@ -91,7 +91,8 @@ export const TabNav: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={style.containerNav}>
       <View style={style.containerTabNav}>
-        {routeName === 'BurnCoupon' || routeNameStack === 'HomeBurnCoupon' ? (
+        {routeName === 'BurnCoupon' &&
+        (routeNameStack === 'HomeBurnCoupon' || routeNameStack === 'nada') ? (
           <TouchableOpacity
             onPress={() => dispatch(AuthSlice.actions.toggleModal())}>
             <Impostazioni

@@ -31,6 +31,7 @@ import { Alert } from 'react-native';
 import { extendedApiUser } from '@core/redux/Api/endpoints/User';
 import { useNavigation } from '@react-navigation/native';
 import { useError } from '@core/hooks/useError';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /**
  * Types
@@ -179,32 +180,30 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     setValue('search', qrfound);
-    trigger('search');
   }, [qrfound]);
   console.log(`STR ${str}`);
   console.log(str?.length);
   return (
-    <ScrollView contentContainerStyle={style.main}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={style.main}
+      keyboardShouldPersistTaps={'always'}>
       <View style={style.container}>
         <FormInput
           control={control}
           name={'search'}
-          keyboardType="numeric"
+          keyboardType="number-pad"
           placeholder="Inserisci il numero"
           styless={{
             backgroundColor: 'transparent',
             borderBottomColor: generalColorsNew.orange,
           }}
+          blurOnSubmit={false}
+          autoFocus={true}
           negativeColor={false}
           showIcons={false}
           errorMessage={`${
             str !== '' && str !== undefined ? 'Minimo 4 numeri' : ' '
           }`}
-          rules={{
-            validate: () => str !== '' && str !== undefined,
-            minLength: 4,
-            //  required: true,
-          }}
         />
 
         <Button
@@ -219,7 +218,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           loading={
             isCoupon() ? isLoading || isFetching : loadingCard || isFetchingCard
           }
-          disabled={!isDirty || !isValid}
+          disabled={str && str !== '' && str.length >= 4 ? false : true}
         />
         {error.isError ? (
           <Text
@@ -248,7 +247,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           onPress={() => navigation.navigate('CameraScannerScreen')}
         />
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

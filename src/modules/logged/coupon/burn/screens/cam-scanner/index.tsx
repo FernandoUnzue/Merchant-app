@@ -59,8 +59,8 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
   const style = useThemedStyles(styles);
   const onBarcodeScan = (qrvalue: any) => {
     // Called after te successful scanning of QRCode/Barcode
-    setQrvalue(qrvalue);
-
+    //  setQrvalue(qrvalue);
+    navigation.push('HomeBurnCoupon', { qrfound: qrvalue });
     //  setOpneScanner(false);
   };
 
@@ -115,7 +115,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
               paddingVertical: 10,
               alignSelf: 'center',
             }}>
-            <ButtonFlat
+            {/*  <ButtonFlat
               title="OK"
               widthButton={65}
               heightButton={50}
@@ -130,7 +130,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
               onPress={() =>
                 navigation.push('HomeBurnCoupon', { qrfound: qrvalue })
               }
-            />
+            />*/}
           </View>
         </View>
         <CameraScreen
