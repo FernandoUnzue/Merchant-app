@@ -128,6 +128,16 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
         //     validate: (value: any) =>
         //       Number(value) >= 0 || `Il importo deve essere maggiore di 0,00€`,
         //   }}
+        returnKeyLabel="done"
+        returnKeyType="done"
+        onSubmitEditing={
+          watch('importo') && watch('importo') > 0
+            ? () =>
+                navigation.navigate('ResumeSaleScreen', {
+                  amount: Number(watch('importo')),
+                })
+            : () => null
+        }
       />
       <Spacer height={30} />
       <UserBar />

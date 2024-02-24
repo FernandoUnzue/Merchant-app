@@ -191,7 +191,7 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
         <FormInput
           control={control}
           name={'search'}
-          keyboardType="number-pad"
+          keyboardType="numeric"
           placeholder="Inserisci il numero"
           styless={{
             backgroundColor: 'transparent',
@@ -204,6 +204,15 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
           errorMessage={`${
             str !== '' && str !== undefined ? 'Minimo 4 numeri' : ' '
           }`}
+          returnKeyLabel="done"
+          returnKeyType="done"
+          onSubmitEditing={
+            str && str !== '' && str.length >= 4
+              ? isCoupon()
+                ? () => funcGetCoupon(str)
+                : () => funcGetMemberByCard(str)
+              : () => null
+          }
         />
 
         <Button

@@ -37,6 +37,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { removeCustomer } from '@core/redux/customerSlice';
+import { Alert } from 'react-native';
 
 /**
  * Types
@@ -175,6 +176,11 @@ export const Login: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         negativeColor={true}
         styless={style.backNegative}
         // onPasswordMessagePressed={() => navigate('PasswordError')}
+        returnKeyLabel="done"
+        returnKeyType="done"
+        onSubmitEditing={
+          isDirty || isValid ? handleSubmit(onLoginPressed) : () => null
+        }
       />
       <Spacer height={'30%'} />
       <Button
