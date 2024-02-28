@@ -60,8 +60,8 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
   const onBarcodeScan = (qrvalue: any) => {
     // Called after te successful scanning of QRCode/Barcode
     //  setQrvalue(qrvalue);
-    navigation.push('HomeBurnCoupon', { qrfound: qrvalue });
-    //  setOpneScanner(false);
+    navigation.navigate('HomeBurnCoupon', { qrfound: qrvalue });
+    setOpneScanner(false);
   };
 
   const onOpneScanner = () => {
@@ -79,7 +79,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             // If CAMERA Permission is granted
-            setQrvalue('');
+            //    setQrvalue('');
             setOpneScanner(true);
           } else {
             Alert.alert('CAMERA permission denied');
@@ -92,15 +92,17 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
       // Calling the camera permission function
       requestCameraPermission();
     } else {
-      setQrvalue('');
+      //   setQrvalue('');
       setOpneScanner(true);
     }
   };
   const isDarkTheme = useSelector((state: RootState) => state.auth.darkMode);
   const colorScheme = useColorScheme();
+
+  console.log('open scanner ' + opneScanner);
   useEffect(() => {
     onOpneScanner();
-  }, []);
+  }, [opneScanner]);
 
   return (
     <SafeAreaView style={style.safeAreaStyle}>
@@ -134,7 +136,7 @@ const CameraScannerScreen: React.FC<CameraScannerScreenProps> = ({
           </View>
         </View>
         <CameraScreen
-          showFrame={false}
+          showFrame={true}
           // Show/hide scan frame
           scanBarcode={true}
           // Can restrict for the QR Code only
