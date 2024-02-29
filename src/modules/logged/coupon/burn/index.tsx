@@ -198,7 +198,6 @@ const Home: React.FC<HomeScreenBurnCouponProps> = ({ navigation, route }) => {
             borderBottomColor: generalColorsNew.orange,
           }}
           blurOnSubmit={false}
-          autoFocus={true}
           negativeColor={false}
           showIcons={false}
           errorMessage={`${

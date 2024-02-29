@@ -85,8 +85,6 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
 
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
-      enableAutomaticScroll
       contentContainerStyle={style.main}
       keyboardShouldPersistTaps="always">
       <Spacer height={20} />
@@ -109,6 +107,7 @@ const HomeSpesa: React.FC<SpesaHomeProps> = ({ navigation }) => {
           alignSelf: 'center',
           width: Math.floor(width / 2),
         }}
+        autoFocus={true}
         defaultValue={Platform.OS === 'android' ? '0' : ''}
         cursorColor={'#000'}
         valueAdded={
